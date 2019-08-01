@@ -1,0 +1,65 @@
+<app-common-title [showReturn]=true [title]='title'></app-common-title>
+
+<div class="page">
+  <ul class="tradeListUl">
+    <li>
+      <div>我的头像</div>
+      <div>
+        <input  type="file" accept="image/*" class="imgUploader" (change)="upLoadImg($event)" [(ngModel)]="imgaeData">
+        <img *ngIf="imageUrl" [src]="imageUrl" class="avatar avatarImg">
+        <img src="../../assets/right.png" alt="">
+      </div>
+    </li>
+    <li routerLink="changenick">
+      <div>昵称</div>
+      <div>{{userInfo.nickname}}<img src="../../assets/right.png" alt=""></div>
+    </li>
+    <li routerLink="changephonenum">
+      <div>绑定手机号</div>
+      <div>{{userInfo.phone | phonenum}}
+        <img src="../../assets/right.png" alt="">
+      </div>
+    </li>
+    <li routerLink="changeweixin">
+      <div>微信帐号</div>
+      <div>
+        <span *ngIf="isSetUserInfo.isSetWeixin==1">{{userInfo.weixin | phonenum}}</span>
+        <span *ngIf="isSetUserInfo.isSetWeixin==0">未设置</span>
+        <img src="../../assets/right.png" alt="">
+      </div>
+    </li>
+    <!-- <li routerLink="changezhifubao">
+      <div>支付宝账号</div>
+      <div>
+        <span *ngIf="isSetUserInfo.isSetAlipay==1">{{userInfo.alipay | phonenum}}</span>
+        <span *ngIf="isSetUserInfo.isSetAlipay==0">未设置</span>
+        <img src="../../assets/right.png" alt="">
+      </div>
+    </li>
+    <li routerLink="changeqq">
+      <div>QQ账号</div>
+      <div>
+        <span *ngIf="isSetUserInfo.isSetQQ==1">{{userInfo.qq | phonenum}}</span>
+        <span *ngIf="isSetUserInfo.isSetQQ==0">未设置</span>
+        <img src="../../assets/right.png" alt="">
+      </div>
+    </li> -->
+    <li routerLink="changeloginpassword">
+      <div>管理登录密码</div>
+      <div>
+        <img src="../../assets/right.png" alt="">
+      </div>
+    </li>
+    <li routerLink="setpaypwd">
+      <div>管理支付密码</div>
+      <div>
+        <span *ngIf="isSetUserInfo.isSetPlatPayPwd==0">未设置</span>
+        <img src="../../assets/right.png" alt="">
+      </div>
+    </li>
+  </ul>
+
+  <div class="buttonGroup signOut">
+    <button class="btn2" (click)="signOut()">退出登录</button>
+  </div>
+</div>

@@ -1,0 +1,568 @@
+.demo-chart{
+    height: 200px;
+    background: #fff;
+}
+
+.noChartData{
+    padding-top: 70px;
+    text-align: center;
+    font-size: 13px;
+    color: #333333;
+    line-height: 20px;
+}
+
+.status-bar{
+    position: fixed;
+    left: 0px;
+    top: 43px;
+    width: 100%;
+    display: flex;
+    height: 38px;
+    line-height: 38px;
+    background: #fff;
+    color: #666666;
+    font-size: 14px;
+    z-index: 999;
+}
+
+.status-bar span{
+    position: relative;
+    width: 50%;
+    text-align: center;
+}
+
+.status-bar span i{
+    position: absolute;
+    width: 0px;
+    height: 2px;
+    left: 0px;
+    bottom: 0px;
+    background: #ED4143;
+}
+
+.statusBarActive{
+    color: #ED4143;
+    font-weight: 400;
+}
+
+.statusBarActive i{
+    -webkit-transition: width .3s linear;
+    transition: width  .3s linear;
+    width: 100% !important;
+}
+
+/* .content{
+     padding: 0px 5px 5px; 
+} */
+
+.title{
+    font-size: 14px;
+    padding: 10px 14px;
+}
+
+.header{
+    height: 28px;
+    line-height: 28px;
+    font-size: 14px !important;
+    padding: 0px !important;
+    color: #666666;
+    background: #E9E9E9;
+}
+
+.content ul li{
+    position: relative;
+    margin-bottom: 1px;
+    background: #fff;
+}
+
+.contentListTitle{
+    display: flex;
+    padding: 10px 5px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.contentListTime{
+    width: 25%;
+    font-weight: 400;
+}
+
+.contentCountry{
+    width: 50%;
+    font-weight: 400;
+}
+
+.contentBet{
+    width: 25%;
+    font-weight: 400;
+}
+
+.contentHeaderTime{
+    width: 25%;
+    font-weight: 400;
+}
+
+.contentHeaderCountry{
+    width: 50%;
+    font-weight: 400;
+}
+
+.contentHeaderBet{
+    width: 25%;
+    font-weight: 400;
+}
+
+
+.contentCountry div:first-child{
+    margin-bottom: 0.50px;
+}
+
+.contentListTitle span{
+    display: block;
+    width: 100%;
+}
+
+.contentListTitle span:first-child{
+    margin-bottom: 0.50px;
+}
+
+.contentListTitle span:first-child b{
+    display: flex;
+}
+
+.contentListTime{
+    font-size: 12px;
+}
+
+.time{
+    font-size: 10px;
+    color: #d0021b;
+}
+
+.contentCountry{
+    font-size: 12px;
+}
+
+.contentCountry span{
+    display: block;
+    margin-right: 7px;
+    text-align: center;
+}
+
+.contentCountry span:nth-child(1){
+    text-align: right;
+}
+
+.contentCountry span:nth-child(3){
+    text-align: left;
+}
+
+.iconDown{
+    position: absolute;
+    right: 15px;
+}
+
+.contentListBody{
+    padding: 10px 5px 15px 5px;
+    background: #f5e7e9;
+    font-size: 12px;
+}
+
+/* .chart{
+    padding: 0px 7px 0px 5px;
+} */
+
+.chartTitle{
+    position: relative;
+    line-height: 26px;
+}
+
+.tabContent{
+    padding-top: 39px;
+}
+
+.footer{
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    left: 0px;
+    background: #fff;
+    z-index: 9999;
+    display: flex;
+    height: 85px;
+}
+
+.footer div{
+    width: 33.3%;
+    text-align: center;
+    color: #666666;
+}
+
+.price{
+    padding-top: 25px;
+    font-size: 14px;;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+}
+
+.price i{
+    position: absolute;
+    top: 10px;
+    right: 15px; 
+}
+
+.iconCanSelect{
+    color: #0d54c3;
+}
+
+.setPriceStatus {
+    position: absolute;
+    font-size: 10px;
+    background: red;
+    color: #fff;
+    padding: 1px;
+    top: -1px !important;
+    width: 26px;
+    right: 5px !important;
+    z-index: 1;
+}
+
+.price p:nth-child(2){
+    font-size: 16px;
+    color: #333333;
+    font-family:PingFangSC-Medium;
+    font-weight:500;
+    margin-top:7px;
+}
+
+.activePrice{
+    color: #FE3720 !important;
+}
+
+.button{
+    padding: 10px;
+}
+
+.button span{
+    position: relative;
+    width: 70px;
+    height: 70px;
+    display: block;
+    color: #fff;
+    border-radius: 60px;
+    margin: auto;
+    font-size: 12px;
+    line-height: 15px;
+    padding-top: 25px;
+}
+
+.tradeSpan{
+    position: absolute !important;
+    left: 0px;
+    top: 0px;
+    background:linear-gradient(30deg,rgba(254,55,32,1),rgba(254,63,32,1));
+    box-shadow:0px 4px 4px 0px rgba(254,55,32,0.17);
+}
+
+.button .default{
+    padding: 25px 5px;
+    background: #999;
+}
+
+.button b{
+    font-size: 10px;
+    font-weight: 100;
+}
+
+
+.gameDesc{
+    display: flex;
+    padding: 10px;
+    font-size: 14px;
+    line-height: 20px;
+    background: #fff;
+}
+
+.gameDesc img{
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.prizeDesc{
+    display: flex;
+    padding: 10px;
+    background: #fff;
+    border-radius: 3px;
+    border: 1px solid #eee;
+    line-height: 20px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.prizeDesc div{
+    width: 50%;
+    font-size: 12px;
+}
+
+.orderAmount{
+    font-size: 14px;
+    margin-right: 5px;
+    color: #f3a20b;
+}
+
+.planStatus{
+    background: #fff;
+    margin-top: 0.50px;
+}
+
+.planStatus p:nth-child(1){
+    line-height: 28px;
+    font-size: 14px;
+    color: #666666;
+    padding: 0px 12px;
+    border-bottom: 1px solid #F2F2F2;
+}
+
+.planStatusStep{
+    padding: 20px 3px;
+    background: #fff;
+}
+
+.planStatusStepContant{
+    background: #fff;
+}
+
+.planStatusStepContant ul li{
+    border: 0px;
+    border-radius: 0px;
+    margin-bottom: 0px;
+    display: flex;
+    line-height: 22px;
+    text-align: center;
+    font-size: 12px;
+    color: #333333;
+    border-bottom: 1px solid #F2F2F2;
+    padding: 5px 0px;
+}
+
+.planStatusStepContant ul li span{
+    display: block;
+}
+
+.planStatusStepContant ul li div:nth-child(1){
+    width: 18%;
+}
+
+.planStatusStepContant ul li div:nth-child(2){
+    width: 25%;
+}
+
+.planStatusStepContant ul li div:nth-child(3){
+    width: 32%;
+}
+
+.planStatusStepContant ul li div:nth-child(4){
+    width: 25%;
+}
+
+.planStatusStepContant .fontSize{
+    font-size: 14px;
+    color: #666666;
+    font-weight: 400;
+}
+
+
+.tradePop{
+    position: fixed;
+    background: rgba(0, 0, 0, .5);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0px;
+    padding: 50px;
+    z-index: 9999;
+  }
+  
+  .tradePopContainer{
+    position: relative;
+    border-radius: 8px;
+    top: 40%;
+    overflow: hidden;
+    transform: translateY(-40%);
+    text-align: center;
+    background: #fff;
+  }
+
+  .closeBtn{
+      position: relative;
+      font-size: 18px;
+      color: #333333;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      padding-top: 27px;
+  }
+
+  .closeBtn i{
+    right: 10px;
+    position: absolute;
+    font-size: 12px;
+    top: 10px;
+  }
+
+  .tradeSuccessIcon{
+    font-size: 38px;
+    color: #06bb06;
+  }
+
+  .tipsText{
+      line-height: 38px;
+      font-size: 16px;
+  }
+
+  .tradePopContainer button{
+    position: relative;
+    display: block;
+    margin-top: 15px;
+    border-top: 1px solid #ECECEC;
+    height: 44px;
+    font-size: 16px;
+    color: #ED4143;
+    background: #fff;
+    width: 100%;
+  }
+
+  .tradePopContainer p{
+        font-size: 12px;
+        margin-top: 15px;
+        font-size: 14px;
+        line-height: 22px;
+        color: #B2B2B2;
+        padding: 0px 29px;
+  }
+
+  .slider{
+    padding: 10px 10px 0 10px;
+    display: block;
+}
+
+  .tradePopContainer .planAmount{
+    font-size: 18px;
+    color: #333333;
+    line-height:20px;
+    font-weight: 500;
+    margin-top: 20px;
+  }
+
+  .tradePopContainer .tipsText{
+    color: #666666;
+    font-size: 12px;
+    font-weight:400;
+    line-height: 20px;
+    margin-top: 0px;
+    font-family:PingFangSC-Regular;
+  }
+
+  .tradePopContainer .tipsRight{
+    color: #666666;
+    font-size: 12px;
+    font-weight:400;
+    line-height: 20px;
+    margin-top: 10px;
+    padding: 0px 56px;
+    font-family:PingFangSC-Regular;
+  }
+
+  .tradePopContainer input{
+    width: 60px;
+    height: 22px;
+    background: #eee;
+  }
+
+  .popButtonGroup{
+    display: flex;
+}
+
+.popButtonGroup button{
+    height: 44px;
+    display: block;
+    width: 50%;
+    font-size:14px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    border: 0px;
+}
+
+.popButtonGroup button:first-child{
+    background: #fff;
+    color: #333333
+}
+
+.popButtonGroup button:last-child{
+    background: #FE3720;
+    color: #fff;
+}
+
+  .tradePrice{
+      font-size: 12px;
+      height: 14px;
+      padding: 0px 10px;
+  }
+
+  .tradePrice span{
+      display: inline-block;
+      width: 50%;
+  }
+
+  .tradePrice span:nth-child(1){
+    text-align: left;
+  }
+
+  .tradePrice span:nth-child(2){
+      text-align: right;
+  }
+
+  .confirmtradeTip{
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 400px;
+    padding: 27px 27px 0px;
+    color: #B2B2B2;
+  }
+
+
+  .footTrade{
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+    text-align: center;
+    background: #fff;
+    padding: 5px 10px;
+  }
+
+  .footTrade button{
+      width: 100%;
+  }
+
+  .confirm{
+    font-size: 14px;
+    color: #206FFF;
+    height: 45px;
+    line-height: 45px;
+    padding: 0px 11px;
+  }
+
+  .typeList{
+    flex: 1;
+    text-align: left;
+  }
+
+  .ticketDetail{
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    border: 1px solid #FE3720;
+    border-radius: 3px;
+    color: #FE3720;
+    font-size: 12px;
+  }

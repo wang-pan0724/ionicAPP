@@ -1,0 +1,22 @@
+<div class="steps">
+  <ul class="lineUl">
+    <li *ngFor="let item of DataList; let i=index" [ngClass]="{'liWidth': i+1 == DataList.length}">
+      <div class="stepsIcon">
+        <div class="radioSelect radioSelectDisabled" [ngClass]="{'radioSelectDisabled': i>active}">
+          <p></p>
+        </div>
+        <div *ngIf="i+1 != DataList.length" class="line" [ngClass]="{'lineDefaule': i+1>active}">
+          <span *ngIf="!!item.tips">{{item.tips}}</span>
+          <p></p>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+  <ul class="text">
+    <li *ngFor="let item of DataList; let i=index">
+        <div class="title" *ngIf="!!item.title">{{item.title}}</div>
+        <!-- <div class="description" *ngIf="!!item.description">{{item.description}}</div> -->
+    </li>
+  </ul>
+</div>

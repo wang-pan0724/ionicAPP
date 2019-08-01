@@ -1,0 +1,12 @@
+<div class="refresh" (touchstart)="touchStart($event)" (touchmove)="touchMove($event)"
+  (touchend)="touchEnd($event)" #refresh>
+  <div id="downMessage">
+      <div class="txt">{{TitleTop}}</div>
+  </div>
+  <div id="divContent">
+      <ng-content #divContent></ng-content>
+  </div>
+  <div id="upMessage">
+      <div class="txt">{{TitleBottom}}</div>
+  </div>
+</div>

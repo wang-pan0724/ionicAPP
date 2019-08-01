@@ -1,0 +1,32 @@
+.tradeListUl li{
+    display: flex;
+    height: 44px;
+    line-height: 44px;
+    border-bottom: 1px solid #ECECEC;
+}
+
+.tradeListUl li div:first-child{
+   flex: 1;
+   color: #333333;
+   font-family:PingFangSC-Regular;
+   font-weight:400;
+   font-size: 14px;
+}
+
+.tradeListUl li div:last-child{
+    color: #333333;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    font-size: 12px;
+ }
+
+ .itemList{
+     padding: 0px 12px;
+     background: #fff;
+ }
+
+ .itemList img{
+     width: 6px;
+     height: 12px;
+     margin-left: 8px;
+ }

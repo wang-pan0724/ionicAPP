@@ -1,0 +1,20 @@
+<app-common-title [showReturn]=true [title]='title'></app-common-title>
+<ion-content>
+<div class="page">
+  <div class="detailTitle">以下是由店主提供的拆票明细，实际奖金以以下出票赔率计算为准。</div>
+  <div class="table">
+    <div class="tableTitle">
+      <span>序号</span>
+      <span>投注内容</span>
+      <span>倍数</span>
+    </div>
+    <div class="tableBody" *ngFor='let list of detailList'>
+      <div *ngFor="let items of list"  class="tableTitle">
+        <span>{{items.content.split('|')[0]}}</span>
+        <span>{{items.content.split('|')[1]}}</span>
+        <span>{{items.content.split('|')[2]}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+</ion-content>

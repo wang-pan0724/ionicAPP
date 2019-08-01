@@ -1,0 +1,20 @@
+<div class="backgroundColor title">
+  <!-- <i (click)="goBack()" class="icon ion-chevron-left" *ngIf="showReturn"></i> -->
+  <i (click)="goBack()">
+    <img *ngIf="showReturn" src="../../../assets/left.png" alt="">
+  </i>
+  
+  <!-- <i class="iconfont icon-left"></i> -->
+  <span>
+    {{title}}
+    <i *ngIf="selectDown" class="iconfont icon-down iconDown" (click)="selectItem()"></i>
+  </span>
+ 
+  <i class="anticon anticon-right"></i>
+</div>
+
+<div class="showSelectItem" *ngIf="showSelectItem" (click)="selectThis()">
+    <div class="selectItemList">
+      <button class="buttonActive" *ngFor="let item of itemData;let i = index" (click)="selectThis(i)" >{{item.title}}</button>
+    </div>
+</div>

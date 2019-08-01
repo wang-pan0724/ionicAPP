@@ -1,0 +1,12 @@
+<app-common-title [showReturn]=true [title]='title'></app-common-title>
+
+<div class="page change">
+    <div class="tips">请输入您的绑定手机号</div>
+    <div class="input">
+        <div class="phone">
+            <span *ngFor="let num of numberList">{{num}}</span>
+        </div>
+        <input type="number" #number (input)="change(number)">
+    </div>
+</div>
+<app-alert [showPop]="showPop" [showTips]="showTips"></app-alert>

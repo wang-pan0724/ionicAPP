@@ -1,0 +1,45 @@
+.signOutPage{
+    background: #fff;
+    padding: 80px 16px;
+}
+
+.input i,
+.input span{
+    font-size: 14px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.authCode{
+    width: 54px;
+}
+
+
+.password{
+    padding: 0px 10px;
+    font-size: 12px;
+    line-height: 24px;
+}
+
+.password span{
+    float: right;
+}
+
+.btn1{
+    width: 342px;
+}
+
+.select{
+    height: 50px;
+    line-height: 50px;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.select span{
+    font-size: 14px !important;
+    color: #6993FF;
+}

@@ -1,0 +1,34 @@
+<!-- <app-common-title [showReturn]=true [title]='title'></app-common-title> -->
+<div class="backgroundColor title">
+  <i class="iconfont icon-home" (click)="goBack()"></i>
+  <div>{{title}}</div>
+</div>
+<div class="page">
+  <div class="successfulTips">
+    <i class="iconfont icon-check-circle-fill successIcon"></i>
+    <h4>提交成功，站点已收到您的出票请求</h4>
+    <p>为保障站点及时、优先为您出票,请尽快与站点结算方案金额哦</p>
+  </div>
+
+  <div class="storeInfo" *ngIf="!!storeData">
+    <!-- <div class="storeName"></div> -->
+    <div class="imgGroup">
+      <ul>
+        <li>站点名称：<span>{{storeData.providerName}}</span></li>
+        <li>电话：<span>{{storeData.providerPhone}}</span></li>
+        <li>微信：<span>{{storeData.providerWeixin}}</span></li>
+        <li>QQ：<span>{{storeData.providerQQ}}</span></li>
+        <li>支付宝：<span>{{storeData.providerAlipay}}</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="buttonGroup btnGroup">
+    <div>
+      <button class="defaultBtn" (click)="toTrade()">查看我的方案</button>
+    </div>
+    <div>
+      <button class="btn1" (click)="continueIssu()">继续发单</button>
+    </div>
+  </div>
+</div>

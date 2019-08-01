@@ -1,0 +1,11 @@
+.containerLeft{
+    width: 60px;
+    font-size: 10px;
+    margin-right: 10px;
+    padding-top: 22px;
+}
+
+.containerLeft span{
+    display: block;
+    text-align: center;
+}

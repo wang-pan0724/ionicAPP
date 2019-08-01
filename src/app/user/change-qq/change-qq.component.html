@@ -1,0 +1,25 @@
+<app-common-title [showReturn]=true [title]='title'></app-common-title>
+
+<div class="page">
+    <div class="content">
+        <input class="input" type="text" [(ngModel)]="QQnum">
+        <i class="iconfont icon-guanbi1 closeIcon" *ngIf="!!QQnum && QQnum.length!=0" (click)="clearCode()"></i>
+    </div>
+    <div class="tips">
+        站点可通过QQ与您联系，也可通过QQ钱包与您结算除票款，中奖奖金；如有变化，请即使修改并告知站主。
+    </div>
+
+    <div class="button">
+        <ng-container *ngIf="!!QQnum && QQnum.length!=0; else commit">
+            <button (click)="changeQQ()">确认修改</button>
+        </ng-container>
+        <ng-template #commit>
+            <button (click)="changeQQ()">提交</button>
+        </ng-template>
+    </div>
+</div>
+
+<app-alert [showPop]="showPop" [showTips]="showTips"></app-alert>
+<app-password [showPwdPop]="showPwdPop" (onPwdChanged)="getPwd($event)" (onClosePop)="getClosePop($event)">
+</app-password>
+<app-confirm [showConfirmPop]="showConfirmPop" (confirm)="confirm()"></app-confirm>

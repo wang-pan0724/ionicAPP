@@ -1,0 +1,44 @@
+<!-- <app-common-title [showReturn]=false [title]='title'></app-common-title> -->
+<div>
+    <div class="userInfo backgroundColor">
+        <img (click)="userInfo()" src="../../assets/userLogo.png" alt="">
+        <p>{{!!DataList ? DataList.nickname : '请登录'}}</p>
+    </div>
+    <div class="tradeList">
+        <div class="wallet">我的钱包</div>
+        <div class="allMoney">
+            <div>
+                <p class="number">{{!!DataList ? DataList.ableBalance: '-'}}</p>
+                <p>可用余额(元)</p>
+            </div>
+            <div>
+                <p class="number">{{!!DataList ? DataList.freezeAmount : '-'}}</p>
+                <p>冻结余额(元)</p>
+            </div>
+        </div>
+    </div>
+    <div class="tradeList">
+        <ul class="tradeListUl">
+            <li routerLink='walletLog'>
+                <div>交易记录</div>
+                <div><img src="../../assets/right.png" alt=""></div>
+            </li>
+            <li routerLink="mystore">
+                <div>我的彩店</div>
+                <div><img src="../../assets/right.png" alt=""></div>
+            </li>
+            <li routerLink="askedquestions">
+                <div>常见问题</div>
+                <div><img src="../../assets/right.png" alt=""></div>
+            </li>
+            <li routerLink="setup">
+                <div>设置</div>
+                <div>
+                    <img src="../../assets/right.png" alt="">
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<app-footer></app-footer>

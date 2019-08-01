@@ -1,0 +1,42 @@
+.tips{
+    margin-top: 50px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.change{
+    background: #ffffff;
+}
+
+.input{
+    position: relative;
+    margin: 20px auto;
+    width: 80%;
+    border-bottom: 0px;
+}
+
+.input input{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 36px;
+    width: 100%;
+    opacity: 0;
+}
+
+.phone{
+    position: relative;
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    display: flex;
+}
+
+.phone span{
+    width: 8%;
+    margin: 0 0.5%;
+    border-bottom:1px solid #ddd;
+    text-align: center;
+    display:inline-block;
+    vertical-align: bottom;
+}

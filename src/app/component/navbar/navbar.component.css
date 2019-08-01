@@ -1,0 +1,74 @@
+.nav{
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    display: flex;
+    height: 40px;
+    padding: 0px 5px;
+    line-height: 40px;
+    color: #fff;
+    box-sizing: border-box;
+    z-index: 9999;
+}
+
+.nav i{
+    margin: 0px 5px;
+    font-size: 22px;
+}
+
+.navTab{
+    flex: 1;
+}
+
+.navTab ul{
+    display: flex;
+    width: 100px;
+    height: 22px;
+    margin: 9px auto;
+    border: 1px solid #fff;
+    border-radius: 22px;
+    padding: 1px 5px;
+    box-sizing: border-box;
+    overflow: hidden;
+    
+}
+
+.navTab ul li{
+    width: 45px;
+    height: 18px;
+    line-height: 18px;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 18px;
+}
+
+.navActive{
+    background: #fff;
+    color: #d0021b;
+    font-weight: 400;
+}
+
+.status-bar{
+    position: fixed;
+    left: 0px;
+    top: 40px;
+    width: 100%;
+    display: flex;
+    height: 27px;
+    line-height: 27px;
+    background: #fff;
+    color: #666666;
+    font-size: 14px;
+    z-index: 999;
+}
+
+.status-bar span{
+    width: 25%;
+    text-align: center;
+}
+
+.statusBarActive{
+    color: #ED4143;
+    font-weight: 400;
+}

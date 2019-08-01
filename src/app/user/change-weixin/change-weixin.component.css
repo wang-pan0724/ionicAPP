@@ -1,0 +1,29 @@
+.content{
+    position: relative;
+}
+
+.change{
+    background: #fff;
+}
+
+.closeIcon{
+    position: absolute;
+    right: 10px;
+    top: 16px;
+}
+
+.tips{
+    font-size: 13px;
+    color: #555;
+    padding: 10px;
+    line-height: 20px;
+}
+
+.button{
+    padding: 0px 10px;
+    margin-top: 30px;
+}
+
+.button button{
+    width: 100%;
+}

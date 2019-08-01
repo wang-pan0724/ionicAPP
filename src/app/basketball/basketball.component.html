@@ -1,0 +1,818 @@
+<app-navbar (onNavChanged)='navChanged($event)' (onTabChanged)='tabChanged($event)' [navData]='navData'
+    [ballType]='ballType'></app-navbar>
+<ion-content>
+    <div class="match">
+        <!-- <app-refresh (onRefresh)="onScrollRefresh()" class="scrollMarginTop"> -->
+        <div class="container" *ngIf="tabId == 0">
+            <ng-container *ngFor="let item of basketballList.list; let i = index">
+                <app-match-title *ngIf="item.showMatch" (click)="doList('basketballList',i)"
+                    [matchTitleData]='item.endTime' [matchExpend]='item.expendShowMatch'
+                    [matchNum]='basketballList.publistNumMap'></app-match-title>
+                <div class="matchList" *ngIf="item.expendShowMatch != 0">
+                    <!-- <i class="only" *ngIf="item.betSinglePlaytype.indexOf('4061')>-1">单</i> -->
+                    <img class="onlyImg" *ngIf="item.betSinglePlaytype.indexOf('4061')>-1" src="../../assets/only.png"
+                        alt="">
+                    <div class="containerLeft">
+                        <span>{{item.matchName}}</span>
+                        <span>{{item.endTime | week}}{{item.matchNo}}</span>
+                        <span>{{item.endTime | time}}截至</span>
+                        <!-- <span (click)="goDetail($event,item)"> <i class="iconfont icon-down"></i></span> -->
+                    </div>
+                    <div class="containerRight">
+                        <div class="countryName">
+                            <div>
+                                <img *ngIf="!!item.guestImgPath" src="{{item.guestImgPath}}" alt="">
+                                <img *ngIf="!!!item.guestImgPath" src="../../assets/defaultTeamIcon.png" alt="">
+                                <span class="name">{{item.guestTeam}}</span>
+                            </div>
+                            <div class="vs">VS</div>
+                            <div>
+                                <span class="name">{{item.homeTeam}}</span>
+                                <img *ngIf="!!item.homeImgPath" src="{{item.homeImgPath}}" alt="">
+                                <img *ngIf="!!!item.homeImgPath" src="../../assets/defaultTeamIcon.png" alt="">
+                            </div>
+                        </div>
+                        <div class="scoreItem">
+                            <div class="score">
+                                <div class="scorediv" [ngClass]="{scoreSelect:item.selectSpMap['2']}">
+                                    <ng-container *ngIf="!!item.spMap['2']; else spMap2">
+                                        <input [(ngModel)]="item.selectSpMap['2']" type="checkbox"
+                                            (change)="selectThisItem(1,item)">
+                                    </ng-container>
+                                    <ng-template #spMap2>
+                                        <input type="checkbox" (change)="showTipNoSp()">
+                                    </ng-template>
+                                    <span class="state">客胜</span>
+                                    <span class="num">{{item.spMap['2']}}</span>
+                                </div>
+                                <div class="scorediv" [ngClass]="{scoreSelect:item.selectSpMap['1']}">
+                                    <ng-container *ngIf="!!item.spMap['1']; else spMap1">
+                                        <input [(ngModel)]="item.selectSpMap['1']" type="checkbox"
+                                            (change)="selectThisItem(3,item)">
+                                    </ng-container>
+                                    <ng-template #spMap1>
+                                        <input type="checkbox" (change)="showTipNoSp()">
+                                    </ng-template>
+                                    <span class="state">主胜</span>
+                                    <span class="num">{{item.spMap['1']}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="match-detail" *ngIf="item.expend">
+                    <div class="detailList">
+                        <div class="detailName">历史交锋</div>
+                        <div class="detailContent">
+                            近{{basketballDetail.historyInfo.historyRecord.length}}次交锋，{{basketballDetail.historyInfo.historyRecordDesc | dealWithData}}
+                        </div>
+                    </div>
+                    <div class="detailList">
+                        <div class="detailName">近期战绩</div>
+                        <div class="detailContent">
+                            {{basketballDetail.hostMilitInfo.hostMilitDes | dealWithData}}，{{basketballDetail.awayMilitInfo.awayMilitDes | dealWithData}}
+                        </div>
+                    </div>
+                    <div class="detailList">
+                        <div class="detailName">平均欧赔</div>
+                        <div class="detailContent average">
+                            <span>{{item.op.split('^')[1]}}</span>
+                            <span>{{item.op.split('^')[0]}}</span>
+                        </div>
+                    </div>
+                    <div class="detailList detailNumber">详细数据 <i class="iconfont icon-right"></i></div>
+                </div>
+            </ng-container>
+        </div>
+        <div class="container" *ngIf="tabId == 1">
+            <ng-container *ngFor="let item of basketballList2.list;let i=index">
+                <app-match-title *ngIf="item.showMatch" (click)="doList('basketballList2',i)"
+                    [matchTitleData]='item.endTime' [matchExpend]='item.expendShowMatch'
+                    [matchNum]='basketballList2.publistNumMap'></app-match-title>
+                <div class="matchList" *ngIf="item.expendShowMatch != 0">
+                    <!-- <i class="only" *ngIf="item.betSinglePlaytype.indexOf('4062')>-1">单</i> -->
+                    <img class="onlyImg" *ngIf="item.betSinglePlaytype.indexOf('4062')>-1" src="../../assets/only.png"
+                        alt="">
+                    <div class="containerLeft">
+                        <span>{{item.matchName}}</span>
+                        <span>{{item.endTime | week}}{{item.matchNo}}</span>
+                        <span>{{item.endTime | time}}截至</span>
+                        <!-- <span (click)="goDetail($event,item)"> <i class="iconfont icon-down"></i></span> -->
+                    </div>
+                    <div class="containerRight">
+                        <div class="countryName">
+                            <div>
+                                <img *ngIf="!!item.guestImgPath" src="{{item.guestImgPath}}" alt="">
+                                <img *ngIf="!!!item.guestImgPath" src="../../assets/defaultTeamIcon.png" alt="">
+                                <span class="name">{{item.guestTeam}}</span>
+                            </div>
+                            <div class="vs">VS</div>
+                            <div>
+                                <span class="name">{{item.homeTeam}}</span>
+                                <img *ngIf="!!item.homeImgPath" src="{{item.homeImgPath}}" alt="">
+                                <img *ngIf="!!!item.homeImgPath" src="../../assets/defaultTeamIcon.png" alt="">
+                            </div>
+                        </div>
+                        <div class="scoreItem">
+                            <div class="score scoreWinDef">
+                                <div class="scoreWinDefdiv" [ngClass]="{scoreSelect:item.selectSpMap['2']}">
+                                    <ng-container *ngIf="!!item.spMap['2']; else spMap2">
+                                        <input [(ngModel)]="item.selectSpMap['2']" type="checkbox"
+                                            (change)="selectThisItem(1,item)">
+                                    </ng-container>
+                                    <ng-template #spMap2>
+                                        <input type="checkbox" (change)="showTipNoSp()">
+                                    </ng-template>
+                                    <span class="state">客胜</span>
+                                    <span class="num">{{item.spMap['2']}}</span>
+                                </div>
+                                <div class="scoreNum">
+                                    <p>让分</p>
+                                    <p>{{item.concede}}</p>
+                                </div>
+                                <div class="scoreWinDefdiv" [ngClass]="{scoreSelect:item.selectSpMap['1']}">
+                                    <ng-container *ngIf="!!item.spMap['1']; else spMap1">
+                                        <input [(ngModel)]="item.selectSpMap['1']" type="checkbox"
+                                            (change)="selectThisItem(3,item)">
+                                    </ng-container>
+                                    <ng-template #spMap1>
+                                        <input type="checkbox" (change)="showTipNoSp()">
+                                    </ng-template>
+                                    <span class="state">主胜</span>
+                                    <span class="num">{{item.spMap['1']}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="match-detail" *ngIf="item.expend">
+                    <div class="detailList">
+                        <div class="detailName">历史交锋</div>
+                        <div class="detailContent">
+                            近{{basketballDetail.historyInfo.historyRecord.length}}次交锋，{{basketballDetail.historyInfo.historyRecordDesc | dealWithData}}
+                        </div>
+                    </div>
+                    <div class="detailList">
+                        <div class="detailName">近期战绩</div>
+                        <div class="detailContent">
+                            {{basketballDetail.hostMilitInfo.hostMilitDes | dealWithData}}，{{basketballDetail.awayMilitInfo.awayMilitDes | dealWithData}}
+                        </div>
+                    </div>
+                    <div class="detailList">
+                        <div class="detailName">平均欧赔</div>
+                        <div class="detailContent average">
+                            <span>{{item.op.split('^')[1]}}</span>
+                            <span>{{item.op.split('^')[0]}}</span>
+                        </div>
+                    </div>
+                    <div class="detailList detailNumber">详细数据 <i class="iconfont icon-right"></i></div>
+                </div>
+            </ng-container>
+        </div>
+        <div class="container" *ngIf="tabId == 2">
+            <ng-container *ngFor="let item of basketballList3.list;let i=index">
+                <app-match-title *ngIf="item.showMatch" (click)="doList('basketballList3',i)"
+                    [matchTitleData]='item.endTime' [matchExpend]='item.expendShowMatch'
+                    [matchNum]='basketballList3.publistNumMap'></app-match-title>
+                <div class="matchList" *ngIf="item.expendShowMatch != 0">
+                    <div class="containerLeft hhcontainerLeft">
+                        <span>{{item.matchName}}</span>
+                        <span>{{item.endTime | week}}{{item.matchNo}}</span>
+                        <span>{{item.endTime | time}}截至</span>
+                        <!-- <span (click)="goDetail($event,item)"> <i class="iconfont icon-down"></i></span> -->
+                    </div>
+                    <div class="containerRight">
+                        <div class="countryName">
+                            <div>
+                                <img *ngIf="!!item.guestImgPath" src="{{item.guestImgPath}}" alt="">
+                                <img *ngIf="!!!item.guestImgPath" src="../../assets/defaultTeamIcon.png" alt="">
+                                <span class="name">{{item.guestTeam}}</span>
+                            </div>
+                            <div class="vs">VS</div>
+                            <div>
+                                <span class="name">{{item.homeTeam}}</span>
+                                <img *ngIf="!!item.homeImgPath" src="{{item.homeImgPath}}" alt="">
+                                <img *ngIf="!!!item.homeImgPath" src="../../assets/defaultTeamIcon.png" alt="">
+                            </div>
+                        </div>
+                        <div class="scoreItem">
+                            <div class="hhscore">
+                                <!-- <i class="only" *ngIf="item.betSinglePlaytype.indexOf('4061')>-1">单</i> -->
+                                <img class="onlyImg" *ngIf="item.betSinglePlaytype.indexOf('4061')>-1"
+                                    src="../../assets/only.png" alt="">
+                                <div class="hhscoreWinDefdiv" [ngClass]="{scoreSelect:item.selectSpMap['22']}">
+                                    <ng-container *ngIf="!!item.spMap['22']; else spMap22">
+                                        <input *ngIf="item.canSelect[0]==1 || item.canSelect[0]==0"
+                                            [(ngModel)]="item.selectSpMap['22']" type="checkbox"
+                                            (change)="selectThisItem(1,item)">
+                                        <input *ngIf="item.canSelect[0]==-1" type="checkbox" (change)="showTip()">
+                                    </ng-container>
+                                    <ng-template #spMap22>
+                                        <input type="checkbox" (change)="showTipNoSp()">
+                                    </ng-template>
+                                    <span class="state">客胜</span>
+                                    <span class="num">{{item.spMap['22']}}</span>
+                                </div>
+                                <div class="hhscoreNum">
+                                    <p style="margin-top: 4px;">胜负</p>
+                                </div>
+                                <div class="hhscoreWinDefdiv" [ngClass]="{scoreSelect:item.selectSpMap['21']}">
+                                    <ng-container *ngIf="!!item.spMap['21']; else spMap21">
+                                        <input *ngIf="item.canSelect[0]==1 || item.canSelect[0]==0"
+                                            [(ngModel)]="item.selectSpMap['21']" type="checkbox"
+                                            (change)="selectThisItem(3,item)">
+                                        <input *ngIf="item.canSelect[0]==-1" type="checkbox" (change)="showTip()">
+                                    </ng-container>
+                                    <ng-template #spMap21>
+                                        <input type="checkbox" (change)="showTipNoSp()">
+                                    </ng-template>
+                                    <span class="state">主胜</span>
+                                    <span class="num">{{item.spMap['21']}}</span>
+                                </div>
+                            </div>
+                            <div class="hhscore">
+                                <!-- <i class="only" *ngIf="item.betSinglePlaytype.indexOf('4062')>-1">单</i> -->
+                                <img class="onlyImg" *ngIf="item.betSinglePlaytype.indexOf('4062')>-1"
+                                    src="../../assets/only.png" alt="">
+                                <div class="hhscoreWinDefdiv" [ngClass]="{scoreSelect:item.selectSpMap['32']}">
+                                    <ng-container *ngIf="!!item.spMap['32']; else spMap32">
+                                        <input *ngIf="item.canSelect[1]==1 || item.canSelect[1]==0"
+                                            [(ngModel)]="item.selectSpMap['32']" type="checkbox"
+                                            (change)="selectThisItem(1,item)">
+                                        <input *ngIf="item.canSelect[1]==-1" type="checkbox" (change)="showTip()">
+                                    </ng-container>
+                                    <ng-template #spMap32>
+                                        <input type="checkbox" (change)="showTipNoSp()">
+                                    </ng-template>
+                                    <span class="state">客胜</span>
+                                    <span class="num">{{item.spMap['32']}}</span>
+                                </div>
+                                <div class="hhscoreNum">
+                                    <p>让分</p>
+                                    <p>{{item.wapconcede}}</p>
+                                </div>
+                                <div class="hhscoreWinDefdiv" [ngClass]="{scoreSelect:item.selectSpMap['31']}">
+                                    <ng-container *ngIf="!!item.spMap['31']; else spMap31">
+                                        <input *ngIf="item.canSelect[1]==1 || item.canSelect[1]==0"
+                                            [(ngModel)]="item.selectSpMap['31']" type="checkbox"
+                                            (change)="selectThisItem(3,item)">
+                                        <input *ngIf="item.canSelect[1]==-1" type="checkbox" (change)="showTip()">
+                                    </ng-container>
+                                    <ng-template #spMap31>
+                                        <input type="checkbox" (change)="showTipNoSp()">
+                                    </ng-template>
+                                    <span class="state">主胜</span>
+                                    <span class="num">{{item.spMap['31']}}</span>
+                                </div>
+                            </div>
+                            <div class="hhscore">
+                                <!-- <i class="only" *ngIf="item.betSinglePlaytype.indexOf('4064')>-1">单</i> -->
+                                <img class="onlyImg" *ngIf="item.betSinglePlaytype.indexOf('4064')>-1"
+                                    src="../../assets/only.png" alt="">
+                                <div class="hhscoreWinDefdiv" [ngClass]="{scoreSelect:item.selectSpMap['41']}">
+                                    <ng-container *ngIf="!!item.spMap['41']; else spMap41">
+                                        <input *ngIf="item.canSelect[2]==1 || item.canSelect[2]==0"
+                                            [(ngModel)]="item.selectSpMap['41']" type="checkbox"
+                                            (change)="selectThisItem(1,item)">
+                                        <input *ngIf="item.canSelect[2]==-1" type="checkbox" (change)="showTip()">
+                                    </ng-container>
+                                    <ng-template #spMap41>
+                                        <input type="checkbox" (change)="showTipNoSp()">
+                                    </ng-template>
+                                    <span class="state">大分</span>
+                                    <span class="num">{{item.spMap['41']}}</span>
+                                </div>
+                                <div class="hhscoreNum">
+                                    <p>预设总分</p>
+                                    <p>{{item.advancedscore}}</p>
+                                </div>
+                                <div class="hhscoreWinDefdiv" [ngClass]="{scoreSelect:item.selectSpMap['42']}">
+                                    <ng-container *ngIf="!!item.spMap['42']; else spMap42">
+                                        <input *ngIf="item.canSelect[2]==1 || item.canSelect[2]==0"
+                                            [(ngModel)]="item.selectSpMap['42']" type="checkbox"
+                                            (change)="selectThisItem(3,item)">
+                                        <input *ngIf="item.canSelect[2]==-1" type="checkbox" (change)="showTip()">
+                                    </ng-container>
+                                    <ng-template #spMap42>
+                                        <input type="checkbox" (change)="showTipNoSp()">
+                                    </ng-template>
+                                    <span class="state">小分</span>
+                                    <span class="num">{{item.spMap['42']}}</span>
+                                </div>
+                            </div>
+                            <div class="hhscore">
+                                <div [ngClass]="{selectScoreItem:item.SFC.length==0,selectScoreItem_s:item.SFC.length>0}"
+                                    (click)="selectContent(item,tabId)">
+                                    <img class="onlyImg" src="../../assets/only.png" alt="">
+                                    <span *ngIf="item.SFC.length==0">选择投注内容</span>
+                                    <span *ngIf="item.SFC.length>0">
+                                        <b *ngFor="let selectItem of item.SFC">
+                                            {{selectItem}} &nbsp;
+                                        </b>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="match-detail" *ngIf="item.expend">
+                    <div class="detailList">
+                        <div class="detailName">历史交锋</div>
+                        <div class="detailContent">
+                            近{{basketballDetail.historyInfo.historyRecord.length}}次交锋，{{basketballDetail.historyInfo.historyRecordDesc | dealWithData}}
+                        </div>
+                    </div>
+                    <div class="detailList">
+                        <div class="detailName">近期战绩</div>
+                        <div class="detailContent">
+                            {{basketballDetail.hostMilitInfo.hostMilitDes | dealWithData}}，{{basketballDetail.awayMilitInfo.awayMilitDes | dealWithData}}
+                        </div>
+                    </div>
+                    <div class="detailList">
+                        <div class="detailName">平均欧赔</div>
+                        <div class="detailContent average">
+                            <span>{{item.op.split('^')[1]}}</span>
+                            <span>{{item.op.split('^')[0]}}</span>
+                        </div>
+                    </div>
+                    <div class="detailList detailNumber">详细数据 <i class="iconfont icon-right"></i></div>
+                </div>
+            </ng-container>
+        </div>
+        <div class="container" *ngIf="tabId == 3">
+            <ng-container *ngFor="let item of basketballList4.list;let i=index">
+                <app-match-title *ngIf="item.showMatch" (click)="doList('basketballList4',i)"
+                    [matchTitleData]='item.endTime' [matchExpend]='item.expendShowMatch'
+                    [matchNum]='basketballList4.publistNumMap'></app-match-title>
+                <div class="matchList" *ngIf="item.expendShowMatch != 0">
+                    <!-- <i class="only" *ngIf="item.betSinglePlaytype.indexOf('4064')>-1">单</i> -->
+                    <img class="onlyImg" *ngIf="item.betSinglePlaytype.indexOf('4064')>-1" src="../../assets/only.png"
+                        alt="">
+                    <div class="containerLeft">
+                        <span>{{item.matchName}}</span>
+                        <span>{{item.endTime | week}}{{item.matchNo}}</span>
+                        <span>{{item.endTime | time}}截至</span>
+                        <!-- <span (click)="goDetail($event,item)"> <i class="iconfont icon-down"></i></span> -->
+                    </div>
+                    <div class="containerRight">
+                        <div class="countryName">
+                            <div>
+                                <img *ngIf="!!item.guestImgPath" src="{{item.guestImgPath}}" alt="">
+                                <img *ngIf="!!!item.guestImgPath" src="../../assets/defaultTeamIcon.png" alt="">
+                                <span class="name">{{item.guestTeam}}</span>
+                            </div>
+                            <div class="vs">VS</div>
+                            <div>
+                                <span class="name">{{item.homeTeam}}</span>
+                                <img *ngIf="!!item.homeImgPath" src="{{item.homeImgPath}}" alt="">
+                                <img *ngIf="!!!item.homeImgPath" src="../../assets/defaultTeamIcon.png" alt="">
+                            </div>
+                        </div>
+                        <div class="scoreItem">
+                            <div class="score scoreWinDef">
+                                <div class="scoreWinDefdiv" [ngClass]="{scoreSelect:item.selectSpMap['1']}">
+                                    <ng-container *ngIf="!!item.spMap['1']; else spMap1">
+                                        <input [(ngModel)]="item.selectSpMap['1']" type="checkbox"
+                                            (change)="selectThisItem(1,item)">
+                                    </ng-container>
+                                    <ng-template #spMap1>
+                                        <input type="checkbox" (change)="showTipNoSp()">
+                                    </ng-template>
+                                    <span class="state">大分</span>
+                                    <span class="num">{{item.spMap['1']}}</span>
+                                </div>
+                                <div class="scoreNum">
+                                    <p>预设总分</p>
+                                    <p>{{item.concede}}</p>
+                                </div>
+                                <div class="scoreWinDefdiv" [ngClass]="{scoreSelect:item.selectSpMap['2']}">
+                                    <ng-container *ngIf="!!item.spMap['2']; else spMap2">
+                                        <input [(ngModel)]="item.selectSpMap['2']" type="checkbox"
+                                            (change)="selectThisItem(3,item)">
+                                    </ng-container>
+                                    <ng-template #spMap2>
+                                        <input type="checkbox" (change)="showTipNoSp()">
+                                    </ng-template>
+                                    <span class="state">小分</span>
+                                    <span class="num">{{item.spMap['2']}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="match-detail" *ngIf="item.expend">
+                    <div class="detailList">
+                        <div class="detailName">历史交锋</div>
+                        <div class="detailContent">
+                            近{{basketballDetail.historyInfo.historyRecord.length}}次交锋，{{basketballDetail.historyInfo.historyRecordDesc | dealWithData}}
+                        </div>
+                    </div>
+                    <div class="detailList">
+                        <div class="detailName">近期战绩</div>
+                        <div class="detailContent">
+                            {{basketballDetail.hostMilitInfo.hostMilitDes | dealWithData}}，{{basketballDetail.awayMilitInfo.awayMilitDes | dealWithData}}
+                        </div>
+                    </div>
+                    <div class="detailList">
+                        <div class="detailName">平均欧赔</div>
+                        <div class="detailContent average">
+                            <span>{{item.op.split('^')[1]}}</span>
+                            <span>{{item.op.split('^')[0]}}</span>
+                        </div>
+                    </div>
+                    <div class="detailList detailNumber">详细数据 <i class="iconfont icon-right"></i></div>
+                </div>
+            </ng-container>
+        </div>
+        <div class="container" *ngIf="tabId == 4">
+            <ng-container *ngFor="let item of basketballList5.list;let i = index">
+                <app-match-title *ngIf="item.showMatch" (click)="doList('basketballList5',i)"
+                    [matchTitleData]='item.endTime' [matchExpend]='item.expendShowMatch'
+                    [matchNum]='basketballList5.publistNumMap'></app-match-title>
+                <div class="matchList" *ngIf="item.expendShowMatch != 0">
+                    <img class="onlyImg" src="../../assets/only.png" alt="">
+                    <div class="containerLeft">
+                        <span>{{item.matchName}}</span>
+                        <span>{{item.endTime | week}}{{item.matchNo}}</span>
+                        <span>{{item.endTime | time}}截至</span>
+                        <!-- <span (click)="goDetail($event,item)"> <i class="iconfont icon-down"></i></span> -->
+                    </div>
+                    <div class="containerRight">
+                        <div class="countryName">
+                            <div>
+                                <img *ngIf="!!item.guestImgPath" src="{{item.guestImgPath}}" alt="">
+                                <img *ngIf="!!!item.guestImgPath" src="../../assets/defaultTeamIcon.png" alt="">
+                                <span class="name">{{item.guestTeam}}</span>
+                            </div>
+                            <div class="vs">VS</div>
+                            <div>
+                                <span class="name">{{item.homeTeam}}</span>
+                                <img *ngIf="!!item.homeImgPath" src="{{item.homeImgPath}}" alt="">
+                                <img *ngIf="!!!item.homeImgPath" src="../../assets/defaultTeamIcon.png" alt="">
+                            </div>
+                        </div>
+                        <div class="sfcScore">
+                            <div class="sfcLeft">
+                                <div class="header">客胜</div>
+                                <div class="sfcList">
+                                    <div [ngClass]="{scoreSelect:item.selectSpMap['11']}">
+                                        <ng-container *ngIf="!!item.spMap['11']; else spMap11">
+                                            <input [(ngModel)]="item.selectSpMap['11']" type="checkbox"
+                                                (change)="selectThisItem(1,item)">
+                                        </ng-container>
+                                        <ng-template #spMap11>
+                                            <input type="checkbox" (change)="showTipNoSp()">
+                                        </ng-template>
+                                        <span>1-5</span>
+                                        <span>{{item.spMap['11']}}</span>
+                                    </div>
+                                    <div [ngClass]="{scoreSelect:item.selectSpMap['12']}">
+                                        <ng-container *ngIf="!!item.spMap['12']; else spMap12">
+                                            <input [(ngModel)]="item.selectSpMap['12']" type="checkbox"
+                                                (change)="selectThisItem(1,item)">
+                                        </ng-container>
+                                        <ng-template #spMap12>
+                                            <input type="checkbox" (change)="showTipNoSp()">
+                                        </ng-template>
+                                        <span>6-10</span>
+                                        <span>{{item.spMap['12']}}</span>
+                                    </div>
+                                    <div [ngClass]="{scoreSelect:item.selectSpMap['13']}">
+                                        <ng-container *ngIf="!!item.spMap['13']; else spMap13">
+                                            <input [(ngModel)]="item.selectSpMap['13']" type="checkbox"
+                                                (change)="selectThisItem(1,item)">
+                                        </ng-container>
+                                        <ng-template #spMap13>
+                                            <input type="checkbox" (change)="showTipNoSp()">
+                                        </ng-template>
+                                        <span>11-15</span>
+                                        <span>{{item.spMap['13']}}</span>
+                                    </div>
+                                </div>
+                                <div class="sfcList">
+                                    <div [ngClass]="{scoreSelect:item.selectSpMap['14']}">
+                                        <ng-container *ngIf="!!item.spMap['14']; else spMap14">
+                                            <input [(ngModel)]="item.selectSpMap['14']" type="checkbox"
+                                                (change)="selectThisItem(1,item)">
+                                        </ng-container>
+                                        <ng-template #spMap14>
+                                            <input type="checkbox" (change)="showTipNoSp()">
+                                        </ng-template>
+                                        <span>16-20</span>
+                                        <span>{{item.spMap['14']}}</span>
+                                    </div>
+                                    <div [ngClass]="{scoreSelect:item.selectSpMap['15']}">
+                                        <ng-container *ngIf="!!item.spMap['15']; else spMap15">
+                                            <input [(ngModel)]="item.selectSpMap['15']" type="checkbox"
+                                                (change)="selectThisItem(1,item)">
+                                        </ng-container>
+                                        <ng-template #spMap15>
+                                            <input type="checkbox" (change)="showTipNoSp()">
+                                        </ng-template>
+                                        <span>21-25</span>
+                                        <span>{{item.spMap['15']}}</span>
+                                    </div>
+                                    <div [ngClass]="{scoreSelect:item.selectSpMap['16']}">
+                                        <ng-container *ngIf="!!item.spMap['16']; else spMap16">
+                                            <input [(ngModel)]="item.selectSpMap['16']" type="checkbox"
+                                                (change)="selectThisItem(1,item)">
+                                        </ng-container>
+                                        <ng-template #spMap16>
+                                            <input type="checkbox" (change)="showTipNoSp()">
+                                        </ng-template>
+                                        <span>26+</span>
+                                        <span>{{item.spMap['16']}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sfcRight">
+                                <div class="scfHeader header">主胜</div>
+                                <div class="sfcList">
+                                    <div [ngClass]="{scoreSelect:item.selectSpMap['01']}">
+                                        <ng-container *ngIf="!!item.spMap['01']; else spMap01">
+                                            <input [(ngModel)]="item.selectSpMap['01']" type="checkbox"
+                                                (change)="selectThisItem(1,item)">
+                                        </ng-container>
+                                        <ng-template #spMap01>
+                                            <input type="checkbox" (change)="showTipNoSp()">
+                                        </ng-template>
+                                        <span>1-5</span>
+                                        <span>{{item.spMap['01']}}</span>
+                                    </div>
+                                    <div [ngClass]="{scoreSelect:item.selectSpMap['02']}">
+                                        <ng-container *ngIf="!!item.spMap['02']; else spMap02">
+                                            <input [(ngModel)]="item.selectSpMap['02']" type="checkbox"
+                                                (change)="selectThisItem(1,item)">
+                                        </ng-container>
+                                        <ng-template #spMap02>
+                                            <input type="checkbox" (change)="showTipNoSp()">
+                                        </ng-template>
+                                        <span>6-10</span>
+                                        <span>{{item.spMap['02']}}</span>
+                                    </div>
+                                    <div [ngClass]="{scoreSelect:item.selectSpMap['03']}">
+                                        <ng-container *ngIf="!!item.spMap['03']; else spMap03">
+                                            <input [(ngModel)]="item.selectSpMap['03']" type="checkbox"
+                                                (change)="selectThisItem(1,item)">
+                                        </ng-container>
+                                        <ng-template #spMap03>
+                                            <input type="checkbox" (change)="showTipNoSp()">
+                                        </ng-template>
+                                        <span>11-15</span>
+                                        <span>{{item.spMap['03']}}</span>
+                                    </div>
+                                </div>
+                                <div class="sfcList">
+                                    <div [ngClass]="{scoreSelect:item.selectSpMap['04']}">
+                                        <ng-container *ngIf="!!item.spMap['04']; else spMap04">
+                                            <input [(ngModel)]="item.selectSpMap['04']" type="checkbox"
+                                                (change)="selectThisItem(1,item)">
+                                        </ng-container>
+                                        <ng-template #spMap04>
+                                            <input type="checkbox" (change)="showTipNoSp()">
+                                        </ng-template>
+                                        <span>16-20</span>
+                                        <span>{{item.spMap['04']}}</span>
+                                    </div>
+                                    <div [ngClass]="{scoreSelect:item.selectSpMap['05']}">
+                                        <ng-container *ngIf="!!item.spMap['05']; else spMap05">
+                                            <input [(ngModel)]="item.selectSpMap['05']" type="checkbox"
+                                                (change)="selectThisItem(1,item)">
+                                        </ng-container>
+                                        <ng-template #spMap05>
+                                            <input type="checkbox" (change)="showTipNoSp()">
+                                        </ng-template>
+                                        <span>21-25</span>
+                                        <span>{{item.spMap['05']}}</span>
+                                    </div>
+                                    <div [ngClass]="{scoreSelect:item.selectSpMap['06']}">
+                                        <ng-container *ngIf="!!item.spMap['06']; else spMap06">
+                                            <input [(ngModel)]="item.selectSpMap['06']" type="checkbox"
+                                                (change)="selectThisItem(1,item)">
+                                        </ng-container>
+                                        <ng-template #spMap06>
+                                            <input type="checkbox" (change)="showTipNoSp()">
+                                        </ng-template>
+                                        <span>26+</span>
+                                        <span>{{item.spMap['06']}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="match-detail" *ngIf="item.expend">
+                    <div class="detailList">
+                        <div class="detailName">历史交锋</div>
+                        <div class="detailContent">
+                            近{{basketballDetail.historyInfo.historyRecord.length}}次交锋，{{basketballDetail.historyInfo.historyRecordDesc | dealWithData}}
+                        </div>
+                    </div>
+                    <div class="detailList">
+                        <div class="detailName">近期战绩</div>
+                        <div class="detailContent">
+                            {{basketballDetail.hostMilitInfo.hostMilitDes | dealWithData}}，{{basketballDetail.awayMilitInfo.awayMilitDes | dealWithData}}
+                        </div>
+                    </div>
+                    <div class="detailList">
+                        <div class="detailName">平均欧赔</div>
+                        <div class="detailContent average">
+                            <span>{{item.op.split('^')[1]}}</span>
+                            <span>{{item.op.split('^')[0]}}</span>
+                        </div>
+                    </div>
+                    <div class="detailList detailNumber">详细数据 <i class="iconfont icon-right"></i></div>
+                </div>
+            </ng-container>
+        </div>
+        <div class="container havenoData" *ngIf="haveNoData">
+            <img src="../../assets/null.png" alt="">
+            <p> 暂无赛事~ </p>
+        </div>
+        <div class="nextPage" *ngIf="!haveNoData">
+            <span *ngIf="haveNextPage" (click)="onNextPage()">加载更多</span>
+            <span *ngIf="!haveNextPage" class='nextPageNull'>没有更多数据了</span>
+        </div>
+        <!-- </app-refresh> -->
+        <app-footer-next [selectData]='selectMatchDataList'></app-footer-next>
+    </div>
+</ion-content>
+<div class="pop" *ngIf="showPop">
+    <div class="popContainer container">
+        <div class="popCountry">
+            <div>{{popData.homeTeam}}</div>
+            <div>VS</div>
+            <div>{{popData.guestTeam}}</div>
+        </div>
+        <div class="sfcScore">
+            <div class="sfcLeft">
+                <div class="header">客胜</div>
+                <div class="sfcList">
+                    <div [ngClass]="{scoreSelect:popData.selectSpMap['11']}">
+                        <ng-container *ngIf="!!popData.spMap['11']; else spMap11">
+                            <input *ngIf="popData.canSelect[3]==1 || popData.canSelect[3]==0"
+                                [(ngModel)]="popData.selectSpMap['11']" type="checkbox"
+                                (change)="selectThisItem(1,popData)">
+                            <input *ngIf="popData.canSelect[3]==-1" type="checkbox" (change)="showTip()">
+                        </ng-container>
+                        <ng-template #spMap11>
+                            <input type="checkbox" (change)="showTipNoSp()">
+                        </ng-template>
+                        <span>1-5</span><span>{{popData.spMap['11']}}</span>
+                    </div>
+                    <div [ngClass]="{scoreSelect:popData.selectSpMap['12']}">
+                        <ng-container *ngIf="!!popData.spMap['12']; else spMap12">
+                            <input *ngIf="popData.canSelect[3]==1 || popData.canSelect[3]==0"
+                                [(ngModel)]="popData.selectSpMap['12']" type="checkbox"
+                                (change)="selectThisItem(1,popData)">
+                            <input *ngIf="popData.canSelect[3]==-1" type="checkbox" (change)="showTip()">
+                        </ng-container>
+                        <ng-template #spMap12>
+                            <input type="checkbox" (change)="showTipNoSp()">
+                        </ng-template>
+                        <span>6-10</span><span>{{popData.spMap['12']}}</span>
+                    </div>
+                    <div [ngClass]="{scoreSelect:popData.selectSpMap['13']}">
+                        <ng-container *ngIf="!!popData.spMap['13']; else spMap13">
+                            <input *ngIf="popData.canSelect[3]==1 || popData.canSelect[3]==0"
+                                [(ngModel)]="popData.selectSpMap['13']" type="checkbox"
+                                (change)="selectThisItem(1,popData)">
+                            <input *ngIf="popData.canSelect[3]==-1" type="checkbox" (change)="showTip()">
+                        </ng-container>
+                        <ng-template #spMap13>
+                            <input type="checkbox" (change)="showTipNoSp()">
+                        </ng-template>
+                        <span>11-15</span><span>{{popData.spMap['13']}}</span>
+                    </div>
+                </div>
+                <div class="sfcList">
+                    <div [ngClass]="{scoreSelect:popData.selectSpMap['14']}">
+                        <ng-container *ngIf="!!popData.spMap['14']; else spMap14">
+                            <input *ngIf="popData.canSelect[3]==1 || popData.canSelect[3]==0"
+                                [(ngModel)]="popData.selectSpMap['14']" type="checkbox"
+                                (change)="selectThisItem(1,popData)">
+                            <input *ngIf="popData.canSelect[3]==-1" type="checkbox" (change)="showTip()">
+                        </ng-container>
+                        <ng-template #spMap14>
+                            <input type="checkbox" (change)="showTipNoSp()">
+                        </ng-template>
+                        <span>16-20</span><span>{{popData.spMap['14']}}</span>
+                    </div>
+                    <div [ngClass]="{scoreSelect:popData.selectSpMap['15']}">
+                        <ng-container *ngIf="!!popData.spMap['15']; else spMap15">
+                            <input *ngIf="popData.canSelect[3]==1 || popData.canSelect[3]==0"
+                                [(ngModel)]="popData.selectSpMap['15']" type="checkbox"
+                                (change)="selectThisItem(1,popData)">
+                            <input *ngIf="popData.canSelect[3]==-1" type="checkbox" (change)="showTip()">
+                        </ng-container>
+                        <ng-template #spMap15>
+                            <input type="checkbox" (change)="showTipNoSp()">
+                        </ng-template>
+                        <span>21-25</span><span>{{popData.spMap['15']}}</span>
+                    </div>
+                    <div [ngClass]="{scoreSelect:popData.selectSpMap['16']}">
+                        <ng-container *ngIf="!!popData.spMap['16']; else spMap16">
+                            <input *ngIf="popData.canSelect[3]==1 || popData.canSelect[3]==0"
+                                [(ngModel)]="popData.selectSpMap['16']" type="checkbox"
+                                (change)="selectThisItem(1,popData)">
+                            <input *ngIf="popData.canSelect[3]==-1" type="checkbox" (change)="showTip()">
+                        </ng-container>
+                        <ng-template #spMap16>
+                            <input type="checkbox" (change)="showTipNoSp()">
+                        </ng-template>
+                        <span>26+</span><span>{{popData.spMap['16']}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="sfcRight">
+                <div class="scfHeader header">主胜</div>
+                <div class="sfcList">
+                    <div [ngClass]="{scoreSelect:popData.selectSpMap['01']}">
+                        <ng-container *ngIf="!!popData.spMap['01']; else spMap01">
+                            <input *ngIf="popData.canSelect[3]==1 || popData.canSelect[3]==0"
+                                [(ngModel)]="popData.selectSpMap['01']" type="checkbox"
+                                (change)="selectThisItem(1,popData)">
+                            <input *ngIf="popData.canSelect[3]==-1" type="checkbox" (change)="showTip()">
+                        </ng-container>
+                        <ng-template #spMap01>
+                            <input type="checkbox" (change)="showTipNoSp()">
+                        </ng-template>
+                        <span>1-5</span><span>{{popData.spMap['01']}}</span>
+                    </div>
+                    <div [ngClass]="{scoreSelect:popData.selectSpMap['02']}">
+                        <ng-container *ngIf="!!popData.spMap['02']; else spMap02">
+                            <input *ngIf="popData.canSelect[3]==1 || popData.canSelect[3]==0"
+                                [(ngModel)]="popData.selectSpMap['02']" type="checkbox"
+                                (change)="selectThisItem(1,popData)">
+                            <input *ngIf="popData.canSelect[3]==-1" type="checkbox" (change)="showTip()">
+                        </ng-container>
+                        <ng-template #spMap02>
+                            <input type="checkbox" (change)="showTipNoSp()">
+                        </ng-template>
+                        <span>6-10</span><span>{{popData.spMap['02']}}</span>
+                    </div>
+                    <div [ngClass]="{scoreSelect:popData.selectSpMap['03']}">
+                        <ng-container *ngIf="!!popData.spMap['03']; else spMap03">
+                            <input *ngIf="popData.canSelect[3]==1 || popData.canSelect[3]==0"
+                                [(ngModel)]="popData.selectSpMap['03']" type="checkbox"
+                                (change)="selectThisItem(1,popData)">
+                            <input *ngIf="popData.canSelect[3]==-1" type="checkbox" (change)="showTip()">
+                        </ng-container>
+                        <ng-template #spMap03>
+                            <input type="checkbox" (change)="showTipNoSp()">
+                        </ng-template>
+                        <span>11-15</span><span>{{popData.spMap['03']}}</span>
+                    </div>
+                </div>
+                <div class="sfcList">
+                    <div [ngClass]="{scoreSelect:popData.selectSpMap['04']}">
+                        <ng-container *ngIf="!!popData.spMap['04']; else spMap04">
+                            <input *ngIf="popData.canSelect[3]==1 || popData.canSelect[3]==0"
+                                [(ngModel)]="popData.selectSpMap['04']" type="checkbox"
+                                (change)="selectThisItem(1,popData)">
+                            <input *ngIf="popData.canSelect[3]==-1" type="checkbox" (change)="showTip()">
+                        </ng-container>
+                        <ng-template #spMap04>
+                            <input type="checkbox" (change)="showTipNoSp()">
+                        </ng-template>
+                        <span>16-20</span><span>{{popData.spMap['04']}}</span>
+                    </div>
+                    <div [ngClass]="{scoreSelect:popData.selectSpMap['05']}">
+                        <ng-container *ngIf="!!popData.spMap['05']; else spMap05">
+                            <input *ngIf="popData.canSelect[3]==1 || popData.canSelect[3]==0"
+                                [(ngModel)]="popData.selectSpMap['05']" type="checkbox"
+                                (change)="selectThisItem(1,popData)">
+                            <input *ngIf="popData.canSelect[3]==-1" type="checkbox" (change)="showTip()">
+                        </ng-container>
+                        <ng-template #spMap05>
+                            <input type="checkbox" (change)="showTipNoSp()">
+                        </ng-template>
+                        <span>21-25</span><span>{{popData.spMap['05']}}</span>
+                    </div>
+                    <div [ngClass]="{scoreSelect:popData.selectSpMap['06']}">
+                        <ng-container *ngIf="!!popData.spMap['06']; else spMap06">
+                            <input *ngIf="popData.canSelect[3]==1 || popData.canSelect[3]==0"
+                                [(ngModel)]="popData.selectSpMap['06']" type="checkbox"
+                                (change)="selectThisItem(1,popData)">
+                            <input *ngIf="popData.canSelect[3]==-1" type="checkbox" (change)="showTip()">
+                        </ng-container>
+                        <ng-template #spMap06>
+                            <input type="checkbox" (change)="showTipNoSp()">
+                        </ng-template>
+                        <span>26+</span><span>{{popData.spMap['06']}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="popButtonGroup">
+            <button class="cancel" (click)="cancel()">取消</button>
+            <button class="sure" (click)="sure()">确定</button>
+        </div>
+    </div>
+</div>
+
+<div class="pop" *ngIf="showTips">
+    <div class="popContainer container showTipsFont">
+        {{tipsInfo}}
+    </div>
+</div>

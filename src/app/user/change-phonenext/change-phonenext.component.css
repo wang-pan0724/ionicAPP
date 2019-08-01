@@ -1,0 +1,29 @@
+.changePhone{
+    padding-top: 60px;
+    background: #fff;
+}
+
+.changeTips{
+    text-align: center;
+    line-height: 30px;
+    font-size: 13px;
+}
+
+.password{
+    padding: 0px 10px;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.password span{
+    float: right;
+}
+
+.buttonGroup{
+    padding: 10px;
+}
+
+.buttonGroup button{
+    display: block;
+    width: 100%;
+}

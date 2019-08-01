@@ -1,0 +1,547 @@
+
+/* 头部 */
+/* 比赛 */
+
+.container{
+    background: #fff;
+}
+.match{
+    padding: 77px 0px 80px 0px;
+    background: #fff;
+    min-height: 100vh;
+}
+
+.matchItem{
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.matchList{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    background: #fff;
+    border-bottom: 1px solid #F2F2F2;
+}
+
+.containerLeft{
+    width: 60px;
+    font-size: 12px;
+    margin-right: 10px;
+    padding-top: 10px;
+}
+
+.containerLeft span{
+    display: block;
+    text-align: center;
+}
+
+.containerRight{
+    flex: 1;
+    width: 80%;
+}
+
+.countryName{
+    margin-bottom: 10px;
+    height: 23px;
+    overflow: hidden;
+}
+
+.countryName>div{
+    width: 40%;
+    height: 22px;
+    display: flex;
+    float: left;
+}
+
+.countryName div span{
+    line-height: 22px;
+}
+
+.countryName div:nth-child(2){
+    width: 20%;
+    height: 22px;
+    line-height: 22px;
+    display: flex;
+}
+
+.countryName div:nth-child(3){
+    text-align: right;
+}
+
+.countryName img{
+    width: 16px;
+    height: 16px;
+    border-radius: 16px;
+    vertical-align: middle;
+}
+
+.name{
+    font-size: 12px;
+}
+
+.countryName .number{
+    font-size: 10px;
+    color: #bbb;
+}
+
+.vs{
+    font-size: 12px;
+    color: #bbb;
+    text-align: center;
+    display: inline-block !important;
+}
+
+.score{
+    display: flex;
+    font-size: 14px;
+}
+
+.score .num{
+    font-size: 14px;
+}
+
+.scoreSelect{
+    background: #ED4143 !important;
+    color: #fff !important;
+    border: 1px solid #ED4143 !important;
+}
+
+.scoreSelect .state{
+    color: #fff !important;
+}
+
+.scoreSelect .num{
+    color: #fff !important;
+}
+
+.score div{
+    position: relative;
+    border: 1px solid #E8E8E8;
+    border-radius: 3px;
+    margin: 0px 3px 3px 0px;
+    width: 33.3%;
+    height: 28px;
+    line-height: 26px;
+    padding: 0px 12px;
+    display: flex;
+}
+
+.score input{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    opacity: 0;
+}
+
+.only{
+    position: absolute;
+    font-size: 10px;
+    width: 14px;
+    height: 16px;
+    text-align: center;
+    line-height: 16px;
+    left: 3px;
+    top: 0px;
+    display: block;
+    padding: 0px;
+    color: #fff;
+    border-radius: 2px;
+    background: #FE3720;
+}
+
+.onlyImg{
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    left: 3px;
+    top: 0px;
+}
+
+.score span{
+   width: 45%;
+   white-space: nowrap;
+}
+
+.state{
+    text-align: right;
+    margin-right: 10%;
+    color: #333333;
+    font-family:PingFangSC-Medium;
+    font-weight:400;
+}
+
+.popScoreItem .num{
+    color: #666666;
+    font-family:PingFangSC-Medium;
+    font-weight:500;
+}
+
+/* 混合过关 */
+.selectScoreItem{
+    margin: 0px 3px 3px 0px;
+    width: 100%;
+    height: 32px;
+    line-height: 32px;
+    padding: 0px 12px;
+    text-align: center;
+    font-size: 14px;
+    border:1px solid #E8E8E8;
+    border-radius:4px;
+    color: #666666;
+}
+
+.selectScoreItem_s{
+    background: #FE3720;
+    border: 1px solid #FE3720;
+    border-radius: 4px;
+    margin: 0px 3px 3px 0px;
+    width: 100%;
+    height: 32px;
+    line-height: 32px;
+    padding: 0px 12px;
+    text-align: center;
+    font-size: 14px;
+    color: #fff;
+}
+
+.selectScoreItem_s span{
+    display: block;
+    width: 100%; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 总进球 */
+.allscore{
+    display: flex;
+    font-size: 14px;
+}
+
+.allscore div{
+    position: relative;
+    border: 1px solid #E8E8E8;
+    border-radius: 3px;
+    margin: 0px 3px 3px 0px;
+    width: 35%;
+    height: 28px;
+    line-height: 26px;
+    /* padding: 0px 12px; */
+    display: flex;
+    color: #333333;
+}
+
+.allscore input{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    opacity: 0;
+}
+
+.only{
+    position: absolute;
+    font-size: 10px;
+    width: 14px;
+    height: 16px;
+    line-height: 16px;
+    left: 3px;
+    top: 0px;
+    display: block;
+    padding: 0px;
+    color: #fff;
+    border-radius: 2px;
+    background: #FE3720;
+}
+
+.allscore span{
+   width: 33%;
+}
+
+.allscore .num{
+    font-size: 13px;
+    color: #666666;
+    width: 48%;
+}
+
+
+/* 详细数据 */
+/* .match-detail{
+    display: none;
+} */
+
+.detailList{
+    display: flex;
+    text-align: center;
+    font-size: 10px;
+    height: 20px;
+    line-height: 20px;
+    width: 100%;
+}
+
+.detailName,.detailContent{
+    border-right:1px solid #fff;
+    border-bottom: 1px solid #fff;
+}
+
+.detailName{
+    width: 70px;
+}
+
+.detailContent{
+    flex: 1;
+}
+
+.average span{
+    width: 33.3%;
+    text-align: center;
+    display: inline-block;
+}
+
+.detailNumber{
+    display: block;
+    border-bottom: 1px solid #fff;
+}
+
+
+/* 弹出层 */
+.pop{
+    position: fixed;
+    background: rgba(0, 0, 0, .5);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0px;
+    padding: 10px;
+    z-index: 9999;
+}
+
+/* .pop .num{
+    color: #bbb;
+    display: inline;
+} */
+
+.popContainer{
+    position: relative;
+    border-radius: 3px;
+    padding: 10px 15px;
+    top: 40%;
+    transform: translateY(-40%);
+}
+
+.popCountry{
+    display: flex;
+    text-align: center;
+    font-size: 12px;
+    height: 20px;
+    line-height: 20px;
+    margin-bottom: 10px;
+}
+
+.popCountry div{
+    width: 33.3%;
+}
+
+.popScoreItem{
+    font-size: 14px;
+    margin-top: 16px;
+}
+
+.popHeader{
+    text-align: center;
+    border: 1px solid salmon;
+    color: #FE3720;
+    font-size: 12px;
+}
+
+.popList{
+    display: flex;
+}
+
+.popListBorder{
+    border-top: 1px solid #bbb;
+}
+
+.popTitle{
+    width: 20px;
+    height: auto;
+    background: salmon;
+    text-align: center;
+    align-items:center; 
+    display: -webkit-flex;
+    display: flex;
+    justify-content:center;
+    font-size: 12px;
+}
+
+.popContent{
+    flex: 1;
+}
+
+.popScore{
+    display: flex;
+    flex: 1;
+}
+
+.popScore div{
+    position: relative;
+    width: 14.28%;
+    border-right: 1px solid #bbb;
+    border-bottom: 1px solid #bbb;
+    height: 36px;
+}
+
+.popScore input{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    opacity: 0;
+}
+
+.popScore span{
+    display: block;
+    text-align: center;
+    margin-right:0px;
+}
+
+#popOther{
+    flex: 1;
+}
+
+.popScoreAll{
+    display: flex;
+    flex: 1;
+}
+
+.popScoreAll div{
+    position: relative;
+    width: 25%;
+    border-right: 1px solid #bbb;
+    border-bottom: 1px solid #bbb;
+    height: 26px;
+    line-height: 26px;
+    text-align: center;
+}
+
+.popScoreAll input{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    opacity: 0;
+}
+
+.popScoreAll .num,
+.popScoreHalf .num{
+    display: inline;
+}
+
+.popScoreHalf{
+    display: flex;
+    flex: 1;
+}
+
+.popScoreHalf div{
+    position: relative;
+    width: 33.3%;
+    border-right: 1px solid #bbb;
+    border-bottom: 1px solid #bbb;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+}
+
+.popScoreHalf input{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    opacity: 0;
+}
+
+.popButtonGroup{
+    margin-top: 25px;
+    padding: 0px 20px;
+    font-size: 12px;
+}
+
+.popButtonGroup button{
+    height: 30px;
+    width: 45%;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 3px;
+    outline: none;
+}
+
+.cancel{
+    margin-right: 10%;
+}
+
+.sure{
+    background: #FE3720;
+    color: #fff;
+}
+
+.showTipsFont{
+    font-size: 14px;
+    text-align: center;
+}
+
+.havenoData{
+    padding: 40% 0 0 0;
+    text-align: center;
+}
+
+.havenoData img{
+    width: 233px;
+    margin-left: 71px;
+}
+
+.havenoData p{
+    font-size: 14px;
+    color: #666666;
+    width: 195px;
+    margin: auto;
+    line-height: 24px;
+}
+
+.rank{
+    font-size: 10px;
+    color: #bbb;
+}
+
+.nextPage{
+    text-align: center;
+    font-size: 12px;
+    color: #666666;
+}
+
+.nextPageNull{
+    font-size: 12px;
+    margin-top: 9px;
+    text-align: center;
+    color: #666666;
+}
+
+.nextPage span{
+    display: block;
+}
+
+.nullSp{
+    position: relative;
+    border: 1px solid #E8E8E8;
+    border-radius: 3px;
+    margin: 0px 3px 3px 0px;
+    width: 99%;
+    height: 32px;
+    line-height: 32px;
+    padding: 0px 12px;
+    text-align: center;
+    font-size: 14px;
+    color: #666666;
+}

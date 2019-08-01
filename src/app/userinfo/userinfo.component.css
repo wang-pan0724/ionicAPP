@@ -1,0 +1,65 @@
+.tradeListUl li{
+    display: flex;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 6px;
+    font-size: 16px;
+    background: #fff;
+    border-bottom: 1px solid #F5F5F9;
+}
+
+.tradeListUl li div:first-child{
+   flex: 1;
+}
+
+.tradeListUl li div:first-child i{
+    margin-right: 8px;
+ }
+
+ .tradeListUl li div:last-child{
+     position: relative;
+     color: #333;
+ }
+
+ .tradeListUl li div:last-child img:first-child{
+    width: 15px;
+    height: 15px;
+    margin-left: 0.50px;
+    vertical-align: middle;
+ }
+
+ .tradeListUl li div:last-child img:last-child{
+    width: 8px;
+    height: 15px;
+    margin-left: 0.50px;
+    vertical-align: middle;
+ }
+
+ .imgUploader{
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    height: 45px;
+    opacity: 0;
+ }
+
+ .avatarImg{
+     width: 30px;
+     height: 30px;
+     border-radius: 30px;
+     vertical-align: middle;
+ }
+
+ .marginTop5{
+    margin-top: 5px;
+}
+
+ .marginTop10{
+     margin-top: 10px;
+ }
+
+ .signOut{
+     margin-top: 28px;
+ }
+
+ 

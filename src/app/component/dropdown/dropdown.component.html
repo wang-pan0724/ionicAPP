@@ -1,0 +1,10 @@
+<div>
+  <div class="selectTitle" (click)="selectItem()">{{selectData}} <i class="triangle"></i></div>
+  <div class="selectList"  *ngIf="showList" (click)="close()">
+    <ul>
+      <li *ngFor="let item of dataList" (click)="selectThisItem(item)">{{item.label}}
+        <!-- <img src="../../../assets/select.png" alt=""> -->
+      </li>
+    </ul>
+  </div>
+</div>

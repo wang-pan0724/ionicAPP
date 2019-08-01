@@ -1,0 +1,19 @@
+<div>
+  <div class="nav backgroundColor">
+    <i (click)="goBack()" class="iconfont icon-left"></i>
+    <div class="navTab">
+      <ul>
+        <li [class.navActive]="switchNavIndex === 0" (click)="switchNav(0)">全部</li>
+        <li [class.navActive]="switchNavIndex === 2" (click)="switchNav(2)">单关</li>
+      </ul>
+    </div>
+    <!-- <i class="iconfont icon-funnelplot"></i> -->
+    <i class="iconfont icon-menu" (click)="onClickBtn()"></i>
+  </div>
+  <div class="status-bar">
+    <span *ngFor="let item of navData" [class.statusBarActive]="switchIndex === item.id" (click)="switchTab(item.id)">
+      {{item.name}}
+    </span>
+  </div>
+
+</div>

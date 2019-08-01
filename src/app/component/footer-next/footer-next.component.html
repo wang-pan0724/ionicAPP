@@ -1,0 +1,10 @@
+<div class="bottomNext">
+  <div class="bottomLeft">
+      <p *ngIf="!!selectData.selectMatchNum">已选{{selectData.selectMatchNum}}场 <span *ngIf="selectData.selectMatchNum==1 && !!!selectData.canGoMext">,还差一场</span></p>
+      <p *ngIf="!!!selectData.selectMatchNum">请至少选择1场比赛</p>
+      <p>页面赔率仅供参考，奖金赔率以实体票为准</p>
+  </div>
+  <div [ngClass]="{bottonRightRed: selectData.canGoMext,bottonRight:!!!selectData.canGoMext}" (click)="nextStep()">
+      下一步
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<app-common-title [showReturn]=true [title]='title'></app-common-title>
+<div class="page">
+  <div class="input">
+    <span>新密码</span>
+    <input type="password" placeholder="6-15位数字、字母或组合" #passwordType>
+    <i class="iconfont icon-eye-slash" (click)="visible($event)"></i>
+  </div>
+  <div class="tips">密码已被重置，请您重新设置新密码</div>
+  <div class="buttonGroup">
+    <button class="signIn" (click)="submit()">确定</button>
+  </div>
+</div>
+
+<app-alert [showPop]="showPop" [showTips]="showTips"></app-alert>

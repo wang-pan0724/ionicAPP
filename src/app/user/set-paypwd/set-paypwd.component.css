@@ -1,0 +1,39 @@
+.tradeListUl li{
+    display: flex;
+    height: 46px;
+    line-height: 46px;
+    padding: 0 10px;
+    font-size: 14px;
+    background: #fff;
+    border-bottom: 1px solid #F5F5F9;
+}
+
+.tradeListUl li div:first-child{
+   flex: 1;
+}
+
+.tradeListUl li div:first-child i{
+    margin-right: 8px;
+    font-size: 14px;
+ }
+
+ .tradeListUl li div:last-child{
+     font-size: 12px;
+     color: #333;
+ }
+
+ .tradeListUl li div:last-child i{
+    margin-left: 8px;
+    font-size: 12px;
+ }
+
+ .marginTop5{
+    margin-top: 5px;
+}
+
+ .marginTop10{
+     margin-top: 10px;
+ }
+
+
+ 

@@ -1,0 +1,82 @@
+.scrollPage{
+    padding-top: 40px;
+}
+
+.elMenu{
+    position: fixed;
+    z-index: 99;
+    width: 100%;
+}
+
+.listTitle{
+    font-size: 14px;
+    line-height: 26px;
+    padding-left: 5px;
+}
+
+.listContant li{
+    position: relative;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    background: #fff;
+    padding-right: 10%;
+}
+
+.listTime{
+    font-size: 12px;
+    line-height: 24px;
+}
+
+.listDetail{
+    display: flex;
+    padding-bottom: 10px;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.listDetail div{
+    width: 33.3%;
+    text-align: center;
+}
+
+.listDetail img{
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+}
+
+.listDetail .vs{
+    font-size: 26px;
+    font-weight: bold;
+    color: #999;
+    margin: 10px 0;
+}
+
+.star{
+    border-top: 40px #fff solid;
+    width: 0px;
+    height: 0px;
+    border-right: 40px #BDBABD solid;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+}
+
+.star i{
+    position: absolute;
+    top: -20px;
+    right: -35px;
+}
+
+.score{
+    font-size: 26px;
+    font-weight: bold;
+    color: #999;
+    align-items:center; 
+    display: -webkit-flex;
+    justify-content:center;
+}
+
+.halfScore p:nth-child(2){
+    margin-top: 15px;
+}

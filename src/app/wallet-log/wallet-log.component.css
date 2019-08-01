@@ -1,0 +1,151 @@
+
+.menuList{
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    height: 36px;
+    top: 43px;
+    display: flex;
+    background: #fff;
+}
+
+.menuItem{
+    width: 50%;
+    height: 36px;
+    text-align: center;
+    line-height: 36px;
+}
+
+/* .popLength{
+    position: fixed;
+    left: 0px;
+    width: 100%;
+    top: 0px;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 9999;
+    color: #fff;
+    text-align: center;
+} */
+
+/* .popContent{
+    position: relative;
+    width: 80%;
+    margin: auto;
+    top: 36%;
+}
+
+.popTitle{
+    height: 36px;
+}
+
+.popLength ul{
+    background: #fff;
+    padding: 5px 0px;
+    border-radius: 3px;
+    display: flex;
+}
+
+.popLength li{
+    width: 23%;
+    margin: 0px 1%;
+    background: #d0021b;
+    height: 36px;
+    line-height: 36px;
+    border-radius: 3px;
+} */
+
+/* .navList{
+    overflow-x: scroll;
+    position: fixed;
+    z-index: 99;
+    background: #fff;
+    width: 100%;
+}
+
+.navList ul{
+    display: flex;
+    min-width: 375px;
+    font-size: 12px;
+    padding: 5px 0px;
+}
+
+.navList li{
+    padding: 8px 13px;
+}
+
+.navListActive{
+    border-bottom: 1px solid salmon;
+} */
+
+.navListNone{
+    text-align: center;
+    padding-top: 50%;
+    font-size: 13px;
+}
+
+.navListNone img{
+    width: 233px;
+}
+
+.navListNone p{
+    font-size: 14px;
+    color: #666666;
+    width: 195px;
+    margin: auto;
+    line-height: 24px;
+}
+
+.navListHaveData{
+    padding: 36px 0px;
+    margin-top: 8px;
+}
+
+.navListHaveData li{
+    margin-bottom: 1px;
+    background: #fff;
+    font-size: 12px;
+    height: 66px;
+    padding: 16px 12px;
+}
+
+.navListAmount{
+    display: flex;
+    margin-bottom: 10px;
+    color: #333333;
+    font-size: 16px;
+}
+
+.navListAbleBalance{
+    font-size: 12px;
+    display: flex;
+    color: #666666;
+}
+
+.navListData div{
+    width: 50%;
+}
+
+.navListData div:nth-child(2){
+    text-align: right;
+}
+
+.nextPage{
+    font-size: 13px;
+    text-align: center;
+    background: #ddd;
+    line-height: 26px;
+    margin-top: 10px;
+}
+
+.nextPageNull{
+    font-size: 11px;
+    text-align: center;
+    line-height: 60px;
+    color: #666;
+    background: #F2F2F2;
+}
+
+.nextPage span{
+    display: block;
+}

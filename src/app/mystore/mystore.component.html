@@ -1,0 +1,77 @@
+<app-common-title [showReturn]=true [title]='title'></app-common-title>
+<div class="page">
+  <ul class="item">
+    <li class="itemList">
+      <div>站点名称：</div>
+      <div>{{DataList.providerName==''?'暂未设置':DataList.providerName}}</div>
+    </li>
+    <li class="itemList">
+      <div>站点地址：</div>
+      <div>{{DataList.providerAddress==''?'暂未设置':DataList.providerAddress}}</div>
+    </li>
+    <li class="itemList">
+      <div>联系电话：</div>
+      <div>{{DataList.providerPhone==''?'暂未设置':DataList.providerPhone}}</div>
+    </li>
+    <li class="itemList">
+      <div>微信账号：</div>
+      <div>{{DataList.providerWeixin==''?'暂未设置':DataList.providerWeixin}}</div>
+    </li>
+    <li class="itemList"> 
+      <div>支付宝账号：</div>
+      <div>{{DataList.providerAlipay ==''?'暂未设置':DataList.providerAlipay}}</div>
+    </li>
+    <li class="itemList">
+      <div>QQ账号：</div>
+      <div>{{DataList.providerQQ==''?'暂未设置':DataList.providerQQ}}</div>
+    </li>
+    <!-- <li class="itemList">
+      <div>联系店主：</div>
+      <div>点击图标，快捷打开应用</div>
+    </li> -->
+  </ul>
+<!-- 
+  <div class="imgGroup">
+    <div class="imgList">
+      <a href="tel:10086">
+        <img src="../../assets/football.jpg" alt="">
+        <p>电话</p>
+      </a>
+    </div>
+    <div *ngIf="isWeiXin==false" class="imgList">
+      <a href="weixin://">
+        <img src="../../assets/football.jpg" alt="">
+        <p>微信</p>
+      </a>
+    </div>
+    <div class="imgList">
+      <a href="mqqwpa://im/chat?chat_type=wpa&uin=12233445&version=1&src_type=web&web_src=oicqzone.com">
+        <img src="../../assets/football.jpg" alt="">
+        <p>QQ</p>
+      </a>  
+    </div>
+    <div class="imgList">
+      <a href="alipays://platformapi/startapp?appId=20000067&url=https%3A%2F%2Fopenauth.alipay.com%2Foauth2%2FpublicAppAuthorize.htm%3Fapp_id%3D2017062707578742%26scope%3Dauth_user%26redirect_uri%3Dhttps%253A%252F%252Fwww.baidu.com"></a>
+      <img src="../../assets/football.jpg" alt="">
+      <p>支付宝</p>
+    </div>
+  </div> -->
+
+  <div class="changeStore" *ngIf="changeNewStore==true">
+      <div class="newStore">
+        <div class="tips">请填写新的彩店邀请码</div>
+        <input class="code" type="text" placeholder="请输入彩店邀请码" #newStoreCode>
+
+        <div class="popButtonGroup">
+            <button (click)="cancle()">取消</button>
+            <button class="backgroundRed" (click)="submit(newStoreCode)">提交</button>
+        </div>
+      </div>
+  </div>
+
+  <div class="buttonGroup">
+    <button class="btn1 change" (click)="change()">更换彩店</button>
+  </div>
+</div>
+
+<app-alert [showPop]="showPop" [showTips]="showTips"></app-alert>

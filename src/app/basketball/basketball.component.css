@@ -1,0 +1,484 @@
+.container{
+    background: #fff;
+}
+.match{
+    padding: 77px 0px 80px 0px;
+    background: #fff;
+    min-height: 100vh;
+}
+
+.matchList{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    background: #fff;
+}
+
+.containerLeft{
+    width: 60px;
+    font-size: 12px;
+    margin-right: 10px;
+    padding-top: 24px;
+}
+
+.containerLeft span{
+    display: block;
+    text-align: center;
+}
+
+.containerRight{
+    flex: 1;
+    width: 80%;
+}
+
+.countryName{
+    margin-bottom: 10px;
+    height: 23px;
+    overflow: hidden;
+}
+
+.countryName img{
+    width: 16px;
+    height: 16px;
+    border-radius: 16px;
+    vertical-align: middle;
+}
+
+.countryName>div{
+    width: 40%;
+    height: 22px;
+    display: flex;
+    float: left;
+}
+
+.countryName div span{
+    line-height: 22px;
+}
+
+.countryName div:nth-child(2){
+    width: 20%;
+    height: 22px;
+    line-height: 22px;
+    display: flex;
+}
+
+.countryName div:nth-child(3){
+    text-align: right;
+}
+
+
+.name{
+    font-size: 12px;
+}
+
+.countryName .number{
+    font-size: 10px;
+    color: #bbb;
+}
+
+.vs{
+    font-size: 12px;
+    color: #bbb;
+    text-align: center;
+    display: inline-block !important;
+}
+
+.score{
+    display: flex;
+    font-size: 14px;
+}
+
+.scorediv{
+    position: relative;
+    background: #F8F8F8;
+    border: 1px solid #E8E8E8;
+    border-radius: 3px;
+    margin: 0px 3px 3px 0px;
+    width: 49%;
+    height: 48px;
+    line-height: 20px;
+    padding: 4px 12px;
+    /* display: flex; */
+}
+
+.scoreWinDefdiv{
+    position: relative;
+    background: #F8F8F8;
+    border: 1px solid #E8E8E8;
+    border-radius: 3px;
+    margin: 0px 3px 3px 0px;
+    width: 38%;
+    height: 48px;
+    line-height: 20px;
+    padding: 4px 12px;
+}
+
+.scoreNum{
+    width: 24%;
+    text-align: center;
+    padding: 10px 0px;
+}
+
+.score input{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top:0px;
+    opacity: 0;
+}
+
+.hhscore{
+    position: relative;
+    display: flex;
+    font-size: 12px;
+}
+
+.hhscorediv{
+    position: relative;
+    background: #F8F8F8;
+    border: 1px solid #E8E8E8;
+    border-radius: 3px;
+    margin: 0px 3px 3px 0px;
+    width: 49%;
+    height: 28px;
+    line-height: 28px;
+    padding: 0px 12px;
+    /* display: flex; */
+}
+
+.hhscoreWinDefdiv{
+    position: relative;
+    background: #F8F8F8;
+    border: 1px solid #E8E8E8;
+    border-radius: 3px;
+    margin: 0px 3px 3px 0px;
+    width: 38%;
+    height: 30px;
+    line-height: 30px;
+    padding: 0px 12px;
+    display: flex;
+}
+
+.hhscoreWinDefdiv .state{
+    font-size: 14px;
+    color: #333333;
+}
+
+.hhscoreWinDefdiv .num{
+    color: #666666;
+    font-size: 14px;
+}
+
+.hhscoreNum{
+    width: 24%;
+    text-align: center;
+}
+
+.hhscore input{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top:0px;
+    opacity: 0;
+}
+
+.hhcontainerLeft{
+    padding-top: 52px;
+}
+
+.only{
+    position: absolute;
+    font-size: 10px;
+    width: 14px !important;
+    height: 16px;
+    text-align: center;
+    line-height: 16px;
+    left: 3px;
+    top: 0px;
+    display: block;
+    padding: 0px;
+    color: #fff;
+    border-radius: 2px;
+    background: #FE3720;
+    z-index: 99;
+}
+
+.onlyImg{
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    left: 3px;
+    top: 0px;
+    z-index: 99;
+}
+
+.hhscoreWinDefdiv span{
+    width: 50%;
+    text-align: center;
+    display: block;
+}
+
+.score span{
+   display: block;
+   text-align: center;
+   width: 100%;
+}
+
+.score .num{
+    color: #666666;
+    font-size: 14px;
+}
+
+.scoreSelect{
+    background: #FE3720 !important;
+    color: #fff !important;
+}
+
+.scoreSelect .num{
+    color: #fff !important;
+}
+
+/* 详细数据 */
+
+.detailList{
+    display: flex;
+    text-align: center;
+    font-size: 10px;
+    height: 20px;
+    line-height: 20px;
+    width: 100%;
+}
+
+.detailName,.detailContent{
+    border-right:1px solid #fff;
+    border-bottom: 1px solid #fff;
+}
+
+.detailName{
+    width: 70px;
+}
+
+.detailContent{
+    flex: 1;
+}
+
+.average span{
+    width: 33.3%;
+    text-align: center;
+    display: inline-block;
+}
+
+.detailNumber{
+    display: block;
+    border-bottom: 1px solid #fff;
+}
+
+/* 混合过关 */
+.selectScoreItem{
+    background: #F8F8F8;
+    border: 1px solid #E8E8E8;
+    border-radius: 3px;
+    margin: 0px 3px 3px 0px;
+    width: 100%;
+    height: 31px;
+    line-height: 32px;
+    padding: 0px 12px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.selectScoreItem_s{
+    background: #FE3720;
+    border: 1px solid #FE3720;
+    border-radius: 3px;
+    margin: 0px 3px 3px 0px;
+    width: 100%;
+    height: 30px;
+    line-height: 28px;
+    padding: 0px 12px;
+    text-align: center;
+    font-size: 12px;
+    color: #fff;
+}
+
+.selectScoreItem_s span{
+    display: block;
+    width: 100%; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 胜分差 */
+.sfcScore{
+    position: relative;
+    display: flex;
+    font-size: 12px;
+}
+
+.sfcLeft{
+    width: 50%;
+    margin-right: 5px;
+}
+
+.sfcRight{
+    width: 50%;
+}
+
+.sfcScore .header{
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    font-size: 12px;
+    color: #fff;
+    background: #00ddee;
+}
+
+.scfHeader{
+    background: #f37047 !important;
+}
+
+.sfcList{
+    display: flex;
+    border-right: 1px solid #E8E8E8;
+}
+
+.sfcList div{
+    position: relative;
+    height: 40px;
+    line-height: 20px;
+    width: 33.3%;
+    border-left: 1px solid #E8E8E8;
+    border-bottom: 1px solid #E8E8E8;
+    background: #F8F8F8;
+    font-size: 14px;
+}
+
+.sfcList div input{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    opacity: 0;
+}
+
+.sfcList span{
+    display: block;
+    text-align: center;
+}
+
+.sfcList div span:first-child{
+    color: #333333;
+}
+
+.sfcList div span:last-child{
+    color: #666666;
+}
+
+/* 弹出层 */
+.pop{
+    position: fixed;
+    background: rgba(0, 0, 0, .5);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0px;
+    padding: 10px;
+    z-index: 9999;
+}
+
+.pop .num{
+    color: #bbb;
+}
+
+.popContainer{
+    position: relative;
+    border-radius: 3px;
+    padding: 10px 15px;
+    top: 40%;
+    text-align: center;
+    transform: translateY(-40%);
+}
+
+.popCountry{
+    display: flex;
+    text-align: center;
+    font-size: 12px;
+    height: 20px;
+    line-height: 20px;
+    margin-bottom: 10px;
+}
+
+.popCountry div{
+    width: 33.3%;
+}
+
+.popButtonGroup{
+    margin-top: 25px;
+    padding: 0px 20px;
+    font-size: 12px;
+}
+
+.popButtonGroup button{
+    height: 30px;
+    width: 45%;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 3px;
+    outline: none;
+}
+
+.cancel{
+    margin-right: 10%;
+}
+
+.sure{
+    background: #FE3720;
+    color: #fff;
+}
+
+
+.showTipsFont{
+    font-size: 14px;
+}
+
+.havenoData{
+    padding: 40% 0 0 0;
+    text-align: center;
+}
+
+.havenoData img{
+    width: 233px;
+    margin-left: 71px;
+}
+
+.havenoData p{
+    font-size: 14px;
+    color: #666666;
+    width: 195px;
+    margin: auto;
+    line-height: 24px;
+}
+
+.nextPage{
+    text-align: center;
+    font-size: 12px;
+    color: #666666;
+}
+
+.nextPageNull{
+    font-size: 12px;
+    margin-top: 9px;
+    text-align: center;
+    color: #666666;
+}
+
+.nextPage span{
+    display: block;
+}

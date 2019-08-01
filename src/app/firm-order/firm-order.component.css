@@ -1,0 +1,302 @@
+.firmOrderContainer{
+  padding: 44px 0px 100px 0px;
+}
+
+.firmOrder{
+  background: #fff;
+  border-radius: 3px;
+}
+
+.firmOrderScrool{
+  overflow-y: scroll;
+  max-height: 180px;
+}
+
+.firmOrderHeader{
+  position: relative;
+  font-size: 14px;
+  padding: 15px 13px 0 13px;
+  color: #333333;
+  margin-bottom: 10px;
+}
+
+.firmOrderHeader span{
+  position: absolute;
+  right: 5px;
+}
+
+.type{
+  overflow: hidden;
+  padding: 0px 12px;
+}
+
+.firmOrderTitle{
+  position: relative;
+  font-size: 14px;
+  padding: 15px 11px 0 11px;
+  color: #333333;
+  margin-bottom: 10px;
+}
+
+.firmOrderTitle span{
+  position: absolute;
+  right: 5px;
+}
+
+.firmOrderList{
+  display: flex;
+  font-size: 13px;
+  padding: 10px 0px 0px 10px;
+}
+
+.closeBtn{
+  padding-top: 10px;
+}
+
+.rightContent{
+  margin-left: 12px;
+  width: 100%;
+}
+
+.firmOrderListDetail{
+  position: relative;
+  display: flex;
+  font-size: 14px;
+  color: #222;
+  line-height: 26px;
+}
+
+.firmOrderListDetail #can{
+  position: absolute;
+  right: 10px;
+  width: 16px;
+  height: 16px;
+  top: 3px;
+  text-align: center;
+  line-height: 16px;
+}
+
+.firmOrderListDetail .can{
+  background: #bbb;
+}
+
+.canSelectDan{
+  background: #eee;
+  color: #bbb;
+}
+
+.firmOrderListDetail .selectCan{
+  background: #f3a20b;
+  color: #fff;
+}
+
+.firmOrderListDetail #can input{
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  opacity: 0;
+}
+
+.firmOrderListItem{
+  font-size: 14px;
+  line-height: 22px;
+  padding: 0px 5px;
+}
+
+.firmOrderFooter{
+  position: relative;
+  font-size: 12px;
+  color: #bbb;
+  text-align: center;
+  margin: 15px 0px 10px 0px;
+}
+
+.type div{
+  position: relative;
+  background: #F5F5F9;
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  margin: 0px 6px 6px 0px;
+  width: 23%;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  font-size: 14px;
+  float: left;
+  /* padding: 0px 12px; */
+  /* display: flex; */
+}
+
+.firmOrderMargin{
+  margin-top: 8px;
+  padding-bottom: 15px;
+}
+
+.selectThisGuan{
+  color: #fff;
+  border: 1px solid #E93B32 !important;
+  background: #E93B32 !important;
+}
+
+.multiples{
+  padding: 0px 20px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.multiples span{
+    width: 30px;
+    text-align: center;
+    display: inline-block;
+}
+
+.multiples input{
+  background: #bbb;
+  width: 60px;
+  display: inline-block;
+  height: 26px;
+  color: #E93B32;
+  font-size: 16px;
+  text-align: center;
+}
+
+.multiples .num{
+  font-weight: bold;
+  width: 50px;
+  font-size: 15px;
+}
+
+
+.type input{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  opacity: 0;
+}
+
+.scoreSelect{
+  background: #E93B32 !important;
+  color: #fff !important;
+}
+
+
+.shoudRead{
+  padding: 3px 12px;
+  font-size: 13px;
+  color: #B2B2B2;
+  line-height:22px;
+}
+
+/* 彩店信息 */
+.shopAddress{
+  position: fixed;
+  bottom: 48px;
+  width: 100%;
+  height: 70px;
+  background: #fff;
+  display: flex;
+  font-size: 14px;
+  box-shadow: 0px 2px 4px 0px #040000;
+  padding: 13px 15px;
+  z-index: 99;
+}
+
+.storeData{
+  margin-left: 15px;
+  line-height: 24px;
+}
+
+.storeData p:first-child{
+  font-size: 14px;
+}
+
+.storeData p:last-child{
+  font-size: 12px;
+}
+
+/* 底部 提交彩票店 */
+.bottomNext{
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 48px;
+    font-size: 12px;
+    display: flex;
+    box-sizing: border-box;
+    background: #222;
+    color: #fff;
+    z-index: 99;
+}
+
+.bottomLeft{
+  flex: 1;
+  padding: 6px;
+}
+
+.bottomLeft p:first-child{
+  font-size: 14px;
+}
+
+.bottomLeft p:last-child{
+  font-size: 12px;
+}
+
+.bottonRight{
+  width: 120px;
+  height: 48px;
+  line-height: 48px;
+  font-size: 16px;
+  text-align: center;
+  background: #bbb;
+  margin: auto 0;
+}
+
+.bottonRightRed{
+  width: 120px;
+  height: 48px;
+  line-height: 48px;
+  font-size: 16px;
+  text-align: center;
+  margin: auto 0;
+  background: #E93B32;
+}
+
+.bottonRightDefault{
+  width: 120px;
+  height: 48px;
+  line-height: 48px;
+  font-size: 16px;
+  text-align: center;
+  margin: auto 0;
+  background: #bbb;
+}
+
+.pop{
+  position: fixed;
+  background: rgba(0, 0, 0, .5);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0px;
+  padding: 60px;
+  z-index: 9999;
+}
+
+.popContainer{
+  position: relative;
+  border-radius: 3px;
+  padding: 10px 15px;
+  top: 40%;
+  transform: translateY(-40%);
+  text-align: center;
+}
+
+.showTipsFont{
+  font-size: 14px;
+}
+
+.select{
+  padding: 15px 0px 10px 0px;
+}

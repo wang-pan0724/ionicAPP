@@ -1,0 +1,47 @@
+<div>
+    <div class="goBack backgroundColor">
+        <!-- <div><i (click)="goBack()"><img src="../../assets/left.png" alt=""></i></div> -->
+        <div class="signType">
+            <div (click)="changeTab(0)" [ngClass]="{'activeColor':signIndex == 0,'defaultColor':signIndex == 1}">账号密码登录</div>
+            <div (click)="changeTab(1)"  [ngClass]="{'activeColor':signIndex == 1,'defaultColor':signIndex == 0}">免密快捷登录</div>
+        </div>
+    </div>
+    <div class="caretTop">
+        <i class="el-icon-caret-top leftI" *ngIf="signIndex == 0"></i>
+        <i class="el-icon-caret-top rightI" *ngIf="signIndex == 1"></i>
+    </div>
+    <div *ngIf="signIndex == 0" class="inputGroup">
+        <div class="input">
+            <input type="tel" placeholder="请输入用户名" [(ngModel)]="tel">
+        </div>
+        <div class="input">
+            <input type="password" placeholder="请输入密码" [(ngModel)]="password">
+        </div>
+        <div class="password">
+            <!-- <el-checkbox [model]="val" (modelChange)="handle($event)">备选项</el-checkbox> -->
+            <span routerLink="/mine/forgotpassword">忘记密码?</span>
+        </div>
+
+        <div class="buttonGroup">
+            <button class="btn1" (click)="signIn(signIndex)">登录</button>
+            <button class="btn2" routerLink="/mine/signout">注册</button>
+        </div>
+    </div> 
+    <div *ngIf="signIndex == 1"  class="inputGroup">
+        <div class="input">
+            <input type="tel" placeholder="请输入用户名"  [(ngModel)]="tel">
+        </div>
+        <div class="input auth">
+            <input type="number" id="code" placeholder="请输入验证码" [(ngModel)]="code">
+            <span class="send" *ngIf="sendCode == false" (click)="getCode()">发送验证码</span>
+            <span class="num" *ngIf="sendCode == true">{{seconds}}S</span>
+        </div>
+
+        <div class="buttonGroup">
+            <button class="btn1"  (click)="signIn(signIndex)">登录</button>
+            <button class="btn2" routerLink="/mine/signout">注册</button>
+        </div>
+    </div>
+</div>
+
+<app-alert [showPop]="showPop" [showTips]="showTips"></app-alert>

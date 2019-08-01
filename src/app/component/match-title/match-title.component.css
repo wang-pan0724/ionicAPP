@@ -1,0 +1,18 @@
+
+
+.totalMatch{
+    height: 32px;
+    line-height: 32px;
+    font-size: 14px;
+    padding: 0 12px;
+    box-sizing: border-box;
+    background: #F2F2F2;
+    /* position: fixed; */
+    z-index: 99;
+    width: 100%;
+}
+
+.totalMatch i{
+    position: absolute;
+    right: 10px;
+}

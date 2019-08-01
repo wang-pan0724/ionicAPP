@@ -1,0 +1,36 @@
+<app-common-title [showReturn]=true [title]='title'></app-common-title>
+<div class="menuList">
+    <app-dropdown [dataList]='navData' [selectData]='value' (selected)="changeNavData($event)" class="menuItem">
+    </app-dropdown>
+    <app-dropdown [dataList]='dayLength' [selectData]='dayLenLabel' (selected)="changeDayLen($event)" class="menuItem">
+    </app-dropdown>
+</div>
+<ion-content>
+<div class="page">
+    <div *ngIf="navList.length==0" class="navListNone">
+        <img src="../../assets/null.png" alt="">
+        <p> 暂无内容哦~</p>
+    </div>
+    <div *ngIf="navList.length>0" class="navListHaveData">
+        <!-- <app-refresh (onRefresh)="onScrollRefresh()"> -->
+        <ul>
+            <li *ngFor="let item of navList">
+                <div class="navListData navListAmount">
+                    <div>{{item.transTypeDesc}}</div>
+                    <div>{{item.amount}}</div>
+                </div>
+                <div class="navListData navListAbleBalance">
+                    <div>{{item.createTime | slice:5:16}}</div>
+                    <div>余额： {{item.ableBalance}}</div>
+                </div>
+            </li>
+        </ul>
+        <!-- </app-refresh> -->
+        <div class="nextPage">
+            <span *ngIf="haveData" (click)="onNextPage()">加载更多</span>
+            <span *ngIf="!haveData" class='nextPageNull'>没有更多数据了</span>
+        </div>
+    </div>
+
+</div>
+</ion-content>

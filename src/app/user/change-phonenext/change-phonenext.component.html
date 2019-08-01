@@ -1,0 +1,18 @@
+<app-common-title [showReturn]=true [title]='title'></app-common-title>
+<div class="changePhone page">
+    <p class="changeTips">绑定手机号将用于密码找回，请填写本人手机</p>
+    <div class="input">
+        <input type="tel" placeholder="请输入本人手机号" [(ngModel)]="tel">
+    </div>
+    <div class="input auth">
+        <input type="number" id="code" placeholder="请输入验证码" [(ngModel)]="code">
+        <span class="send" *ngIf="sendCode == false" (click)="getCode()">发送验证码</span>
+        <span class="num" *ngIf="sendCode == true">{{seconds}}S</span>
+    </div>
+
+    <div class="buttonGroup">
+        <button class="btn1" (click)="modifyPhone()">确定</button>
+    </div>
+</div>
+
+<app-alert [showPop]="showPop" [showTips]="showTips"></app-alert>

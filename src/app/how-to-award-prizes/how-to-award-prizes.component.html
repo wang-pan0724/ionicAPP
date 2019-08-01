@@ -1,0 +1,12 @@
+<app-common-title [showReturn]=true [title]='title'></app-common-title>
+<ion-content>
+<div class="page">
+    <el-collapse [model]="modelData" class="list">
+        <el-collapse-item  *ngFor="let item of menus" label={{item.name}} value={{item.id}}>
+            <div class="details" *ngFor="let detailsList of item.details">
+                {{detailsList}}
+            </div>
+        </el-collapse-item>
+    </el-collapse>
+</div>
+</ion-content>

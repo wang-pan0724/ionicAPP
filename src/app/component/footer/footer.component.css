@@ -1,0 +1,61 @@
+.footer{
+    width: 100%;
+    position: fixed;
+    height: 49px;
+    bottom: 0px;
+    left:0px;
+    background: #FFFFFF;
+    color: #7F7F7F;
+    font-size: 10px;
+}
+
+.footer ul{
+    display: flex;
+    width: 100%;
+}
+
+.footer li{
+    list-style: none;
+    line-height: 29px;
+    width: 33.3%;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 9px;
+}
+
+.footer li div{
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin: auto;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.footer li:nth-child(1) div{
+    background-image: url(../../../assets/btn_home.png);
+}
+
+.footer li:nth-child(2) div{
+    background-image: url(../../../assets/btn_trade.png);
+}
+
+.footer li:nth-child(3) div{
+    background-image: url(../../../assets/btn_user.png);
+}
+
+.active{
+    color: #F84E50;
+}
+
+.active:nth-child(1) div{
+    background-image: url(../../../assets/btn_home_active.png) !important;
+}
+
+.active:nth-child(2) div{
+    background-image: url(../../../assets/btn_trade_active.png) !important;
+}
+
+.active:nth-child(3) div{
+    background-image: url(../../../assets/btn_user_active.png) !important;
+}

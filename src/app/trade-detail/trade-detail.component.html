@@ -1,0 +1,397 @@
+<app-common-title [showReturn]=true [title]='title'></app-common-title>
+<ion-content>
+  <!-- <ion-refresher slot="fixed" (ionRefresh)="onScrollRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher> -->
+  <div class="page">
+    <div class="status-bar">
+      <span *ngFor="let item of navData" [class.statusBarActive]="tabIndex === item.id"
+        (click)="switchTab(item.id)">{{item.name}}<i></i></span>
+    </div>
+    <div *ngIf="tabIndex==0" class="tabContent">
+      <app-refresh (onRefresh)="onScrollRefresh()">
+      <div class="content">
+        <p class="title">方案包含赛事</p>
+        <div class="contentListTitle header">
+          <div class="contentHeaderTime">场次</div>
+          <div class="contentHeaderCountry" *ngIf="4070 > tradeDetailList.gameId">客队VS主队</div>
+          <div class="contentHeaderCountry" *ngIf="tradeDetailList.gameId>4070">主队VS客队</div>
+          <div class="contentHeaderBet">您投注了</div>
+        </div>
+        <ul>
+          <li *ngFor="let item of tradeDetailList.contentList">
+            <div class="contentListTitle"
+              *ngIf="!!item.queryUserFocusMatch && item.queryUserFocusMatch.length == 0 && 4070 > tradeDetailList.gameId">
+              <div class="contentListTime"><span>{{item.jsonContent.week}}{{item.jsonContent.matchNo}}</span> <span
+                  class="time">({{item.jsonContent.matchTime | slice:5:16}})</span></div>
+              <div class="contentCountry">
+                {{item.jsonContent.guestTeam}}
+                &nbsp; VS &nbsp;
+                {{item.jsonContent.homeTeam}}
+              </div>
+              <div class="contentBet">{{item.jsonContent.betContent}}</div>
+            </div>
+            <div class="contentListTitle"
+              *ngIf="!!item.queryUserFocusMatch && item.queryUserFocusMatch.length == 0 && tradeDetailList.gameId > 4070">
+              <div class="contentListTime"><span>{{item.jsonContent.week}}{{item.jsonContent.matchNo}}</span> <span
+                  class="time">({{item.jsonContent.matchTime | slice:5:16}})</span></div>
+              <div class="contentCountry">
+                {{item.jsonContent.homeTeam}}
+                &nbsp; VS &nbsp;
+                {{item.jsonContent.guestTeam}}
+              </div>
+              <div class="contentBet">{{item.jsonContent.betContent}}</div>
+            </div>
+            <div class="contentListTitle"
+              *ngIf="item.queryUserFocusMatch && item.queryUserFocusMatch.length > 0 && 4070 > tradeDetailList.gameId">
+              <span [ngSwitch]="item.queryUserFocusMatch[0].matchStatus">
+                <b *ngSwitchCase="50">
+                  <div class="contentListTime"><span>{{item.jsonContent.week}}{{item.jsonContent.matchNo}}</span> <span
+                      class="time">({{item.jsonContent.matchTime | slice:5:16}})</span></div>
+                  <div class="contentCountry">
+                    <div>{{item.jsonContent.guestTeam}}&nbsp; VS &nbsp;{{item.jsonContent.homeTeam}}</div>
+                    <!-- <div>待开赛</div> -->
+                  </div>
+                  <div class="contentBet">{{item.jsonContent.betContent}}</div>
+                </b>
+                <b *ngSwitchCase="-50">
+                  <div class="contentListTime">
+                    <span>{{item.jsonContent.week}}{{item.jsonContent.matchNo}}</span>
+                    <span class="time">(已完场)</span>
+                  </div>
+                  <div class="contentCountry">
+                    <span>{{item.jsonContent.guestTeam}}</span>
+                    <span
+                      *ngIf="4070 > tradeDetailList.gameId">{{item.queryUserFocusMatch[0].awayScore}}:{{item.queryUserFocusMatch[0].hostScore}}</span>
+                    <span>{{item.jsonContent.homeTeam}}</span>
+                  </div>
+                  <div class="contentBet">{{item.jsonContent.betContent}}</div>
+                </b>
+                <b *ngSwitchCase="70">
+                  <div class="contentListTime">
+                    <span>{{item.jsonContent.week}}{{item.jsonContent.matchNo}}</span>
+                    <span class="time">(进行中){{item.queryUserFocusMatch[0].onTime}}</span>
+                  </div>
+                  <div class="contentCountry">
+                    <div>{{item.jsonContent.guestTeam}}&nbsp; VS &nbsp;{{item.jsonContent.homeTeam}}</div>
+                    <div>{{item.queryUserFocusMatch[0].awayScore}}:{{item.queryUserFocusMatch[0].hostScore}}</div>
+                  </div>
+                  <div class="contentBet">{{item.jsonContent.betContent}}</div>
+                </b>
+                <b *ngSwitchCase="-4">
+                  <div class="contentListTime">
+                    <span>{{item.jsonContent.week}}{{item.jsonContent.matchNo}}</span>
+                    <span class="time">(取消)</span>
+                  </div>
+                  <div class="contentCountry">
+                    <div>{{item.jsonContent.guestTeam}}&nbsp; VS &nbsp;{{item.jsonContent.homeTeam}}</div>
+                    <div>{{item.queryUserFocusMatch[0].awayScore}}:{{item.queryUserFocusMatch[0].hostScore}}</div>
+                  </div>
+                  <div class="contentBet">{{item.jsonContent.betContent}}</div>
+                </b>
+                <b *ngSwitchDefault>
+                  <div class="contentListTime">
+                    <span>{{item.jsonContent.week}}{{item.jsonContent.matchNo}}</span>
+                    <span class="time">(异常)</span>
+                  </div>
+                  <div class="contentCountry">
+                    <div>{{item.jsonContent.guestTeam}}&nbsp; VS &nbsp;{{item.jsonContent.homeTeam}}</div>
+                    <div>{{item.queryUserFocusMatch[0].awayScore}}:{{item.queryUserFocusMatch[0].hostScore}}</div>
+                  </div>
+                  <div class="contentBet">{{item.jsonContent.betContent}}</div>
+                </b>
+              </span>
+            </div>
+            <div class="contentListTitle"
+              *ngIf="item.queryUserFocusMatch && item.queryUserFocusMatch.length > 0 && tradeDetailList.gameId>4070">
+              <span [ngSwitch]="item.queryUserFocusMatch[0].matchStateIndex">
+                <b *ngSwitchCase="0">
+                  <div class="contentListTime"><span>{{item.jsonContent.week}}{{item.jsonContent.matchNo}}</span> <span
+                      class="time">({{item.jsonContent.matchTime | slice:5:16}})</span></div>
+                  <div class="contentCountry">
+                    <div>{{item.jsonContent.homeTeam}}&nbsp; VS &nbsp;{{item.jsonContent.guestTeam}}</div>
+                    <!-- <div>待开赛</div> -->
+                  </div>
+                  <div class="contentBet">{{item.jsonContent.betContent}}</div>
+                </b>
+                <b *ngSwitchCase="-1">
+                  <div class="contentListTime">
+                    <span>{{item.jsonContent.week}}{{item.jsonContent.matchNo}}</span>
+                    <span class="time">(已完场)</span>
+                  </div>
+                  <div class="contentCountry">
+                    <div>{{item.jsonContent.homeTeam}}&nbsp; VS &nbsp;{{item.jsonContent.guestTeam}}</div>
+                    <div>
+                      {{item.queryUserFocusMatch[0].hostScore}}(半场{{item.queryUserFocusMatch[0].hostHalfScore}}:{{item.queryUserFocusMatch[0].guestHalfScore}}){{item.queryUserFocusMatch[0].guestScore}}
+                    </div>
+                  </div>
+                  <div class="contentBet">{{item.jsonContent.betContent}}</div>
+                </b>
+                <b *ngSwitchCase="4">
+                  <div class="contentListTime">
+                    <span>{{item.jsonContent.week}}{{item.jsonContent.matchNo}}</span>
+                    <span class="time">(进行中){{item.queryUserFocusMatch[0].onTime}}</span>
+                  </div>
+                  <div class="contentCountry">
+                    <div>{{item.jsonContent.homeTeam}}&nbsp; VS &nbsp;{{item.jsonContent.guestTeam}}</div>
+                    <div>
+                      {{item.queryUserFocusMatch[0].hostScore}}(半场{{item.queryUserFocusMatch[0].hostHalfScore}}:{{item.queryUserFocusMatch[0].guestHalfScore}}){{item.queryUserFocusMatch[0].guestScore}}
+                    </div>
+                  </div>
+                  <div class="contentBet">{{item.jsonContent.betContent}}</div>
+                </b>
+                <b *ngSwitchCase="-10">
+                  <div class="contentListTime">
+                    <span>{{item.jsonContent.week}}{{item.jsonContent.matchNo}}</span>
+                    <span class="time">(取消)</span>
+                  </div>
+                  <div class="contentCountry">
+                    <div>{{item.jsonContent.homeTeam}}&nbsp; VS &nbsp;{{item.jsonContent.guestTeam}}</div>
+                    <div>
+                      {{item.queryUserFocusMatch[0].hostScore}}(半场{{item.queryUserFocusMatch[0].hostHalfScore}}:{{item.queryUserFocusMatch[0].guestHalfScore}}){{item.queryUserFocusMatch[0].guestScore}}
+                    </div>
+                  </div>
+                  <div class="contentBet">{{item.jsonContent.betContent}}</div>
+                </b>
+                <b *ngSwitchDefault>
+                  <div class="contentListTime">
+                    <span>{{item.jsonContent.week}}{{item.jsonContent.matchNo}}</span>
+                    <span class="time">(异常)</span>
+                  </div>
+                  <div class="contentCountry">
+                    <div>{{item.jsonContent.homeTeam}}&nbsp; VS &nbsp;{{item.jsonContent.guestTeam}}</div>
+                    <div>
+                      {{item.queryUserFocusMatch[0].hostScore}}(半场{{item.queryUserFocusMatch[0].hostHalfScore}}:{{item.queryUserFocusMatch[0].guestHalfScore}}){{item.queryUserFocusMatch[0].guestScore}}
+                    </div>
+                  </div>
+                  <div class="contentBet">{{item.jsonContent.betContent}}</div>
+                </b>
+              </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="chart">
+        <div class="title">
+          <span>价格走势明细</span>
+          <i class="iconfont icon-down iconDown" (click)="goDetail($event,option)"></i>
+        </div>
+        <div *ngIf="option.expend">
+          <ng-container *ngIf="haveChartData && tradeDetailList.planStatusId>12; else nochart">
+            <div echarts [options]="option" class="demo-chart" (chartInit)="onChartInit($event)"> </div>
+          </ng-container>
+          <ng-template #nochart>
+            <ng-container *ngIf="12>tradeDetailList.planStatusId; else noPrice">
+              <div class="demo-chart noChartData">
+                站点录入票内容后可查看报价 <br>
+                您可主动联系站点出票、录票哦
+              </div>
+            </ng-container>
+            <ng-template #noPrice>
+              <div class="demo-chart noChartData"> 暂无报价</div>
+            </ng-template>
+          </ng-template>
+        </div>
+        <div class="confirm">
+          <el-checkbox [model]="val" (modelChange)="handle($event)">我已阅读并同意</el-checkbox><span
+            routerLink='/trade/tradedetail/tradeagreements'>《彩票评估和交易协议》</span>
+        </div>
+      </div>
+      </app-refresh>
+      
+    </div>
+    <div *ngIf="tabIndex==1" class="tabContent">
+      <app-refresh (onRefresh)="onScrollRefresh()">
+        <div class="content">
+          <div class="gameDesc">
+            <img *ngIf="tradeDetailList.gameId>4070" src="../../assets/football.png" alt="">
+            <img *ngIf="4070>tradeDetailList.gameId" src="../../assets/basketball.png" alt="">
+            <div>
+              <h4>{{tradeDetailList.gameName}}</h4>
+              <p>{{tradeDetailList.gameDesc}}</p>
+            </div>
+          </div>
+          <div class="prizeDesc">
+            <div>
+              <p><span class="orderAmount">￥{{tradeDetailList.orderAmount}}</span>{{tradeDetailList.multiple}}倍</p>
+              <p>方案本金</p>
+            </div>
+            <div>
+              <p>{{!!tradeDetailList.payWinAmount ? tradeDetailList.payWinAmount :'-'}}</p>
+              <p>中奖金额</p>
+            </div>
+          </div>
+          <div class="planStatus">
+            <p>方案状态</p>
+            <div class="planStatusStep">
+              <app-steps [stepsData]="tradeDetailList.planStatusId"></app-steps>
+            </div>
+          </div>
+          <div class="planStatus">
+            <p>投注内容</p>
+            <div class="planStatusStepContant">
+              <ul>
+                <li>
+                  <div class="fontSize">编号</div>
+                  <div class="fontSize">对阵</div>
+                  <div class="fontSize">投注选项</div>
+                  <div class="fontSize">彩果</div>
+                </li>
+                <li *ngFor="let contentList of tradeDetailList.contentList">
+                  <div>
+                    <span>{{contentList.jsonContent.week}}{{contentList.jsonContent.matchNo}}</span>
+                    <span>{{contentList.jsonContent.matchName}}</span>
+                  </div>
+                  <div>
+                    <span>{{contentList.jsonContent.guestTeam}}</span>
+                    <span *ngIf="!!!contentList.jsonContent.wholeScore;haveScore">VS</span>
+                    <span #haveScore>{{contentList.jsonContent.wholeScore}}</span>
+                    <span>{{contentList.jsonContent.homeTeam}}</span>
+                  </div>
+                  <div>
+                    <span *ngFor="let item of contentList.content.split(','); let itemIndex = index">{{item}}
+                    </span>
+                  </div>
+                  <div>{{contentList.jsonContent.result}}</div>
+                </li>
+                <li>
+                  <div class="fontSize">过关方式</div>
+                  <div class="typeList">{{tradeDetailList.contentList.length}}场，{{tradeDetailList.passTypeDesc}}</div>
+                </li>
+                <li class="fontSize">
+                  *页面赔率仅供参考，奖金赔率以实体票为准
+                  <div class="ticketDetail" (click)="ticketDetail()">出票详情</div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="planStatus">
+            <p>方案信息</p>
+            <div class="planStatusStepContant">
+              <ul>
+                <li class="fontSize">方案编号：{{tradeDetailList.planNo}}</li>
+                <li class="fontSize">下单时间：{{tradeDetailList.time}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </app-refresh>
+      <div class="footTrade buttonGroup">
+        <button class="btn1" (click)="continueIssu()">继续发单</button>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
+<div class="footer" *ngIf="tabIndex==0">
+    <div class="price">
+      <p>方案本金</p>
+      <p>{{tradeDetailList.orderAmount}}元</p>
+    </div>
+    <div class="button" [ngSwitch]="tradeDetailList.planStatusId">
+      <span class="default" *ngSwitchCase="4">
+        暂不支持交易
+      </span>
+      <span class="default" *ngSwitchCase="15">
+        暂停交易
+      </span>
+      <span class="default" *ngSwitchCase="17">
+        暂停交易
+      </span>
+      <span *ngSwitchCase="16" (click)="tradeOrder(tradeDetailList)">
+        <span class="tradeSpan">
+          发起交易
+        </span>
+      </span>
+      <span *ngSwitchCase="13" (click)="tradeOrder(tradeDetailList)">
+        <span *ngIf="tradeDetailList.lostPrice != 'NaN'" class="tradeSpan">
+          发起交易<br>
+          <b>({{tradeDetailList.planPrice}})</b>
+        </span>
+        <span class="default tradeSpan" *ngIf="tradeDetailList.lostPrice == 'NaN'">
+          暂无报价
+        </span>
+      </span>
+      <span class="default" *ngSwitchCase="14">
+        已完成交易<br>
+        <b>({{tradeDetailList.planPrice}})</b>
+      </span>
+      <span class="default" *ngSwitchCase="19">
+        交易中 <br>
+        <b>({{tradeDetailList.planPrice}})</b>
+      </span>
+      <span class="default" *ngSwitchDefault>
+        录入后可交易
+      </span>
+    </div>
+    <div class="price">
+      <p>可盈利</p>
+      <p class="activePrice">({{tradeDetailList.lostPrice != 'NaN'?tradeDetailList.lostPrice:''}}元)</p>
+      <ng-container
+        *ngIf="(tradeDetailList.planStatusId==13 || tradeDetailList.planStatusId==16) && tradeDetailList.lostPrice != 'NaN';else autoPrice">
+        <i *ngIf="tradeDetailList.isAutoMatic" class="setPriceStatus">自动</i>
+        <i class="iconfont icon-icon_setting iconCanSelect" (click)="setPrice(tradeDetailList)"></i>
+      </ng-container>
+      <ng-template #autoPrice>
+        <i class="iconfont icon-icon_setting"></i>
+      </ng-template>
+    </div>
+  </div>
+<app-alert [showPop]="showPop" [showTips]="showTips"></app-alert>
+
+<div class="tradePop" *ngIf="tradePop">
+  <div class="tradePopContainer">
+    <div *ngIf="popIndex == 0">
+      <div class="closeBtn">
+        <i class="iconfont icon-guanbi2" (click)="closePop()"></i>
+      </div>
+      <i class="iconfont icon-check-circle tradeSuccessIcon"></i>
+      <div class="tipsText">已成功设置自动交易</div>
+      <p>当评估金额达到{{popData.autoRepoAmount}}元时，自动发起交易申请</p>
+
+      <button class="autoTradeBtn" (click)="cancelTrade(popData)">取消自动交易</button>
+    </div>
+    <div *ngIf="popIndex == 1">
+      <header class="closeBtn">
+        自动交易设置
+        <i class="iconfont icon-guanbi2" (click)="closePop()"></i>
+      </header>
+      <p>
+        当前评估金额达到
+        <input type="number" [(ngModel)]="planAmount">
+        元时，自动发起交易申请
+      </p>
+      <div>
+        <app-slider (modelChange)="changeValue($event)" [value]="planAmount" [min]="popData.min" [max]="popData.max"
+          class="slider">
+        </app-slider>
+        <div class="tradePrice">
+          <span>{{popData.min}}</span>
+          <span>{{popData.max}}</span>
+        </div>
+      </div>
+      <button class="autoTradeBtn" (click)="setAutoTrade(popData)">设置自动交易</button>
+    </div>
+    <div *ngIf="popIndex == 2">
+      <header class="closeBtn">
+        确认发起交易吗？
+      </header>
+      <div>
+        <h3 class="planAmount">￥{{planAmount}}</h3>
+        <p class="tipsText"><span>{{seconds}}</span>秒后重新查询价格</p>
+        <p class="tipsRight">交易成功后则该彩票的全部权益归属于彩易科思</p>
+      </div>
+      <div class="popButtonGroup">
+        <button (click)="closePop()">取消</button>
+        <button (click)="confirmTradeOrder(popData)">确认</button>
+      </div>
+    </div>
+    <div *ngIf="popIndex == 3">
+      <div class="confirmtradeTip">主动发起交易将会取消自动交易的设置，是否确认继续发起交易？</div>
+      <div class="popButtonGroup">
+        <button (click)="closePop()">取消</button>
+        <button (click)="tradeNext(popData)">继续发起交易</button>
+      </div>
+    </div>
+  </div>
+</div>

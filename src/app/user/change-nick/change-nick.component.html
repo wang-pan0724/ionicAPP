@@ -1,0 +1,17 @@
+<app-common-title [showReturn]=true [title]='title'></app-common-title>
+
+<div class="page changeNick">
+    <div class="content">
+        <input class="input" type="text" [(ngModel)]="nickname">
+        <i class="el-icon-circle-close closeIcon" *ngIf="haveText==true"></i>
+    </div>
+    <div class="tips">
+        昵称长度限制为4-15个字符
+    </div>
+
+    <div class="button buttonGroup">
+        <button class="btn1" (click)="commitNickname()">确认修改</button>
+    </div>
+</div>
+
+<app-alert [showPop]="showPop" [showTips]="showTips"></app-alert>

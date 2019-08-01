@@ -1,0 +1,111 @@
+<app-common-title [showReturn]=false [title]='title' (getTitleId)='getTitleId($event)'  [selectDown]=true [(itemData)]='itemData'></app-common-title>
+<div class="page">
+    <el-menu model='{{tabIndex}}' (modelChange)="handle($event)" class="el-menu-demo elMenu" mode="horizontal">
+        <el-menu-item index="0"> 未结束 </el-menu-item>
+        <el-menu-item index="1"> 已结束 </el-menu-item>
+        <el-menu-item index="2">我的关注</el-menu-item>
+        <el-menu-item index="3">已购赛事</el-menu-item>
+    </el-menu>
+
+    <div class="scrollPage">
+        <!-- <app-scroll (onRefresh)="onScrollRefresh()" (onSlideLeft)="onSlideLeft()" [IsRefreshFinish]="_IsRefreshFinish"> -->
+            <div class="lists haveTab" *ngIf="tabIndex==0">
+                <div *ngFor="let item of LivezcMatchListData.list">
+                    <div class="listTitle" *ngIf="item.showMatch">{{item.matchTime.split(' ')[0]}} {{item.matchLength}}场比赛</div>
+                    <div class="listContant">
+                        <ul>
+                            <li>
+                                <div class="listTime">{{item.matchNo}} <span>{{item.leagueName}}</span>
+                                    {{item.matchTime.split(' ')[1]}}({{item.matchStateDesc}})</div>
+                                <div class="listDetail">
+                                    <div>
+                                        <img src="{{item.hostLogoUrl}}" alt="">
+                                        <p>{{item.hostTeamName}}</p>
+                                        <!-- <p>9</p> -->
+                                    </div>
+                                    <div>
+                                        <p>{{item.letPoint}}</p>
+                                        <p class="vs">VS</p>
+                                    </div>
+                                    <div>
+                                        <img src="{{item.guestLogoUrl}}" alt="">
+                                        <p>{{item.guestTeamName}}</p>
+                                        <!-- <p>2</p> -->
+                                    </div>
+                                </div>
+                                <div class="star">
+                                    <i class="iconfont icon-star"></i>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="lists haveTab" *ngIf="tabIndex==1">
+                <div class="listTitle">2019-01-04 2场比赛</div>
+                <div class="listContant">
+                    <ul>
+                        <li>
+                            <div class="listTime">周二101 <span>澳洲甲</span> 16：50(未开赛)</div>
+                            <div class="listDetail">
+                                <div>
+                                    <img src="../../assets/football.jpg" alt="">
+                                    <p>印度</p>
+                                    <p>9</p>
+                                </div>
+                                <div class="score">
+                                    3
+                                </div>
+                                <div class="halfScore">
+                                    <p>+1</p>
+                                    <p>(2:0)</p>
+                                    <p>半场</p>
+                                </div>
+                                <div class="score">
+                                    0
+                                </div>
+                                <div>
+                                    <img src="../../assets/football.jpg" alt="">
+                                    <p>印度</p>
+                                    <p>2</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="lists haveTab" *ngIf="tabIndex==2">
+                <div class="listTitle">2019-01-04 2场比赛</div>
+                <div class="listContant">
+                    <ul>
+                        <li>
+                            <div class="listTime">周二101 <span>澳洲甲</span> 16：50(未开赛)</div>
+                            <div class="listDetail">
+                                <div>
+                                    <img src="../../assets/football.jpg" alt="">
+                                    <p>印度</p>
+                                    <p>9</p>
+                                </div>
+                                <div>
+                                    <p>+1</p>
+                                    <p class="vs">VS</p>
+                                </div>
+                                <div>
+                                    <img src="../../assets/football.jpg" alt="">
+                                    <p>印度</p>
+                                    <p>2</p>
+                                </div>
+                            </div>
+                            <div class="star">
+                                <i class="iconfont icon-star"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        <!-- </app-scroll> -->
+    </div>
+</div>
+
+
+<app-footer></app-footer>

@@ -1,0 +1,1866 @@
+<app-navbar (onNavChanged)='navChanged($event)' (onTabChanged)='tabChanged($event)' [navData]='navData'
+    [ballType]='ballType'></app-navbar>
+<ion-content>
+    <div class="match">
+        <!-- <app-refresh (onRefresh)="onScrollRefresh()" class="scrollMarginTop">  -->
+        <div class="container" *ngIf="tabId==0">
+            <div class="matchItem">
+                <ng-container *ngFor="let item of footballList.list; let i = index">
+                    <app-match-title *ngIf="item.showMatch" (click)="doList('footballList',i)"
+                        [matchTitleData]='item.endTime' [matchExpend]='item.expendShowMatch'
+                        [matchNum]='footballList.publistNumMap'></app-match-title>
+                    <div class="matchList" *ngIf="item.expendShowMatch != 0">
+                        <div class="containerLeft">
+                            <span>{{item.matchName}}</span>
+                            <span>{{item.endTime | week}}{{item.matchNo}}</span>
+                            <span>{{item.endTime | time}}截至</span>
+                            <!-- <span (click)="goDetail($event,item)"> <i class="iconfont icon-down"></i></span> -->
+                        </div>
+                        <div class="containerRight">
+                            <div class="countryName">
+                                <div>
+                                    <img *ngIf="!!item.homeImgPath" src="{{item.homeImgPath}}" alt="">
+                                    <img *ngIf="!!!item.homeImgPath" src="../../assets/defaultTeamIcon.png" alt="">
+                                    <span class="name">{{item.homeTeam}}</span>
+                                    <span class="rank" *ngIf="!!item.homeRank">[{{item.homeRank}}]</span>
+                                </div>
+                                <div class="vs">VS</div>
+                                <div>
+                                    <span class="rank" *ngIf="!!item.guestRank">[{{item.guestRank}}]</span>
+                                    <span class="name">{{item.guestTeam}}</span>
+                                    <img *ngIf="!!item.guestImgPath" src="{{item.guestImgPath}}" alt="">
+                                    <img *ngIf="!!!item.guestImgPath" src="../../assets/defaultTeamIcon.png" alt="">
+                                </div>
+                            </div>
+                            <div class="scoreItem">
+                                <ng-container *ngIf="item.betplaytype.indexOf('4076')>-1; else spf">
+                                    <div class="score">
+                                        <div [ngClass]="{scoreSelect:item.selectSpMap.spf_3}">
+                                            <ng-container *ngIf="!!item.spMap.spf_3; else spMapspf_3">
+                                                <input *ngIf="item.canSelect[0]==1 || item.canSelect[0]==0"
+                                                    [(ngModel)]="item.selectSpMap.spf_3" type="checkbox"
+                                                    (change)="selectThisItem(1,item)"
+                                                    [disabled]="item.canSelect[0]==-1 ? true: false">
+                                                <input *ngIf="item.canSelect[0]==-1" type="checkbox"
+                                                    (change)="showTip()">
+                                            </ng-container>
+                                            <ng-template #spMapspf_3>
+                                                <input type="checkbox" (change)="showTipNoSp()">
+                                            </ng-template>
+                                            <img class="onlyImg" *ngIf="item.betSinglePlaytype.indexOf('4076')>-1"
+                                                src='../../assets/only.png' alt="">
+                                            <span class="state">胜</span>
+                                            <span class="num">{{item.spMap.spf_3}}</span>
+                                        </div>
+                                        <div [ngClass]="{scoreSelect:item.selectSpMap.spf_1}">
+                                            <ng-container *ngIf="!!item.spMap.spf_1; else spMapspf_1">
+                                                <input *ngIf="item.canSelect[0]==1 || item.canSelect[0]==0"
+                                                    [(ngModel)]="item.selectSpMap.spf_1" type="checkbox"
+                                                    (change)="selectThisItem(2,item)"
+                                                    [disabled]="item.canSelect[0]==-1 ? true: false">
+                                                <input *ngIf="item.canSelect[0]==-1" type="checkbox"
+                                                    (change)="showTip()">
+                                            </ng-container>
+                                            <ng-template #spMapspf_1>
+                                                <input type="checkbox" (change)="showTipNoSp()">
+                                            </ng-template>
+                                            <span class="state">平</span>
+                                            <span class="num">{{item.spMap.spf_1}}</span>
+                                        </div>
+                                        <div [ngClass]="{scoreSelect:item.selectSpMap.spf_0}">
+                                            <ng-container *ngIf="!!item.spMap.spf_0; else spMapspf_0">
+                                                <input *ngIf="item.canSelect[0]==1 || item.canSelect[0]==0"
+                                                    [(ngModel)]="item.selectSpMap.spf_0" type="checkbox"
+                                                    (change)="selectThisItem(3,item)"
+                                                    [disabled]="item.canSelect[0]==-1 ? true: false">
+                                                <input *ngIf="item.canSelect[0]==-1" type="checkbox"
+                                                    (change)="showTip()">
+                                            </ng-container>
+                                            <ng-template #spMapspf_0>
+                                                <input type="checkbox" (change)="showTipNoSp()">
+                                            </ng-template>
+                                            <span class="state">负</span>
+                                            <span class="num">{{item.spMap.spf_0}}</span>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <ng-template #spf>
+                                    <div class="nullSp">未开售胜平负</div>
+                                </ng-template>
+                                <ng-container *ngIf="item.betplaytype.indexOf('4071')>-1; else rqspf">
+                                    <div class="score">
+                                        <div [ngClass]="{scoreSelect:item.selectSpMap.rqspf_3}">
+                                            <ng-container *ngIf="item.spMap.rqspf_3; else spMaprqspf_3">
+                                                <input *ngIf="item.canSelect[1]==1 || item.canSelect[1]==0"
+                                                    [(ngModel)]="item.selectSpMap.rqspf_3" type="checkbox"
+                                                    (change)="selectThisItem(4,item)"
+                                                    [disabled]="item.canSelect[1]==-1 ? true: false">
+                                                <input *ngIf="item.canSelect[1]==-1" type="checkbox"
+                                                    (change)="showTip()">
+                                            </ng-container>
+                                            <ng-template #spMaprqspf_3>
+                                                <input type="checkbox" (change)="showTipNoSp()">
+                                            </ng-template>
+                                            <img class="onlyImg" *ngIf="item.betSinglePlaytype.indexOf('4071')>-1"
+                                                src='../../assets/only.png' alt="">
+                                            <span class="state">
+                                                <b *ngIf="item.concede == 1">+</b>{{item.concede}}胜
+                                            </span>
+                                            <span class="num">{{item.spMap.rqspf_3}}</span>
+                                        </div>
+                                        <div [ngClass]="{scoreSelect:item.selectSpMap.rqspf_1}">
+                                            <ng-container *ngIf="!!item.spMap.rqspf_1; else spMaprqspf_1">
+                                                <input *ngIf="item.canSelect[1]==1 || item.canSelect[1]==0"
+                                                    [(ngModel)]="item.selectSpMap.rqspf_1" type="checkbox"
+                                                    (change)="selectThisItem(5,item)"
+                                                    [disabled]="item.canSelect[1]==-1 ? true: false">
+                                                <input *ngIf="item.canSelect[1]==-1" type="checkbox"
+                                                    (change)="showTip()">
+                                            </ng-container>
+                                            <ng-template #spMaprqspf_1>
+                                                <input type="checkbox" (change)="showTipNoSp()">
+                                            </ng-template>
+                                            <span class="state"><b
+                                                    *ngIf="item.concede == 1">+</b>{{item.concede}}平</span>
+                                            <span class="num">{{item.spMap.rqspf_1}}</span>
+                                        </div>
+                                        <div [ngClass]="{scoreSelect:item.selectSpMap.rqspf_0}">
+                                            <ng-container *ngIf="!!item.spMap.rqspf_0; else spMaprqspf_0">
+                                                <input *ngIf="item.canSelect[1]==1 || item.canSelect[1]==0"
+                                                    [(ngModel)]="item.selectSpMap.rqspf_0" type="checkbox"
+                                                    (change)="selectThisItem(6,item)"
+                                                    [disabled]="item.canSelect[1]==-1 ? true: false">
+                                                <input *ngIf="item.canSelect[1]==-1" type="checkbox"
+                                                    (change)="showTip()">
+                                            </ng-container>
+                                            <ng-template #spMaprqspf_0>
+                                                <input type="checkbox" (change)="showTipNoSp()">
+                                            </ng-template>
+                                            <span class="state"><b
+                                                    *ngIf="item.concede == 1">+</b>{{item.concede}}负</span>
+                                            <span class="num">{{item.spMap.rqspf_0}}</span>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <ng-template #rqspf>
+                                    <div class="nullSp">未开售让球胜平负</div>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-detail" *ngIf="item.expend">
+                        <div class="detailList">
+                            <div class="detailName">历史交锋</div>
+                            <div class="detailContent">
+                                近{{footballDetail.againstRecord.length}}次交锋，{{item.homeTeam}}{{footballDetail.againstRecord | againstRecord}}
+                            </div>
+                        </div>
+                        <div class="detailList">
+                            <div class="detailName">近期战绩</div>
+                            <div class="detailContent">
+                                {{item.homeTeam}}{{footballDetail.hostLeagueResultDesc | leagueResultDesc}}，{{item.guestTeam}}{{footballDetail.qwarLeagueResultDesc | leagueResultDesc}}
+                            </div>
+                        </div>
+                        <div class="detailList">
+                            <div class="detailName">平均欧赔</div>
+                            <div class="detailContent average">
+                                <span>{{item.op.split('^')[0]}}</span>
+                                <span>{{item.op.split('^')[1]}}</span>
+                                <span>{{item.op.split('^')[2]}}</span>
+                            </div>
+                        </div>
+                        <div class="detailList detailNumber">详细数据 <i class="iconfont icon-right"></i></div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div class="container" *ngIf="tabId==1">
+            <div class="matchItem">
+                <ng-container *ngFor="let item of footballList2.list; let i = index">
+                    <app-match-title *ngIf="item.showMatch" (click)="doList('footballList2',i)"
+                        [matchTitleData]=item.endTime [matchExpend]='item.expendShowMatch'
+                        [matchNum]='footballList.publistNumMap'></app-match-title>
+                    <div class="matchList" *ngIf="item.expendShowMatch != 0">
+                        <div class="containerLeft">
+                            <span>{{item.matchName}}</span>
+                            <span>{{item.endTime | week}}{{item.matchNo}}</span>
+                            <span>{{item.endTime | time}}截至</span>
+                            <!-- <span (click)="goDetail($event,item)"> <i class="iconfont icon-down"></i></span> -->
+                        </div>
+                        <div class="containerRight">
+                            <div class="countryName">
+                                <div>
+                                    <img *ngIf="!!item.homeImgPath" src="{{item.homeImgPath}}" alt="">
+                                    <img *ngIf="!!!item.homeImgPath" src="../../assets/defaultTeamIcon.png" alt="">
+                                    <span class="name">{{item.homeTeam}}</span>
+                                    <span class="rank" *ngIf="!!item.homeRank">[{{item.homeRank}}]</span>
+                                    <!-- <span class="number">[{{item.betRatio}}]</span> -->
+                                </div>
+
+                                <div class="vs">VS</div>
+                                <div>
+                                    <!-- <span class="number">[{{item.rfBetRatio}}]</span> -->
+                                    <span class="rank" *ngIf="!!item.guestRank">[{{item.guestRank}}]</span>
+                                    <span class="name">{{item.guestTeam}}</span>
+                                    <img *ngIf="!!item.guestImgPath" src="{{item.guestImgPath}}" alt="">
+                                    <img *ngIf="!!!item.guestImgPath" src="../../assets/defaultTeamIcon.png" alt="">
+                                </div>
+                            </div>
+                            <div class="scoreItem">
+                                <div [ngClass]="{selectScoreItem:item.selectedSpmapers.length==0,selectScoreItem_s:item.selectedSpmapers.length>0}"
+                                    (click)="selectContent(item,tabId)">
+                                    <span *ngIf="item.selectedSpmapers.length==0">选择投注内容</span>
+                                    <span *ngIf="item.selectedSpmapers.length>0">
+                                        <b *ngFor="let selectItem of item.selectedSpmapers">{{selectItem}} &nbsp;</b>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-detail" *ngIf="item.expend">
+                        <div class="detailList">
+                            <div class="detailName">历史交锋</div>
+                            <div class="detailContent">近4次交锋，巴林1胜2负1平</div>
+                        </div>
+                        <div class="detailList">
+                            <div class="detailName">近期战绩</div>
+                            <div class="detailContent">巴林3胜4平3负，泰国5胜1平4负</div>
+                        </div>
+                        <div class="detailList detailNumber">详细数据 <i class="iconfont icon-right"></i></div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div class="container" *ngIf="tabId==2">
+            <div class="matchItem">
+                <ng-container *ngFor="let item of footballList3.list; let i = index">
+                    <app-match-title *ngIf="item.showMatch" (click)="doList('footballList3',i)"
+                        [matchTitleData]=item.endTime [matchExpend]='item.expendShowMatch'
+                        [matchNum]='footballList.publistNumMap'></app-match-title>
+                    <div class="matchList" *ngIf="item.expendShowMatch != 0">
+                        <img class="onlyImg" *ngIf="item.betSinglePlaytype.indexOf('4073')>-1"
+                            src='../../assets/only.png' alt="">
+                        <div class="containerLeft">
+                            <span>{{item.matchName}}</span>
+                            <span>{{item.endTime | week}}{{item.matchNo}}</span>
+                            <span>{{item.endTime | time}}截至</span>
+                            <!-- <span (click)="goDetail($event,item)"> <i class="iconfont icon-down"></i></span> -->
+                        </div>
+                        <div class="containerRight">
+                            <div class="countryName">
+                                <div>
+                                    <img *ngIf="!!item.homeImgPath" src="{{item.homeImgPath}}" alt="">
+                                    <img *ngIf="!!!item.homeImgPath" src="../../assets/defaultTeamIcon.png" alt="">
+                                    <span class="name">{{item.homeTeam}}</span>
+                                    <span class="rank" *ngIf="!!item.homeRank">[{{item.homeRank}}]</span>
+                                    <!-- <span class="number">[{{item.betRatio}}]</span> -->
+                                </div>
+
+                                <div class="vs">VS</div>
+                                <div>
+                                    <!-- <span class="number">[{{item.rfBetRatio}}]</span> -->
+                                    <span class="rank" *ngIf="!!item.guestRank">[{{item.guestRank}}]</span>
+                                    <span class="name">{{item.guestTeam}}</span>
+                                    <img *ngIf="!!item.guestImgPath" src="{{item.guestImgPath}}" alt="">
+                                    <img *ngIf="!!!item.guestImgPath" src="../../assets/defaultTeamIcon.png" alt="">
+                                </div>
+                            </div>
+                            <div class="scoreItem">
+                                <div [ngClass]="{selectScoreItem:item.selectedSpmapers.length==0,selectScoreItem_s:item.selectedSpmapers.length>0}"
+                                    (click)="selectContent(item,tabId)">
+                                    <span *ngIf="item.selectedSpmapers.length==0">选择投注内容</span>
+                                    <span *ngIf="item.selectedSpmapers.length>0">
+                                        <b *ngFor="let selectItem of item.selectedSpmapers">{{selectItem}} &nbsp;</b>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-detail" *ngIf="item.expend">
+                        <div class="detailList">
+                            <div class="detailName">历史交锋</div>
+                            <div class="detailContent">近4次交锋，巴林1胜2负1平</div>
+                        </div>
+                        <div class="detailList">
+                            <div class="detailName">近期战绩</div>
+                            <div class="detailContent">巴林3胜4平3负，泰国5胜1平4负</div>
+                        </div>
+                        <div class="detailList detailNumber">详细数据 <i class="iconfont icon-right"></i></div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div class="container" *ngIf="tabId==3">
+            <div class="matchItem">
+                <ng-container *ngFor="let item of footballList4.list; let i = index">
+                    <app-match-title *ngIf="item.showMatch" (click)="doList('footballList4',i)"
+                        [matchTitleData]=item.endTime [matchExpend]='item.expendShowMatch'
+                        [matchNum]='footballList4.publistNumMap'></app-match-title>
+                    <div class="matchList" *ngIf="item.expendShowMatch != 0">
+                        <img class="onlyImg" *ngIf="item.betSinglePlaytype.indexOf('4072')>-1"
+                            src='../../assets/only.png' alt="">
+                        <div class="containerLeft">
+                            <span>{{item.matchName}}</span>
+                            <span>{{item.endTime | week}}{{item.matchNo}}</span>
+                            <span>{{item.endTime | time}}截至</span>
+                            <!-- <span (click)="goDetail($event,item)"> <i class="iconfont icon-down"></i></span> -->
+                        </div>
+                        <div class="containerRight">
+                            <div class="countryName">
+                                <div>
+                                    <img *ngIf="!!item.homeImgPath" src="{{item.homeImgPath}}" alt="">
+                                    <img *ngIf="!!!item.homeImgPath" src="../../assets/defaultTeamIcon.png" alt="">
+                                    <span class="name">{{item.homeTeam}}</span>
+                                    <span class="rank" *ngIf="!!item.homeRank">[{{item.homeRank}}]</span>
+                                    <!-- <span class="number">[{{item.betRatio}}]</span> -->
+                                </div>
+
+                                <div class="vs">VS</div>
+                                <div>
+                                    <!-- <span class="number">[{{item.rfBetRatio}}]</span> -->
+                                    <span class="rank" *ngIf="!!item.guestRank">[{{item.guestRank}}]</span>
+                                    <span class="name">{{item.guestTeam}}</span>
+                                    <img *ngIf="!!item.guestImgPath" src="{{item.guestImgPath}}" alt="">
+                                    <img *ngIf="!!!item.guestImgPath" src="../../assets/defaultTeamIcon.png" alt="">
+                                </div>
+                            </div>
+                            <div class="scoreItem">
+                                <div class="allscore">
+                                    <div [ngClass]="{scoreSelect:item.selectSpMap['0']}">
+                                        <ng-container *ngIf="!!item.spMap['0']; else spMap0">
+                                            <input [(ngModel)]="item.selectSpMap['0']" type="checkbox"
+                                                (change)="selectThisItem()">
+                                        </ng-container>
+                                        <ng-template #spMap0>
+                                            <input type="checkbox" (change)="showTipNoSp()">
+                                        </ng-template>
+                                        <span class="state">0</span>
+                                        <span class="num">{{item.spMap['0']}}</span>
+                                    </div>
+                                    <div [ngClass]="{scoreSelect:item.selectSpMap['1']}">
+                                        <ng-container *ngIf="!!item.spMap['1']; else spMap1">
+                                            <input [(ngModel)]="item.selectSpMap['1']" type="checkbox"
+                                                (change)="selectThisItem()">
+                                        </ng-container>
+                                        <ng-template #spMap1>
+                                            <input type="checkbox" (change)="showTipNoSp()">
+                                        </ng-template>
+                                        <span class="state">1</span>
+                                        <span class="num">{{item.spMap['1']}}</span>
+                                    </div>
+                                    <div [ngClass]="{scoreSelect:item.selectSpMap['2']}">
+                                        <ng-container *ngIf="!!item.spMap['2']; else spMap2">
+                                            <input [(ngModel)]="item.selectSpMap['2']" type="checkbox"
+                                                (change)="selectThisItem()">
+                                        </ng-container>
+                                        <ng-template #spMap2>
+                                            <input type="checkbox" (change)="showTipNoSp()">
+                                        </ng-template>
+                                        <span class="state">2</span>
+                                        <span class="num">{{item.spMap['2']}}</span>
+                                    </div>
+                                    <div [ngClass]="{scoreSelect:item.selectSpMap['3']}">
+                                        <ng-container *ngIf="!!item.spMap['3']; else spMap3">
+                                            <input [(ngModel)]="item.selectSpMap['3']" type="checkbox"
+                                                (change)="selectThisItem()">
+                                        </ng-container>
+                                        <ng-template #spMap3>
+                                            <input type="checkbox" (change)="showTipNoSp()">
+                                        </ng-template>
+                                        <span class="state">3</span>
+                                        <span class="num">{{item.spMap['3']}}</span>
+                                    </div>
+                                </div>
+                                <div class="allscore">
+                                    <div [ngClass]="{scoreSelect:item.selectSpMap['4']}">
+                                        <ng-container *ngIf="!!item.spMap['4']; else spMap4">
+                                            <input [(ngModel)]="item.selectSpMap['4']" type="checkbox"
+                                                (change)="selectThisItem()">
+                                        </ng-container>
+                                        <ng-template #spMap4>
+                                            <input type="checkbox" (change)="showTipNoSp()">
+                                        </ng-template>
+                                        <span class="state">4</span>
+                                        <span class="num">{{item.spMap['4']}}</span>
+                                    </div>
+                                    <div [ngClass]="{scoreSelect:item.selectSpMap['5']}">
+                                        <ng-container *ngIf="!!item.spMap['5']; else spMap5">
+                                            <input [(ngModel)]="item.selectSpMap['5']" type="checkbox"
+                                                (change)="selectThisItem()">
+                                        </ng-container>
+                                        <ng-template #spMap5>
+                                            <input type="checkbox" (change)="showTipNoSp()">
+                                        </ng-template>
+                                        <span class="state">5</span>
+                                        <span class="num">{{item.spMap['5']}}</span>
+                                    </div>
+                                    <div [ngClass]="{scoreSelect:item.selectSpMap['6']}">
+                                        <ng-container *ngIf="!!item.spMap['6']; else spMap6">
+                                            <input [(ngModel)]="item.selectSpMap['6']" type="checkbox"
+                                                (change)="selectThisItem()">
+                                        </ng-container>
+                                        <ng-template #spMap6>
+                                            <input type="checkbox" (change)="showTipNoSp()">
+                                        </ng-template>
+                                        <span class="state">6</span>
+                                        <span class="num">{{item.spMap['6']}}</span>
+                                    </div>
+                                    <div [ngClass]="{scoreSelect:item.selectSpMap['7']}">
+                                        <ng-container *ngIf="!!item.spMap['7']; else spMap7">
+                                            <input [(ngModel)]="item.selectSpMap['7']" type="checkbox"
+                                                (change)="selectThisItem()">
+                                        </ng-container>
+                                        <ng-template #spMap7>
+                                            <input type="checkbox" (change)="showTipNoSp()">
+                                        </ng-template>
+                                        <span class="state">7+</span>
+                                        <span class="num">{{item.spMap['7']}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-detail" *ngIf="item.expend">
+                        <div class="detailList">
+                            <div class="detailName">历史交锋</div>
+                            <div class="detailContent">近4次交锋，巴林1胜2负1平</div>
+                        </div>
+                        <div class="detailList">
+                            <div class="detailName">近期战绩</div>
+                            <div class="detailContent">巴林3胜4平3负，泰国5胜1平4负</div>
+                        </div>
+                        <div class="detailList detailNumber">详细数据 <i class="iconfont icon-right"></i></div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div class="container" *ngIf="tabId ==4">
+            <div class="matchItem">
+                <ng-container *ngFor="let item of footballList5.list; let i = index">
+                    <app-match-title *ngIf="item.showMatch" (click)="doList('footballList5',i)"
+                        [matchTitleData]=item.endTime [matchExpend]='item.expendShowMatch'
+                        [matchNum]='footballList.publistNumMap'></app-match-title>
+                    <div class="matchList" *ngIf="item.expendShowMatch != 0">
+                        <img class="onlyImg" *ngIf="item.betSinglePlaytype.indexOf('4074')>-1"
+                            src='../../assets/only.png' alt="">
+                        <div class="containerLeft">
+                            <span>{{item.matchName}}</span>
+                            <span>{{item.endTime | week}}{{item.matchNo}}</span>
+                            <span>{{item.endTime | time}}截至</span>
+                            <!-- <span (click)="goDetail($event,item)"> <i class="iconfont icon-down"></i></span> -->
+                        </div>
+                        <div class="containerRight">
+                            <div class="countryName">
+                                <div>
+                                    <img *ngIf="!!item.homeImgPath" src="{{item.homeImgPath}}" alt="">
+                                    <img *ngIf="!!!item.homeImgPath" src="../../assets/defaultTeamIcon.png" alt="">
+                                    <span class="name">{{item.homeTeam}}</span>
+                                    <span class="rank" *ngIf="!!item.homeRank">[{{item.homeRank}}]</span>
+                                    <!-- <span class="number">[{{item.betRatio}}]</span> -->
+                                </div>
+
+                                <div class="vs">VS</div>
+                                <div>
+                                    <!-- <span class="number">[{{item.rfBetRatio}}]</span> -->
+                                    <span class="rank" *ngIf="!!item.guestRank">[{{item.guestRank}}]</span>
+                                    <span class="name">{{item.guestTeam}}</span>
+                                    <img *ngIf="!!item.guestImgPath" src="{{item.guestImgPath}}" alt="">
+                                    <img *ngIf="!!!item.guestImgPath" src="../../assets/defaultTeamIcon.png" alt="">
+                                </div>
+                            </div>
+                            <div class="scoreItem">
+                                <div [ngClass]="{selectScoreItem:item.selectedSpmapers.length==0,selectScoreItem_s:item.selectedSpmapers.length>0}"
+                                    (click)="selectContent(item,tabId)">
+                                    <span *ngIf="item.selectedSpmapers.length==0">选择投注内容</span>
+                                    <span *ngIf="item.selectedSpmapers.length>0">
+                                        <b *ngFor="let selectItem of item.selectedSpmapers">{{selectItem}} &nbsp;</b>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="match-detail" *ngIf="item.expend">
+                        <div class="detailList">
+                            <div class="detailName">历史交锋</div>
+                            <div class="detailContent">近4次交锋，巴林1胜2负1平</div>
+                        </div>
+                        <div class="detailList">
+                            <div class="detailName">近期战绩</div>
+                            <div class="detailContent">巴林3胜4平3负，泰国5胜1平4负</div>
+                        </div>
+                        <div class="detailList detailNumber">详细数据 <i class="iconfont icon-right"></i></div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div class="container havenoData" *ngIf="haveNoData">
+            <img src="../../assets/null.png" alt="">
+            <p> 暂无赛事~ </p>
+        </div>
+        <div class="nextPage" *ngIf="!haveNoData">
+            <span *ngIf="haveNextPage" (click)="onNextPage()" class='moreData'>加载更多</span>
+            <span *ngIf="!haveNextPage" class='nextPageNull'>没有更多数据了</span>
+        </div>
+        <!-- </app-refresh> -->
+        <app-footer-next [selectData]='selectMatchDataList'></app-footer-next>
+
+    </div>
+</ion-content>
+
+<div class="pop" *ngIf="showPop">
+    <div class="popContainer container">
+        <div class="popCountry">
+            <div>{{popData.homeTeam}} <span class="rank" *ngIf="!!popData.homeRank">[{{popData.homeRank}}]</span></div>
+            <div>VS</div>
+            <div><span class="rank" *ngIf="!!popData.guestRank">[{{popData.guestRank}}]</span>{{popData.guestTeam}}
+            </div>
+        </div>
+
+        <!-- 混合过关弹出层 -->
+        <div *ngIf="clickTabId == 1">
+            <!-- 胜平负 -->
+            <div class="scoreItem">
+                <ng-container *ngIf="popData.betplaytype.indexOf('4076')>-1; else popSpf">
+                    <div class="score">
+                        <div [ngClass]="{scoreSelect:popData.selectSpMap.spf_3}">
+                            <ng-container *ngIf="!!popData.spMap.spf_3; else spMapspf3">
+                                <input *ngIf="popData.canSelect[0]==0 || popData.canSelect[0]==1"
+                                    [(ngModel)]="popData.selectSpMap.spf_3" type="checkbox"
+                                    (change)="selectThisItem(1,popData)"
+                                    [disabled]="popData.canSelect[0]==-1 ? true: false">
+                                <input type="checkbox" *ngIf="popData.canSelect[0]==-1" (change)="showTip()">
+                            </ng-container>
+                            <ng-template #spMapspf3>
+                                <input type="checkbox" (change)="showTipNoSp()">
+                            </ng-template>
+                            <!-- <i class="only" *ngIf="popData.betSinglePlaytype.indexOf('4076')>-1">单</i> -->
+                            <img class="onlyImg" *ngIf="popData.betSinglePlaytype.indexOf('4076')>-1"
+                                src='../../assets/only.png' alt="">
+                            <span class="state">胜</span>
+                            <span class="num">{{popData.spMap.spf_3}}</span>
+                        </div>
+                        <div [ngClass]="{scoreSelect:popData.selectSpMap.spf_1}">
+                            <ng-container *ngIf="!!popData.spMap.spf_1; else spMapspf1">
+                                <input *ngIf="popData.canSelect[0]==0 || popData.canSelect[0]==1"
+                                    [(ngModel)]="popData.selectSpMap.spf_1" type="checkbox"
+                                    (change)="selectThisItem(2,popData)"
+                                    [disabled]="popData.canSelect[0]==-1 ? true: false">
+                                <input type="checkbox" *ngIf="popData.canSelect[0]==-1" (change)="showTip()">
+                            </ng-container>
+                            <ng-template #spMapspf1>
+                                <input type="checkbox" (change)="showTipNoSp()">
+                            </ng-template>
+                            <span class="state">平</span>
+                            <span class="num">{{popData.spMap.spf_1}}</span>
+                        </div>
+                        <div [ngClass]="{scoreSelect:popData.selectSpMap.spf_0}">
+                            <ng-container *ngIf="!!popData.spMap.spf_0; else spMapspf0">
+                                <input *ngIf="popData.canSelect[0]==0 || popData.canSelect[0]==1"
+                                    [(ngModel)]="popData.selectSpMap.spf_0" type="checkbox"
+                                    (change)="selectThisItem(3,popData)"
+                                    [disabled]="popData.canSelect[0]==-1 ? true: false">
+                                <input type="checkbox" *ngIf="popData.canSelect[0]==-1" (change)="showTip()">
+                            </ng-container>
+                            <ng-template #spMapspf0>
+                                <input type="checkbox" (change)="showTipNoSp()">
+                            </ng-template>
+                            <span class="state">负</span>
+                            <span class="num">{{popData.spMap.spf_0}}</span>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-template #popSpf>
+                    <div class="nullSp">未开售胜平负</div>
+                </ng-template>
+                <ng-container *ngIf="popData.betplaytype.indexOf('4071')>-1; else popRqspf">
+                    <div class="score">
+                        <div [ngClass]="{scoreSelect:popData.selectSpMap.rqspf_3}">
+                            <ng-container *ngIf="!!popData.spMap.rqspf_3; else spMaprqspf3">
+                                <input *ngIf="popData.canSelect[1]==0 || popData.canSelect[1]==1"
+                                    [(ngModel)]="popData.selectSpMap.rqspf_3" type="checkbox"
+                                    (change)="selectThisItem(4,popData)"
+                                    [disabled]="popData.canSelect[1]==-1 ? true: false">
+                                <input type="checkbox" *ngIf="popData.canSelect[1]==-1" (change)="showTip()">
+                            </ng-container>
+                            <ng-template #spMaprqspf3>
+                                <input type="checkbox" (change)="showTipNoSp()">
+                            </ng-template>
+                            <!-- <i class="only" *ngIf="popData.betSinglePlaytype.indexOf('4071')>-1">单</i> -->
+                            <img class="onlyImg" *ngIf="popData.betSinglePlaytype.indexOf('4071')>-1"
+                                src='../../assets/only.png' alt="">
+                            <span class="state"><b *ngIf="popData.concede == 1">+</b>{{popData.concede}}胜</span>
+                            <span class="num">{{popData.spMap.rqspf_3}}</span>
+                        </div>
+                        <div [ngClass]="{scoreSelect:popData.selectSpMap.rqspf_1}">
+                            <ng-container *ngIf="!!popData.spMap.rqspf_1; else spMaprqspf1">
+                                <input *ngIf="popData.canSelect[1]==0 || popData.canSelect[1]==1"
+                                    [(ngModel)]="popData.selectSpMap.rqspf_1" type="checkbox"
+                                    (change)="selectThisItem(5,popData)"
+                                    [disabled]="popData.canSelect[1]==-1 ? true: false">
+                                <input type="checkbox" *ngIf="popData.canSelect[1]==-1" (change)="showTip()">
+                            </ng-container>
+                            <ng-template #spMaprqspf1>
+                                <input type="checkbox" (change)="showTipNoSp()">
+                            </ng-template>
+                            <span class="state"><b *ngIf="popData.concede == 1">+</b>{{popData.concede}}平</span>
+                            <span class="num">{{popData.spMap.rqspf_1}}</span>
+                        </div>
+                        <div [ngClass]="{scoreSelect:popData.selectSpMap.rqspf_0}">
+                            <ng-container *ngIf="!!popData.spMap.rqspf_0; else spMaprqspf0">
+                                <input *ngIf="popData.canSelect[1]==0 || popData.canSelect[1]==1"
+                                    [(ngModel)]="popData.selectSpMap.rqspf_0" type="checkbox"
+                                    (change)="selectThisItem(6,popData)"
+                                    [disabled]="popData.canSelect[1]==-1 ? true: false">
+                                <input type="checkbox" *ngIf="popData.canSelect[1]==-1" (change)="showTip()">
+                            </ng-container>
+                            <ng-template #spMaprqspf0>
+                                <input type="checkbox" (change)="showTipNoSp()">
+                            </ng-template>
+
+                            <span class="state"><b *ngIf="popData.concede == 1">+</b>{{popData.concede}}负</span>
+                            <span class="num">{{popData.spMap.rqspf_0}}</span>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-template #popRqspf>
+                    <div class="nullSp">未开售让球胜平负</div>
+                </ng-template>
+            </div>
+            <!-- 胜/平/负 -->
+            <div class="popScoreItem">
+                <div class="popHeader">单</div>
+                <div class="popList">
+                    <div class="popTitle">胜</div>
+                    <div class="popContent">
+                        <div class="popScore">
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_10}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_10; else spMapdcbf_10">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_10" type="checkbox"
+                                        (change)="selectThisItem(24,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_10>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">1:0</span>
+                                <span class="num">{{popData.spMap.dcbf_10}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_20}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_20; else spMapdcbf_20">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_20" type="checkbox"
+                                        (change)="selectThisItem(25,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_20>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">2:0</span>
+                                <span class="num">{{popData.spMap.dcbf_20}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_21}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_21; else spMapdcbf_21">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_21" type="checkbox"
+                                        (change)="selectThisItem(26,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_21>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">2:1</span>
+                                <span class="num">{{popData.spMap.dcbf_21}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_30}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_30; else spMapdcbf_30">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_30" type="checkbox"
+                                        (change)="selectThisItem(27,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_30>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">3:0</span>
+                                <span class="num">{{popData.spMap.dcbf_30}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_31}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_31; else spMapdcbf_31">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_31" type="checkbox"
+                                        (change)="selectThisItem(28,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_31>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">3:1</span>
+                                <span class="num">{{popData.spMap.dcbf_31}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_32}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_32; else spMapdcbf_32">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_32" type="checkbox"
+                                        (change)="selectThisItem(29,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_32>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">3:2</span>
+                                <span class="num">{{popData.spMap.dcbf_32}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_40}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_40; else spMapdcbf_40">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_40" type="checkbox"
+                                        (change)="selectThisItem(30,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_40>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">4:0</span>
+                                <span class="num">{{popData.spMap.dcbf_40}}</span>
+                            </div>
+                        </div>
+                        <div class="popScore">
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_41}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_41; else spMapdcbf_41">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_41" type="checkbox"
+                                        (change)="selectThisItem(31,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_41>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">4:1</span>
+                                <span class="num">{{popData.spMap.dcbf_41}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_42}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_42; else spMapdcbf_42">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_42" type="checkbox"
+                                        (change)="selectThisItem(32,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_42>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">4:2</span>
+                                <span class="num">{{popData.spMap.dcbf_42}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_50}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_50; else spMapdcbf_50">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_50" type="checkbox"
+                                        (change)="selectThisItem(33,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_50>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">5:0</span>
+                                <span class="num">{{popData.spMap.dcbf_50}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_51}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_51; else spMapdcbf_51">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_51" type="checkbox"
+                                        (change)="selectThisItem(34,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_51>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">5:1</span>
+                                <span class="num">{{popData.spMap.dcbf_51}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_52}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_52; else spMapdcbf_52">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_52" type="checkbox"
+                                        (change)="selectThisItem(35,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_52>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">5:2</span>
+                                <span class="num">{{popData.spMap.dcbf_52}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_90}" id="popOther">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_90; else spMapdcbf_90">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_90" type="checkbox"
+                                        (change)="selectThisItem(36,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_90>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">胜其他</span>
+                                <span class="num">{{popData.spMap.dcbf_90}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="popList">
+                    <div class="popTitle">平</div>
+                    <div class="popContent">
+                        <div class="popScore">
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_00}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_00; else spMapdcbf_00">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_00" type="checkbox"
+                                        (change)="selectThisItem(37,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_00>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">0:0</span>
+                                <span class="num">{{popData.spMap.dcbf_00}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_11}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_11; else spMapdcbf_11">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_11" type="checkbox"
+                                        (change)="selectThisItem(38,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_11>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">1:1</span>
+                                <span class="num">{{popData.spMap.dcbf_11}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_22}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_22; else spMapdcbf_22">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_22" type="checkbox"
+                                        (change)="selectThisItem(39,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_22>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">2:2</span>
+                                <span class="num">{{popData.spMap.dcbf_22}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_33}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_33; else spMapdcbf_33">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_33" type="checkbox"
+                                        (change)="selectThisItem(40,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_33>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">3:3</span>
+                                <span class="num">{{popData.spMap.dcbf_33}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_99}" id="popOther">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_99; else spMapdcbf_99">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_99" type="checkbox"
+                                        (change)="selectThisItem(41,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_99>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">平其他</span>
+                                <span class="num">{{popData.spMap.dcbf_99}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="popList">
+                    <div class="popTitle">负</div>
+                    <div class="popContent">
+                        <div class="popScore">
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_01}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_01; else spMapdcbf_01">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_01" type="checkbox"
+                                        (change)="selectThisItem(42,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_01>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">0:1</span>
+                                <span class="num">{{popData.spMap.dcbf_01}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_02}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_02; else spMapdcbf_02">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_02" type="checkbox"
+                                        (change)="selectThisItem(43,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_02>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">0:2</span>
+                                <span class="num">{{popData.spMap.dcbf_02}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_12}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_12; else spMapdcbf_12">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_12" type="checkbox"
+                                        (change)="selectThisItem(44,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_12>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">1:2</span>
+                                <span class="num">{{popData.spMap.dcbf_12}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_03}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_03; else spMapdcbf_03">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_03" type="checkbox"
+                                        (change)="selectThisItem(45,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_03>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">0:3</span>
+                                <span class="num">{{popData.spMap.dcbf_03}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_13}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_13; else spMapdcbf_13">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_13" type="checkbox"
+                                        (change)="selectThisItem(46,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_13>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">1:3</span>
+                                <span class="num">{{popData.spMap.dcbf_13}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_23}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_23; else spMapdcbf_23">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_23" type="checkbox"
+                                        (change)="selectThisItem(47,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_23>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">2:3</span>
+                                <span class="num">{{popData.spMap.dcbf_23}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_04}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_04; else spMapdcbf_04">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_04" type="checkbox"
+                                        (change)="selectThisItem(48,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_04>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">0:4</span>
+                                <span class="num">{{popData.spMap.dcbf_04}}</span>
+                            </div>
+                        </div>
+                        <div class="popScore">
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_14}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_14; else spMapdcbf_14">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_14" type="checkbox"
+                                        (change)="selectThisItem(49,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_14>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">1:4</span>
+                                <span class="num">{{popData.spMap.dcbf_14}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_24}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_24; else spMapdcbf_24">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_24" type="checkbox"
+                                        (change)="selectThisItem(50,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_24>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">2:4</span>
+                                <span class="num">{{popData.spMap.dcbf_24}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_05}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_05; else spMapdcbf_05">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_05" type="checkbox"
+                                        (change)="selectThisItem(51,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_05>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">0:5</span>
+                                <span class="num">{{popData.spMap.dcbf_05}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_15}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_15; else spMapdcbf_15">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_15" type="checkbox"
+                                        (change)="selectThisItem(52,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_15>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">1:5</span>
+                                <span class="num">{{popData.spMap.dcbf_15}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_25}">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_25; else spMapdcbf_25">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_25" type="checkbox"
+                                        (change)="selectThisItem(53,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_25>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">2:5</span>
+                                <span class="num">{{popData.spMap.dcbf_25}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.dcbf_09}" id="popOther">
+                                <ng-container *ngIf="!!popData.spMap.dcbf_09; else spMapdcbf_09">
+                                    <input *ngIf="popData.canSelect[4]==0 || popData.canSelect[4]==1"
+                                        [(ngModel)]="popData.selectSpMap.dcbf_09" type="checkbox"
+                                        (change)="selectThisItem(54,popData)"
+                                        [disabled]="popData.canSelect[4]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[4]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapdcbf_09>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">负其他</span>
+                                <span class="num">{{popData.spMap.dcbf_09}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 总进球 -->
+            <div class="popScoreItem">
+                <div class="popHeader">单</div>
+                <div class="popList">
+                    <div class="popTitle">总进球</div>
+                    <div class="popContent">
+                        <div class="popScoreAll">
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.zjq_0}">
+                                <ng-container *ngIf="!!popData.spMap.zjq_0; else spMapzjq_0">
+                                    <input *ngIf="popData.canSelect[2]==0 || popData.canSelect[2]==1"
+                                        [(ngModel)]="popData.selectSpMap.zjq_0" type="checkbox"
+                                        (change)="selectThisItem(7,popData)"
+                                        [disabled]="popData.canSelect[2]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[2]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapzjq_0>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">0</span>
+                                <span class="num">{{popData.spMap.zjq_0}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.zjq_1}">
+                                <ng-container *ngIf="!!popData.spMap.zjq_1; else spMapzjq_1">
+                                    <input *ngIf="popData.canSelect[2]==0 || popData.canSelect[2]==1"
+                                        [(ngModel)]="popData.selectSpMap.zjq_1" type="checkbox"
+                                        (change)="selectThisItem(8,popData)"
+                                        [disabled]="popData.canSelect[2]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[2]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapzjq_1>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">1</span>
+                                <span class="num">{{popData.spMap.zjq_1}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.zjq_2}">
+                                <ng-container *ngIf="!!popData.spMap.zjq_2; else spMapzjq_2">
+                                    <input *ngIf="popData.canSelect[2]==0 || popData.canSelect[2]==1"
+                                        [(ngModel)]="popData.selectSpMap.zjq_2" type="checkbox"
+                                        (change)="selectThisItem(9,popData)"
+                                        [disabled]="popData.canSelect[2]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[2]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapzjq_2>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">2</span>
+                                <span class="num">{{popData.spMap.zjq_2}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.zjq_3}">
+                                <ng-container *ngIf="!!popData.spMap.zjq_3; else spMapzjq_3">
+                                    <input *ngIf="popData.canSelect[2]==0 || popData.canSelect[2]==1"
+                                        [(ngModel)]="popData.selectSpMap.zjq_3" type="checkbox"
+                                        (change)="selectThisItem(10,popData)"
+                                        [disabled]="popData.canSelect[2]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[2]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapzjq_3>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">3</span>
+                                <span class="num">{{popData.spMap.zjq_3}}</span>
+                            </div>
+                        </div>
+                        <div class="popScoreAll">
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.zjq_4}">
+                                <ng-container *ngIf="!!popData.spMap.zjq_4; else spMapzjq_4">
+                                    <input *ngIf="popData.canSelect[2]==0 || popData.canSelect[2]==1"
+                                        [(ngModel)]="popData.selectSpMap.zjq_4" type="checkbox"
+                                        (change)="selectThisItem(11,popData)"
+                                        [disabled]="popData.canSelect[2]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[2]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapzjq_4>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">4</span>
+                                <span class="num">{{popData.spMap.zjq_4}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.zjq_5}">
+                                <ng-container *ngIf="!!popData.spMap.zjq_5; else spMapzjq_5">
+                                    <input *ngIf="popData.canSelect[2]==0 || popData.canSelect[2]==1"
+                                        [(ngModel)]="popData.selectSpMap.zjq_5" type="checkbox"
+                                        (change)="selectThisItem(12,popData)"
+                                        [disabled]="popData.canSelect[2]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[2]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapzjq_5>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">5</span>
+                                <span class="num">{{popData.spMap.zjq_5}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.zjq_6}">
+                                <ng-container *ngIf="!!popData.spMap.zjq_6; else spMapzjq_6">
+                                    <input *ngIf="popData.canSelect[2]==0 || popData.canSelect[2]==1"
+                                        [(ngModel)]="popData.selectSpMap.zjq_6" type="checkbox"
+                                        (change)="selectThisItem(13,popData)"
+                                        [disabled]="popData.canSelect[2]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[2]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapzjq_6>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">6</span>
+                                <span class="num">{{popData.spMap.zjq_6}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.zjq_7}">
+                                <ng-container *ngIf="!!popData.spMap.zjq_7; else spMapzjq_7">
+                                    <input *ngIf="popData.canSelect[2]==0 || popData.canSelect[2]==1"
+                                        [(ngModel)]="popData.selectSpMap.zjq_7" type="checkbox"
+                                        (change)="selectThisItem(14,popData)"
+                                        [disabled]="popData.canSelect[2]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[2]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapzjq_7>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">7+</span>
+                                <span class="num">{{popData.spMap.zjq_7}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 半全场 -->
+            <div class="popScoreItem">
+                <div class="popHeader">单</div>
+                <div class="popList">
+                    <div class="popTitle">半全场</div>
+                    <div class="popContent">
+                        <div class="popScoreHalf">
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.bqc_33}">
+                                <ng-container *ngIf="!!popData.spMap.bqc_33; else spMapbqc_33">
+                                    <input *ngIf="popData.canSelect[3]==0 || popData.canSelect[3]==1"
+                                        [(ngModel)]="popData.selectSpMap.bqc_33" type="checkbox"
+                                        (change)="selectThisItem(15,popData)"
+                                        [disabled]="popData.canSelect[3]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[3]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapbqc_33>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">胜-胜</span>
+                                <span class="num">{{popData.spMap.bqc_33}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.bqc_31}">
+                                <ng-container *ngIf="!!popData.spMap.bqc_31; else spMapbqc_31">
+                                    <input *ngIf="popData.canSelect[3]==0 || popData.canSelect[3]==1"
+                                        [(ngModel)]="popData.selectSpMap.bqc_31" type="checkbox"
+                                        (change)="selectThisItem(16,popData)"
+                                        [disabled]="popData.canSelect[3]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[3]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapbqc_31>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">胜-平</span>
+                                <span class="num">{{popData.spMap.bqc_31}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.bqc_30}">
+                                <ng-container *ngIf="!!popData.spMap.bqc_30; else spMapbqc_30">
+                                    <input *ngIf="popData.canSelect[3]==0 || popData.canSelect[3]==1"
+                                        [(ngModel)]="popData.selectSpMap.bqc_30" type="checkbox"
+                                        (change)="selectThisItem(17,popData)"
+                                        [disabled]="popData.canSelect[3]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[3]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapbqc_30>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">胜-负</span>
+                                <span class="num">{{popData.spMap.bqc_30}}</span>
+                            </div>
+                        </div>
+                        <div class="popScoreHalf">
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.bqc_13}">
+                                <ng-container *ngIf="!!popData.spMap.bqc_13; else spMapbqc_13">
+                                    <input *ngIf="popData.canSelect[3]==0 || popData.canSelect[3]==1"
+                                        [(ngModel)]="popData.selectSpMap.bqc_13" type="checkbox"
+                                        (change)="selectThisItem(18,popData)"
+                                        [disabled]="popData.canSelect[3]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[3]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapbqc_13>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">平-胜</span>
+                                <span class="num">{{popData.spMap.bqc_13}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.bqc_11}">
+                                <ng-container *ngIf="!!popData.spMap.bqc_11; else spMapbqc_11">
+                                    <input *ngIf="popData.canSelect[3]==0 || popData.canSelect[3]==1"
+                                        [(ngModel)]="popData.selectSpMap.bqc_11" type="checkbox"
+                                        (change)="selectThisItem(19,popData)"
+                                        [disabled]="popData.canSelect[3]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[3]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapbqc_11>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">平-平</span>
+                                <span class="num">{{popData.spMap.bqc_11}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.bqc_10}">
+                                <ng-container *ngIf="!!popData.spMap.bqc_10; else spMapbqc_10">
+                                    <input *ngIf="popData.canSelect[3]==0 || popData.canSelect[3]==1"
+                                        [(ngModel)]="popData.selectSpMap.bqc_10" type="checkbox"
+                                        (change)="selectThisItem(20,popData)"
+                                        [disabled]="popData.canSelect[3]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[3]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapbqc_10>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">平-负</span>
+                                <span class="num">{{popData.spMap.bqc_10}}</span>
+                            </div>
+                        </div>
+                        <div class="popScoreHalf">
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.bqc_03}">
+                                <ng-container *ngIf="!!popData.spMap.bqc_03; else spMapbqc_03">
+                                    <input *ngIf="popData.canSelect[3]==0 || popData.canSelect[3]==1"
+                                        [(ngModel)]="popData.selectSpMap.bqc_03" type="checkbox"
+                                        (change)="selectThisItem(21,popData)"
+                                        [disabled]="popData.canSelect[3]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[3]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapbqc_03>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">负-胜</span>
+                                <span class="num">{{popData.spMap.bqc_03}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.bqc_01}">
+                                <ng-container *ngIf="!!popData.spMap.bqc_01; else spMapbqc_01">
+                                    <input *ngIf="popData.canSelect[3]==0 || popData.canSelect[3]==1"
+                                        [(ngModel)]="popData.selectSpMap.bqc_01" type="checkbox"
+                                        (change)="selectThisItem(22,popData)"
+                                        [disabled]="popData.canSelect[3]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[3]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapbqc_01>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">负-平</span>
+                                <span class="num">{{popData.spMap.bqc_01}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap.bqc_00}">
+                                <ng-container *ngIf="!!popData.spMap.bqc_00; else spMapbqc_00">
+                                    <input *ngIf="popData.canSelect[3]==0 || popData.canSelect[3]==1"
+                                        [(ngModel)]="popData.selectSpMap.bqc_00" type="checkbox"
+                                        (change)="selectThisItem(23,popData)"
+                                        [disabled]="popData.canSelect[3]==-1 ? true: false">
+                                    <input type="checkbox" *ngIf="popData.canSelect[3]==-1" (change)="showTip()">
+                                </ng-container>
+                                <ng-template #spMapbqc_00>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">负-负</span>
+                                <span class="num">{{popData.spMap.bqc_00}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 比分弹出层 -->
+        <div *ngIf="clickTabId==2">
+            <div class="popScoreItem">
+                <!-- <div class="popHeader">单</div> -->
+                <div class="popList popListBorder">
+                    <div class="popTitle">胜</div>
+                    <div class="popContent">
+                        <div class="popScore">
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['10']}">
+                                <ng-container *ngIf="!!popData.spMap['10']; else spMap10">
+                                    <input [(ngModel)]="popData.selectSpMap['10']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap10>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">1:0</span>
+                                <span class="num">{{popData.spMap['10']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['20']}">
+                                <ng-container *ngIf="!!popData.spMap['20']; else spMap20">
+                                    <input [(ngModel)]="popData.selectSpMap['20']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap20>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+
+                                <span class="state">2:0</span>
+                                <span class="num">{{popData.spMap['20']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['21']}">
+                                <ng-container *ngIf="!!popData.spMap['21']; else spMap21">
+                                    <input [(ngModel)]="popData.selectSpMap['21']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap21>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">2:1</span>
+                                <span class="num">{{popData.spMap['21']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['30']}">
+                                <ng-container *ngIf="!!popData.spMap['30']; else spMap30">
+                                    <input [(ngModel)]="popData.selectSpMap['30']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap30>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">3:0</span>
+                                <span class="num">{{popData.spMap['30']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['31']}">
+                                <ng-container *ngIf="!!popData.spMap['31']; else spMap31">
+                                    <input [(ngModel)]="popData.selectSpMap['31']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap31>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">3:1</span>
+                                <span class="num">{{popData.spMap['31']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['32']}">
+                                <ng-container *ngIf="!!popData.spMap['32']; else spMap32">
+                                    <input [(ngModel)]="popData.selectSpMap['32']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap32>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">3:2</span>
+                                <span class="num">{{popData.spMap['32']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['40']}">
+                                <ng-container *ngIf="!!popData.spMap['40']; else spMap40">
+                                    <input [(ngModel)]="popData.selectSpMap['40']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap40>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">4:0</span>
+                                <span class="num">{{popData.spMap['40']}}</span>
+                            </div>
+                        </div>
+                        <div class="popScore">
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['41']}">
+                                <ng-container *ngIf="!!popData.spMap['41']; else spMap41">
+                                    <input [(ngModel)]="popData.selectSpMap['41']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap41>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">4:1</span>
+                                <span class="num">{{popData.spMap['41']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['42']}">
+                                <ng-container *ngIf="!!popData.spMap['42']; else spMap42">
+                                    <input [(ngModel)]="popData.selectSpMap['42']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap42>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">4:2</span>
+                                <span class="num">{{popData.spMap['42']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['50']}">
+                                <ng-container *ngIf="!!popData.spMap['50']; else spMap50">
+                                    <input [(ngModel)]="popData.selectSpMap['50']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap50>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">5:0</span>
+                                <span class="num">{{popData.spMap['50']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['51']}">
+                                <ng-container *ngIf="!!popData.spMap['51']; else spMap51">
+                                    <input [(ngModel)]="popData.selectSpMap['51']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap51>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">5:1</span>
+                                <span class="num">{{popData.spMap['51']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['52']}">
+                                <ng-container *ngIf="!!popData.spMap['52']; else spMap52">
+                                    <input [(ngModel)]="popData.selectSpMap['52']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap52>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">5:2</span>
+                                <span class="num">{{popData.spMap['52']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['90']}" id="popOther">
+                                <ng-container *ngIf="!!popData.spMap['90']; else spMap90">
+                                    <input [(ngModel)]="popData.selectSpMap['90']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap90>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">胜其他</span>
+                                <span class="num">{{popData.spMap['90']}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="popList">
+                    <div class="popTitle">平</div>
+                    <div class="popContent">
+                        <div class="popScore">
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['00']}">
+                                <ng-container *ngIf="!!popData.spMap['00']; else spMap00">
+                                    <input [(ngModel)]="popData.selectSpMap['00']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap00>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">0:0</span>
+                                <span class="num">{{popData.spMap['00']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['11']}">
+                                <ng-container *ngIf="!!popData.spMap['11']; else spMap11">
+                                    <input [(ngModel)]="popData.selectSpMap['11']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap11>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">1:1</span>
+                                <span class="num">{{popData.spMap['11']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['22']}">
+                                <ng-container *ngIf="!!popData.spMap['22']; else spMap22">
+                                    <input [(ngModel)]="popData.selectSpMap['22']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap22>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">2:2</span>
+                                <span class="num">{{popData.spMap['22']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['33']}">
+                                <ng-container *ngIf="!!popData.spMap['33']; else spMap33">
+                                    <input [(ngModel)]="popData.selectSpMap['33']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap33>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">3:3</span>
+                                <span class="num">{{popData.spMap['33']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['99']}" id="popOther">
+                                <ng-container *ngIf="!!popData.spMap['99']; else spMap99">
+                                    <input [(ngModel)]="popData.selectSpMap['99']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap99>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">平其他</span>
+                                <span class="num">{{popData.spMap['99']}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="popList">
+                    <div class="popTitle">负</div>
+                    <div class="popContent">
+                        <div class="popScore">
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['01']}">
+                                <ng-container *ngIf="!!popData.spMap['01']; else spMap01">
+                                    <input [(ngModel)]="popData.selectSpMap['01']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap01>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">0:1</span>
+                                <span class="num">{{popData.spMap['01']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['02']}">
+                                <ng-container *ngIf="!!popData.spMap['02']; else spMap02">
+                                    <input [(ngModel)]="popData.selectSpMap['02']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap02>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">0:2</span>
+                                <span class="num">{{popData.spMap['02']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['12']}">
+                                <ng-container *ngIf="!!popData.spMap['12']; else spMap12">
+                                    <input [(ngModel)]="popData.selectSpMap['12']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap12>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">1:2</span>
+                                <span class="num">{{popData.spMap['12']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['03']}">
+                                <ng-container *ngIf="!!popData.spMap['03']; else spMap03">
+                                    <input [(ngModel)]="popData.selectSpMap['03']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap03>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">0:3</span>
+                                <span class="num">{{popData.spMap['03']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['13']}">
+                                <ng-container *ngIf="!!popData.spMap['13']; else spMap13">
+                                    <input [(ngModel)]="popData.selectSpMap['13']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap13>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">1:3</span>
+                                <span class="num">{{popData.spMap['13']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['23']}">
+                                <ng-container *ngIf="!!popData.spMap['23']; else spMap23">
+                                    <input [(ngModel)]="popData.selectSpMap['23']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap23>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">2:3</span>
+                                <span class="num">{{popData.spMap['23']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['04']}">
+                                <ng-container *ngIf="!!popData.spMap['04']; else spMap04">
+                                    <input [(ngModel)]="popData.selectSpMap['04']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap04>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">0:4</span>
+                                <span class="num">{{popData.spMap['04']}}</span>
+                            </div>
+                        </div>
+                        <div class="popScore">
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['14']}">
+                                <ng-container *ngIf="!!popData.spMap['14']; else spMap14">
+                                    <input [(ngModel)]="popData.selectSpMap['14']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap14>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">1:4</span>
+                                <span class="num">{{popData.spMap['14']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['24']}">
+                                <ng-container *ngIf="!!popData.spMap['24']; else spMap24">
+                                    <input [(ngModel)]="popData.selectSpMap['24']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap24>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">2:4</span>
+                                <span class="num">{{popData.spMap['24']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['05']}">
+                                <ng-container *ngIf="!!popData.spMap['05']; else spMap05">
+                                    <input [(ngModel)]="popData.selectSpMap['05']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap05>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">0:5</span>
+                                <span class="num">{{popData.spMap['05']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['15']}">
+                                <ng-container *ngIf="!!popData.spMap['15']; else spMap15">
+                                    <input [(ngModel)]="popData.selectSpMap['15']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap15>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">1:5</span>
+                                <span class="num">{{popData.spMap['15']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['25']}">
+                                <ng-container *ngIf="!!popData.spMap['25']; else spMap25">
+                                    <input [(ngModel)]="popData.selectSpMap['25']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap25>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">2:5</span>
+                                <span class="num">{{popData.spMap['25']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['09']}" id="popOther">
+                                <ng-container *ngIf="!!popData.spMap['09']; else spMap09">
+                                    <input [(ngModel)]="popData.selectSpMap['09']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap09>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">负其他</span>
+                                <span class="num">{{popData.spMap['09']}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 半全场弹出层 -->
+        <div *ngIf="clickTabId == 4">
+            <div class="popScoreItem">
+                <!-- <div class="popHeader">单</div> -->
+                <div class="popList popListBorder">
+                    <div class="popTitle">半全场</div>
+                    <div class="popContent">
+                        <div class="popScoreHalf">
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['33']}">
+                                <ng-container *ngIf="!!popData.spMap['33']; else spMap33">
+                                    <input [(ngModel)]="popData.selectSpMap['33']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap33>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">胜-胜</span>
+                                <span class="num">{{popData.spMap['33']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['31']}">
+                                <ng-container *ngIf="!!popData.spMap['31']; else spMap31">
+                                    <input [(ngModel)]="popData.selectSpMap['31']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap31>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">胜-平</span>
+                                <span class="num">{{popData.spMap['31']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['30']}">
+                                <ng-container *ngIf="!!popData.spMap['30']; else spMap30">
+                                    <input [(ngModel)]="popData.selectSpMap['30']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap30>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">胜-负</span>
+                                <span class="num">{{popData.spMap['30']}}</span>
+                            </div>
+                        </div>
+                        <div class="popScoreHalf">
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['13']}">
+                                <ng-container *ngIf="!!popData.spMap['13']; else spMap13">
+                                    <input [(ngModel)]="popData.selectSpMap['13']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap13>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">平-胜</span>
+                                <span class="num">{{popData.spMap['13']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['11']}">
+                                <ng-container *ngIf="!!popData.spMap['11']; else spMap11">
+                                    <input [(ngModel)]="popData.selectSpMap['11']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap11>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">平-平</span>
+                                <span class="num">{{popData.spMap['11']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['10']}">
+                                <ng-container *ngIf="!!popData.spMap['10']; else spMap10">
+                                    <input [(ngModel)]="popData.selectSpMap['10']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap10>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">平-负</span>
+                                <span class="num">{{popData.spMap['10']}}</span>
+                            </div>
+                        </div>
+                        <div class="popScoreHalf">
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['03']}">
+                                <ng-container *ngIf="!!popData.spMap['03']; else spMap03">
+                                    <input [(ngModel)]="popData.selectSpMap['03']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap03>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">负-胜</span>
+                                <span class="num">{{popData.spMap['03']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['01']}">
+                                <ng-container *ngIf="!!popData.spMap['01']; else spMap01">
+                                    <input [(ngModel)]="popData.selectSpMap['01']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap01>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">负-平</span>
+                                <span class="num">{{popData.spMap['01']}}</span>
+                            </div>
+                            <div [ngClass]="{scoreSelect:popData.selectSpMap['00']}">
+                                <ng-container *ngIf="!!popData.spMap['00']; else spMap00">
+                                    <input [(ngModel)]="popData.selectSpMap['00']" type="checkbox"
+                                        (change)="selectThisItem()">
+                                </ng-container>
+                                <ng-template #spMap00>
+                                    <input type="checkbox" (change)="showTipNoSp()">
+                                </ng-template>
+                                <span class="state">负-负</span>
+                                <span class="num">{{popData.spMap['00']}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="popButtonGroup">
+            <button class="cancel" (click)="cancel()">取消</button>
+            <button class="sure" (click)="sure()">确定</button>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="pop" *ngIf="showTips">
+    <div class="popContainer container showTipsFont">
+        {{tipsInfo}}
+    </div>
+</div>

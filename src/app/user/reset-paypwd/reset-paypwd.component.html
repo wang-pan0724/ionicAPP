@@ -1,0 +1,42 @@
+<app-common-title [showReturn]=true [title]='title'></app-common-title>
+<div class="page">
+    <div *ngIf="step == 0">
+        <div class="tips">请输入您的绑定手机号</div>
+        <div class="input">
+            <div class="phoneNum">
+                <span *ngFor="let num of phoneNumList">{{num}}</span>
+            </div>
+            <input type="number" #number (input)="change(number)" [(ngModel)]="phone">
+        </div>
+    </div>
+    <div *ngIf="step == 1">
+        <div class="tips">我们已发送验证码到您的手机</div>
+        <div class="tips">{{phone}}</div>
+        <div class="input">
+            <div class="phone">
+                <span *ngFor="let num of numberList">{{num}}</span>
+            </div>
+            <input type="number" #number (input)="setPhoneCode(number)" [(ngModel)]="code">
+        </div>
+    </div>
+    <div *ngIf="step == 2">
+        <div class="tips">请设置新支付密码，用于支付验证</div>
+        <div class="input">
+            <div class="phone">
+                <span *ngFor="let num of numberList">{{num}}</span>
+            </div>
+            <input type="number" #number (input)="setNewPwd(number)" [(ngModel)]="NewPwd">
+        </div>
+    </div>
+    <div *ngIf="step == 3">
+        <div class="tips">请再次填写以确认</div>
+        <div class="input">
+            <div class="phone">
+                <span *ngFor="let num of numberList">{{num}}</span>
+            </div>
+            <input type="number" #number (input)="resetNewPwd(number)" [(ngModel)]="reNewpwd">
+        </div>
+    </div>
+</div>
+
+<app-alert [showPop]="showPop" [showTips]="showTips"></app-alert>

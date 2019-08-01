@@ -1,0 +1,12 @@
+.pd{
+    padding: 60px 5px 0px 5px; 
+    font-size: 13px;
+    color: #333;
+    background: #fff;
+}
+
+p{
+    text-indent: 2em;
+    font-size: 13px;
+    margin-bottom: 10px;
+}

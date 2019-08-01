@@ -1,0 +1,98 @@
+<app-common-title [showReturn]=true [title]='title'></app-common-title>
+<ion-content>
+<div class="firmOrderContainer container">
+  <div class="firmOrder">
+    <div class="firmOrderHeader">投注内容 <span>共{{firmOrder.selectMatchNum}}场比赛</span></div>
+    <div class="firmOrderScrool">
+        <ng-container *ngFor="let item of firmOrder.list.list">
+            <div class="firmOrderList" *ngIf="item.selectedList.length>0">
+              <div (click)="deleteThisItem(item.matchNo,item.matchTime)" class="closeBtn"><i class="el-icon-circle-close"></i></div>
+              <div class="rightContent">
+                <div class="firmOrderListDetail">
+                  <div *ngIf="firmOrder.list.gameId>4070">
+                    {{item.endTime | week}}{{item.matchNo}} &nbsp;&nbsp; {{item.homeTeam}} (主) VS {{item.guestTeam}} (客)
+                  </div>
+                  <div *ngIf="4070>firmOrder.list.gameId">
+                    {{item.endTime | week}}{{item.matchNo}} &nbsp;&nbsp; {{item.guestTeam}} (客) VS {{item.homeTeam}} (主)
+                  </div>
+                  <div id="can" [ngClass]="{can:!item.selectDan, selectCan:item.selectDan}" *ngIf="item.canSelectDan">
+                    <input [(ngModel)]="item.selectDan" type="checkbox" (change)="setDan()">
+                    胆
+                  </div>
+                  <div id="can" class="canSelectDan" *ngIf="!item.canSelectDan">
+                    <input type="checkbox" (change)="showTips()">
+                    胆
+                  </div>
+                </div>
+                <div class="firmOrderListItem">
+                  <span *ngFor="let itemList of item.selectedSpmapers">{{itemList}}&nbsp;&nbsp;</span>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+    </div>
+    <div class="firmOrderFooter" *ngIf="firmOrder.list.gameId>4070">投注内容为全场90分钟内赛果（含伤停补时）</div>
+  </div>
+  <div class="firmOrder firmOrderMargin">
+    <div class="firmOrderTitle">过关方式</div>
+    <div class="type">
+      <ng-container *ngFor="let item of guanType">
+        <div *ngIf="item.type==1" [ngClass]="{selectThisGuan: item.select}">
+          <input [(ngModel)]="item.select" type="checkbox" (change)="changeGuan(item.id)"> {{item.title}}
+        </div>
+      </ng-container>
+
+    </div>
+  </div>
+  <div class="firmOrder firmOrderMargin">
+    <div class="firmOrderTitle">选择倍数</div>
+    <div class="multiples">
+      <span>投</span>
+      <span class="num" (click)="sub()">-</span>
+      <!--  onkeyup="this.value=this.value.replace(/[^0-9-]+/,'');"  -->
+      <input type="number" [(ngModel)]="multiples" (ngModelChange)="changeNum($event)">
+      <span class="num" (click)="add()">+</span>
+      <span>倍</span>
+    </div>
+  </div>
+  <div class="firmOrder firmOrderMargin">
+    <div class="firmOrderTitle">预约须知</div>
+    <div class="shoudRead">
+      <p>1.提交方案后，站点将收到您的方案信息，并尽快为您处理。</p>
+      <p>2.站点接单后，出票款需由您双方线下结算，结算后站点将为您出票。</p>
+      <p>3.在您下单与站点出票之间存在一定时间差，期间中心的让球数、预设总分、赔率值可能会有变化，您的方案奖金值须以实际出票时的赔率为准。</p>
+      <p>4.使用本服务即视为您已同意站点为您提供出票、保存样飘、待兑奖等服务。</p>
+    </div>
+    <div class="select">
+      <el-checkbox [model]="val" (modelChange)="handle($event)">我已阅读并同意预约须知</el-checkbox>
+    </div>
+  </div>
+</div>
+
+<div class="shopAddress">
+  <div class="closeBtn"><i class="iconfont icon-location"></i></div>
+  <div *ngIf="!!storeData" class="storeData">
+    <p>{{storeData.providerName}}&nbsp;{{storeData.providerPhone}}</p>
+    <p>{{storeData.providerAddress}}</p>
+  </div> 
+</div>
+<div class="bottomNext">
+  <div class="bottomLeft">
+    <p>{{listZhu}}注，共{{listZhu*2*multiples}}元</p>
+    <p>预计奖金：￥{{minBonus}}~{{maxBonus}}</p>
+  </div>
+  <div *ngIf="canGoNextStep" class="bottonRightRed" (click)="nextStep()">
+    提交彩店出票
+  </div>
+  <div *ngIf="!canGoNextStep"  class="bottonRightDefault">
+    提交彩店出票
+  </div>
+</div>
+</ion-content>
+<div class="pop" *ngIf="showDanTips">
+  <div class="popContainer container showTipsFont">
+    {{showDanStr}}
+  </div>
+</div>
+
+<app-alert [showPop]="showPop" [showTips]="showPOPTips"></app-alert>

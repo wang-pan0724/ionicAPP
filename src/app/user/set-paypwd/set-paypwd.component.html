@@ -1,0 +1,23 @@
+<app-common-title [showReturn]=true [title]='title'></app-common-title>
+<div class="page">
+  <ul class="tradeListUl">
+    <li class="marginTop10" routerLink="/mine/userinfo/changepaypwd" *ngIf="isSetUserInfo.isSetPlatPayPwd ==1">
+      <div>修改支付密码</div>
+      <div>
+        <i class="iconfont icon-right"></i>
+      </div>
+    </li>
+    <li class="marginTop5"  routerLink="/mine/userinfo/resetpaypwd"  *ngIf="isSetUserInfo.isSetPlatPayPwd ==1">
+      <div>重置支付密码</div>
+      <div>
+        <i class="iconfont icon-right"></i>
+      </div>
+    </li>
+    <li class="marginTop10" routerLink="/mine/userinfo/setpaypassword" *ngIf="isSetUserInfo.isSetPlatPayPwd ==0">
+      <div>设置支付密码</div>
+      <div>
+        <i class="iconfont icon-right"></i>
+      </div>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,186 @@
+<app-common-title [showReturn]=false [title]='title'></app-common-title>
+<ion-content>
+<div class="page container">
+    <div class="menuList">
+        <app-dropdown [dataList]='GameIddata' [selectData]='value' (selected)="checkGameId($event)" class="menuItem">
+        </app-dropdown>
+        <app-dropdown [dataList]='winStatus' [selectData]='value2' (selected)="checkWinStatus($event)" class="menuItem">
+        </app-dropdown>
+        <app-dropdown [dataList]='planStatus' [selectData]='value3' (selected)="checkPlanStatus($event)"
+            class="menuItem"></app-dropdown>
+    </div>
+    <!-- <app-refresh (onRefresh)="onScrollRefresh()" class="scrollMarginTop"> -->
+        <div class="tradeList" *ngIf="tradeData.length>0">
+            <ul>
+                <li class="list" *ngFor="let item of tradeData">
+                    <div class="listContent" (click)="teadeDetail(item)">
+                        <div class="ballKinds">
+                            <img *ngIf="item.gameId>4070" src="../../assets/football.png" alt="">
+                            <img *ngIf="4070>item.gameId" src="../../assets/basketball.png" alt="">
+                            <div>{{item.gameName}}</div>
+                        </div>
+                        <div class="listTimeAndMoney">
+                            <p class="money">{{item.amount}}元</p>
+                            <p class="time">{{item.time}}</p>
+                        </div>
+                        <div class="listState" [ngSwitch]="item.planStatusId">
+                            <div *ngSwitchCase="0">
+                                <p class="state marginTop">待接单</p>
+                            </div>
+                            <div *ngSwitchCase="1">
+                                <p class="state marginTop">接单失败</p>
+                            </div>
+                            <div *ngSwitchCase="2">
+                                <p class="state marginTop">已撤销</p>
+                            </div>
+                            <div *ngSwitchCase="3">
+                                <p class="totalMoney">待出票</p>
+                                <p class="state">已接单</p>
+                            </div>
+                            <div *ngSwitchCase="4">
+                                <p class="totalMoney">待开奖</p>
+                                <p class="state">部分出票</p>
+                            </div>
+                            <div *ngSwitchCase="5">
+                                <p class="totalMoney">部分出票</p>
+                                <p class="state">未中奖</p>
+                            </div>
+                            <div *ngSwitchCase="6">
+                                <p class="totalMoney totalMoneyRed">已中奖</p>
+                                <p class="state">部分出票</p>
+                            </div>
+                            <div *ngSwitchCase="7">
+                                <p class="totalMoney totalMoneyRed">已派奖</p>
+                                <p class="state">部分出票</p>
+                            </div>
+                            <div *ngSwitchCase="8">
+                                <p class="state marginTop">站点撤销</p>
+                            </div>
+                            <div *ngSwitchCase="9">
+                                <p class="totalMoney">待录入</p>
+                                <p class="state">出票成功</p>
+                            </div>
+                            <div *ngSwitchCase="10">
+                                <p class="totalMoney">未中奖</p>
+                                <p class="state">未录入</p>
+                            </div>
+                            <div *ngSwitchCase="11">
+                                <p class="totalMoney totalMoneyRed">已中奖</p>
+                                <p class="state">未录入</p>
+                            </div>
+                            <div *ngSwitchCase="12">
+                                <p class="totalMoney totalMoneyRed">￥{{item.postaxPrize}}</p>
+                                <p class="state">出票成功</p>
+                            </div>
+                            <div *ngSwitchCase="13">
+                                <p class="totalMoney">待开奖</p>
+                                <p class="state">已录入</p>
+                            </div>
+                            <div *ngSwitchCase="14">
+                                <p class="totalMoney totalMoneyRed">￥{{item.repoAmount}}</p>
+                                <p class="state">已交易</p>
+                            </div>
+                            <div *ngSwitchCase="15">
+                                <p class="totalMoney">未中奖</p>
+                                <p class="state">已录入</p>
+                            </div>
+                            <div *ngSwitchCase="16">
+                                <p class="totalMoney totalMoneyRed"> 已中奖</p>
+                                <p class="state">已录入</p>
+                            </div>
+                            <div *ngSwitchCase="17">
+                                <p class="totalMoney totalMoneyRed">￥{{item.postaxPrize}}</p>
+                                <p class="state">已录入</p>
+                            </div>
+                            <div *ngSwitchCase="18">
+                                <p class="state marginTop">修改中</p>
+                            </div>
+                            <div *ngSwitchCase="19">
+                                <p class="totalMoney">交易中</p>
+                                <p class="state">已录入</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="listContent doList"
+                        *ngIf="(item.inquiryType==2 || item.inquiryType==0) && (item.planStatusId == 13 || item.planStatusId == 16) && !!item.planPrice">
+                        <!-- item.inquiryType==2 || item.inquiryType==0 && !!item.planPrice &&  -->
+                        <div class="nowPrice">实时价值：<span>{{!!!item.planPrice ? '暂无报价' : item.planPrice}}</span></div>
+                        <div class="bunGroup">
+                            <i class="setPriceStatus" *ngIf="item.isAutoMatic">自动</i>
+                            <button class="setPrice" (click)="setPrice(item)">设置金额</button>
+                            <button class="trade" (click)="tradeOrder(item)">发起交易</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="nextPage">
+                <span *ngIf="haveNextPage" (click)="onNextPage()">加载更多</span>
+                <span *ngIf="!haveNextPage" class='nextPageNull'>没有更多数据了</span>
+            </div>
+        </div>
+        <div class="tradeListNull" *ngIf="tradeData.length==0">
+            <img src="../../assets/null.png" alt="">
+            <p>亲，您还没有方案哦，快去发单吧！</p>
+        </div>
+<!-- </app-refresh>     -->
+</div>
+</ion-content>
+<app-footer></app-footer>
+<app-alert [showPop]="showPop" [showTips]="showTips"></app-alert>
+
+<div class="tradePop" *ngIf="tradePop">
+    <div class="tradePopContainer">
+        <div *ngIf="popIndex == 0">
+            <div class="closeBtn">
+                <i class="iconfont icon-guanbi2" (click)="closePop()"></i>
+            </div>
+            <i class="iconfont icon-check-circle tradeSuccessIcon"></i>
+            <div class="tipsText">已成功设置自动交易</div>
+            <p>当评估金额达到{{popData.autoRepoAmount}}元时，自动发起交易申请</p>
+
+            <button class="autoTradeBtn" (click)="cancelTrade(popData)">取消自动交易</button>
+        </div>
+        <div *ngIf="popIndex == 1">
+            <header class="closeBtn">
+                自动交易设置
+                <i class="iconfont icon-guanbi2" (click)="closePop()"></i>
+            </header>
+            <p>
+                当前评估金额达到
+                <input type="number" [(ngModel)]="planAmount">
+                元时，自动发起交易申请
+            </p>
+            <div *ngIf="!!popData.min">
+                <app-slider (modelChange)="changeValue($event)" [value]="planAmount" [min]="popData.min"
+                    [max]="popData.max" class="slider"></app-slider>
+                <div class="tradePrice">
+                    <span>{{popData.planPrice}}</span>
+                    <span>￥{{popData.maxBudgetPrize}}</span>
+                </div>
+            </div>
+            <button class="autoTradeBtn" (click)="setAutoTrade(popData)">设置自动交易</button>
+        </div>
+        <div *ngIf="popIndex == 2">
+            <header class="closeBtn">
+                确认发起交易吗？
+                <!-- <i class="iconfont icon-guanbi2" (click)="closePop()"></i> -->
+            </header>
+            <div>
+                <h3 class="planAmount">￥{{planAmount}}</h3>
+                <p class="tipsText"><span>{{seconds}}</span>秒后重新查询价格</p>
+                <p class="tipsRight">交易成功后则该彩票的全部权益归属于彩易科思</p>
+            </div>
+            <div class="popButtonGroup">
+                <button (click)="closePop()">取消</button>
+                <button (click)="confirmTradeOrder(popData)">确认</button>
+            </div>
+        </div>
+        <div *ngIf="popIndex == 3">
+            <div class="confirmtradeTip">主动发起交易将会取消自动交易的设置，是否确认继续发起交易？</div>
+            <div class="popButtonGroup">
+                <button (click)="closePop()">取消</button>
+                <button (click)="tradeNext(popData)">继续发起交易</button>
+            </div>
+        </div>
+    </div>
+</div>

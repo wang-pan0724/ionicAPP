@@ -1,0 +1,40 @@
+.logo{
+    text-align: center;
+    margin-top: 21%;
+    color: #666666;
+}
+
+.logo img{
+    width: 88px;
+    height: 88px;
+    display: block;
+    margin: 0px auto;
+}
+
+.logo p{
+    font-size: 18px;
+    font-family:PingFangSC-Medium;
+    font-weight:500;
+    margin-top: 12px;
+}
+
+.phone{
+    position: absolute;
+    bottom: 23px;
+    text-align: center;
+    width: 100%;
+    line-height: 26px;
+}
+
+.phone p:first-child{
+    font-weight:400;
+    font-size: 16px;
+    font-family:PingFangSC-Regular;
+    margin-bottom: 10px;
+}
+
+.phone p:last-child{
+    font-size: 14px;
+    font-weight:500;
+    font-family:PingFangSC-Medium;
+}
