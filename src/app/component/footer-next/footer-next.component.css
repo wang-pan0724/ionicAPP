@@ -1,6 +1,6 @@
 /* 底部 下一步 */
 .bottomNext{
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;

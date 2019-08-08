@@ -28,7 +28,7 @@ export class ScoreComponent implements OnInit {
   ];
   public tabIndex = 0;
   public LivezcMatchListData: any = [];
-  constructor(private http: HttpClient, private signService: SignService, ) { }
+  constructor(private http: HttpClient, private signService: SignService) { }
 
   ngOnInit() {
     this.getData();

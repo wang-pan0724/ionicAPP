@@ -10,7 +10,7 @@ import { HttpClient } from "@angular/common/http";
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-  @ViewChild('passwordType',{static: false}) passwordType: ElementRef
+  @ViewChild('passwordType') passwordType: ElementRef
   public title: string = "手机注册";
   public sendCode: boolean = false;
   public seconds:number;

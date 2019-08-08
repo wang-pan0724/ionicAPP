@@ -1,5 +1,7 @@
-<app-navbar (onNavChanged)='navChanged($event)' (onTabChanged)='tabChanged($event)' [navData]='navData'
-    [ballType]='ballType'></app-navbar>
+<ion-header>
+    <app-navbar (onNavChanged)='navChanged($event)' (onTabChanged)='tabChanged($event)' [navData]='navData'
+        [ballType]='ballType'></app-navbar>
+</ion-header>
 <ion-content>
     <div class="match">
         <!-- <app-refresh (onRefresh)="onScrollRefresh()" class="scrollMarginTop"> -->
@@ -634,9 +636,10 @@
             <span *ngIf="!haveNextPage" class='nextPageNull'>没有更多数据了</span>
         </div>
         <!-- </app-refresh> -->
-        <app-footer-next [selectData]='selectMatchDataList'></app-footer-next>
+        
     </div>
 </ion-content>
+<app-footer-next [selectData]='selectMatchDataList'></app-footer-next>
 <div class="pop" *ngIf="showPop">
     <div class="popContainer container">
         <div class="popCountry">

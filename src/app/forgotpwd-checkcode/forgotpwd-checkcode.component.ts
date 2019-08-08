@@ -11,7 +11,7 @@ import { HttpClient } from "@angular/common/http";
 })
 export class ForgotpwdCheckcodeComponent implements OnInit {
 
-  @ViewChild('passwordType',{static: false}) passwordType: ElementRef
+  @ViewChild('passwordType') passwordType: ElementRef
   public title: string = "找回密码";
   public showPop: boolean = false;
   public showTips: any = "";

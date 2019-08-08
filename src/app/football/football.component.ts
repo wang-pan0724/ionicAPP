@@ -85,7 +85,7 @@ export class FootballComponent implements OnInit {
     }
     var that = this;
     this.http.get(AppConfig.baseUrl + '/m/info/zcmatchlist.do?' + this.signService.getStrUrl(data)).subscribe(response => {
-      console.log(response)
+      console.log(response);
       if(!!response && response['ro'].code == '0000'){
         that.doData(response, listName)
       }

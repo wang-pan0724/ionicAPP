@@ -10,8 +10,8 @@ export class RefreshComponent implements OnInit, OnChanges {
   @Input('IsRefreshFinish') _IsRefreshFinish: boolean;
   @Output('onRefresh') _onRefresh: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('refresh',{static: false}) refresh: ElementRef;
-  @ViewChild('divContent',{static: false}) divContent: ElementRef;
+  @ViewChild('refresh') refresh: ElementRef;
+  @ViewChild('divContent') divContent: ElementRef;
 
   public TitleTop: string = '下拉刷新';
   public TitleBottom = '上拉加载';

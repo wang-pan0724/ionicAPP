@@ -21,14 +21,14 @@
     user-select:none;
 }
 html,body {
-    height: 100%;
+    // height: 100%;
     touch-action: inherit;
 }
 
+// html:not(.hydrated) body {
+//     display: block;
+// }
 
-html:not(.hydrated) body {
-    display: block;
-}
 html,body{ -webkit-text-size-adjust: none; }  
 /* 当需要在中文版chrome浏览器中显示小于12px的字体时，而且此时页面放大效果会被阻止 */
 
@@ -58,22 +58,28 @@ html{
 
 .page {
     opacity: 1;
+    position: relative;
     display: flex;
     flex-direction: column;
     line-height: 1;
-    padding-top: 43px;
     padding-bottom: 55px;
     min-height: 100vh;
     overflow-y: scroll;
   }
   
   .container {
-    flex: 1;
-    display: flex;
+    // flex: 1;
+    // display: flex;
     position: relative;
     overflow: scroll;
-    flex-direction: column;
+    // flex-direction: column;
+    height: 100%;
     background-color: #F2F2F2;
+  }
+
+  .pageContainer{
+      height: 100%;
+      position: relative;
   }
 
   .backgroundColor{
@@ -165,3 +171,13 @@ li::before{
     border: 1px solid #999999;
     color: #999999;
 }
+
+
+
+ion-content{
+    position: sticky;
+    height: 94%;
+    top: 44px;
+}
+
+

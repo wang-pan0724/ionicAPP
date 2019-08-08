@@ -6,7 +6,7 @@ import { Component, OnInit,Input, Output, EventEmitter,HostListener,ElementRef,V
   styleUrls: ['./slider.component.css']
 })
 export class SliderComponent implements OnInit {
-  @ViewChild('modal',{static: false}) modal:ElementRef;
+  @ViewChild('modal') modal:ElementRef;
   @Output() public modelChange = new EventEmitter();
   @Input() value;
   @Input() min: number;

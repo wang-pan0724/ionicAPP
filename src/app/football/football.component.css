@@ -2,11 +2,17 @@
 /* 头部 */
 /* 比赛 */
 
+ion-content{
+    position: sticky;
+    height: 94%;
+    top: 67px;
+}
+
 .container{
     background: #fff;
 }
 .match{
-    padding: 77px 0px 80px 0px;
+    padding: 0px 0px 80px 0px;
     background: #fff;
     min-height: 100vh;
 }
@@ -14,6 +20,7 @@
 .matchItem{
     position: relative;
     margin-bottom: 8px;
+    min-height: 100vh;
 }
 
 .matchList{
