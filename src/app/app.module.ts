@@ -74,6 +74,8 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { RouteReuseStrategy } from '@angular/router';
+
+import { JPush } from '@jiguang-ionic/jpush/ngx';
 @NgModule({
   declarations: [
     AppComponent,
@@ -151,6 +153,7 @@ import { RouteReuseStrategy } from '@angular/router';
   providers: [
     StatusBar,
     SplashScreen,
+    JPush,
     { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
   bootstrap: [AppComponent]
